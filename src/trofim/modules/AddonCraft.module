@@ -1,0 +1,8 @@
+{
+  "props": {
+    "singleton": true,
+    "version": "0.1",
+    "author": "TROFIM"
+  },
+  "components": []
+}

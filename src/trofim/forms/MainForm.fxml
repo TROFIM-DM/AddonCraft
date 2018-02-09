@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?import javafx.scene.*?><?import javafx.collections.*?><?import javafx.scene.layout.*?><?import javafx.scene.control.*?><?import javafx.scene.text.*?><?import javafx.scene.image.*?><?import javafx.scene.shape.*?><?import javafx.scene.paint.*?><?import javafx.scene.web.*?><?import javafx.geometry.*?><?import java.lang.*?><?import org.develnext.jphp.ext.javafx.classes.data.*?><?import org.develnext.jphp.ext.javafx.support.*?><?import org.develnext.jphp.ext.javafx.support.control.*?><?import org.develnext.jphp.ext.game.support.*?><AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" focusTraversable="false" id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664" prefWidth="976" styleClass="">
+  <children>
+    <Data cursor="DEFAULT" enabled="1" id="data-panelGlobal" visible="1"/>
+    <Panel backgroundColor="#ffffff" borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelGlobal" layoutX="16" layoutY="16" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="632" prefWidth="944" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+      <children>
+        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="568" id="imageGlobal" layoutX="0" layoutY="64" mosaic="false" mosaicGap="0" proportional="false" stretch="false" styleClass=" " textFill="#000000" width="944">
+          <font>
+            <Font name="System Regular" size="12"/>
+          </font>
+        </ImageViewEx>
+        <Data cursor="DEFAULT" enabled="1" id="data-tabPane" visible="1"/>
+        <Data cursor="DEFAULT" enabled="1" id="data-panelBar" visible="1"/>
+        <org.develnext.jphp.ext.javafx.jfoenix.support.JFXTabPaneFixed focusTraversable="false" id="tabPane" layoutX="0" layoutY="32" prefHeight="600" prefWidth="944" styleClass="jfx-tab-pane " tabClosingPolicy="SELECTED_TAB">
+          <tabs>
+            <Tab text="Моды">
+              <content>
+                <AnchorPane focusTraversable="false" id="" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="568" prefWidth="944" styleClass="">
+                  <children>
+                    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelInfoMod" layoutX="376" layoutY="42" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="488" prefWidth="528" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+                      <children>
+                        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="488" id="transparentInfoMod" layoutX="0" layoutY="0" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="528">
+                          <font>
+                            <Font name="System Regular" size="12"/>
+                          </font>
+                        </ImageViewEx>
+                        <Data cursor="DEFAULT" enabled="1" id="data-transparentInfoMod" image=".data/img/transparent_selected.png" visible="1"/>
+                        <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonDeleteMod" layoutX="8" layoutY="448" prefHeight="32" prefWidth="160" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Удалить" textAlignment="LEFT" textFill="#990000" underline="false" wrapText="false">
+                          <font>
+                            <Font name="Minecraft Rus Regular" size="16"/>
+                          </font>
+                          <styleClass xmlns:fx="http://javafx.com/fxml">
+                            <String fx:value="button"/>
+                            <String fx:value="jfx-button"/>
+                            <String fx:value="normal-tooltip"/>
+                          </styleClass>
+                        </com.jfoenix.controls.JFXButton>
+                        <Data cursor="HAND" enabled="1" id="data-buttonDeleteMod" tooltipText="Удалить мод" visible="1"/>
+                        <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonOpenMod" layoutX="360" layoutY="448" prefHeight="32" prefWidth="160" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Открыть мод..." textAlignment="LEFT" textFill="#1a3399" underline="false" wrapText="false">
+                          <font>
+                            <Font name="Minecraft Rus Regular" size="16"/>
+                          </font>
+                          <styleClass xmlns:fx="http://javafx.com/fxml">
+                            <String fx:value="button"/>
+                            <String fx:value="jfx-button"/>
+                            <String fx:value="normal-tooltip"/>
+                          </styleClass>
+                        </com.jfoenix.controls.JFXButton>
+                        <Data cursor="HAND" enabled="1" id="data-buttonOpenMod" tooltipText="Перейти к моду" visible="1"/>
+                        <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonModeMod" layoutX="184" layoutY="448" prefHeight="32" prefWidth="160" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                          <font>
+                            <Font name="Minecraft Rus Regular" size="16"/>
+                          </font>
+                          <styleClass xmlns:fx="http://javafx.com/fxml">
+                            <String fx:value="button"/>
+                            <String fx:value="jfx-button"/>
+                            <String fx:value="normal-tooltip"/>
+                          </styleClass>
+                        </com.jfoenix.controls.JFXButton>
+                        <Data cursor="HAND" enabled="1" id="data-buttonModeMod" tooltipText="Режим мода" visible="1"/>
+                        <ListViewEx editable="false" fixedCellSize="-1" focusTraversable="false" id="boxInfoMod" layoutX="0" layoutY="0" prefHeight="440" prefWidth="528" style="-fx-background-color: transparent;" styleClass="list-view info-mod ">
+                          <items xmlns:fx="http://javafx.com/fxml">
+                            <FXCollections fx:factory="observableArrayList"/>
+                          </items>
+                        </ListViewEx>
+                        <Data cursor="DEFAULT" enabled="1" id="data-boxInfoMod" visible="1"/>
+                      </children>
+                      <titleFont>
+                        <Font name="System Regular" size="12"/>
+                      </titleFont>
+                    </Panel>
+                    <Data cursor="DEFAULT" enabled="1" id="data-panelInfoMod" visible="1"/>
+                    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelListMods" layoutX="0" layoutY="0" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="568" prefWidth="336" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+                      <children>
+                        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="568" id="transparentMods" layoutX="0" layoutY="0" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="336">
+                          <font>
+                            <Font name="System Regular" size="12"/>
+                          </font>
+                        </ImageViewEx>
+                        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-transparentMods" image=".data/img/transparent.png" visible="1"/>
+                        <ListViewEx editable="false" fixedCellSize="-1" focusTraversable="false" id="boxMods" layoutX="0" layoutY="1" prefHeight="514" prefWidth="336" style="-fx-background-color: transparent;" styleClass="list-view list-mods ">
+                          <items xmlns:fx="http://javafx.com/fxml">
+                            <FXCollections fx:factory="observableArrayList"/>
+                          </items>
+                        </ListViewEx>
+                        <Data cursor="DEFAULT" enabled="1" id="data-boxMods" visible="1"/>
+                        <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonSelectMod" layoutX="8" layoutY="526" prefHeight="32" prefWidth="152" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 14px;" text="Добавить мод..." textAlignment="LEFT" textFill="#1a4d1a" underline="false" wrapText="false">
+                          <font>
+                            <Font name="Minecraft Rus Regular" size="14"/>
+                          </font>
+                          <styleClass xmlns:fx="http://javafx.com/fxml">
+                            <String fx:value="button"/>
+                            <String fx:value="jfx-button"/>
+                            <String fx:value="normal-tooltip"/>
+                          </styleClass>
+                        </com.jfoenix.controls.JFXButton>
+                        <Data cursor="HAND" enabled="1" id="data-buttonSelectMod" tooltipText="Добавить мод" visible="1"/>
+                        <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonUpdateMod" layoutX="176" layoutY="526" prefHeight="32" prefWidth="152" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Обновить" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                          <font>
+                            <Font name="Minecraft Rus Regular" size="16"/>
+                          </font>
+                          <styleClass xmlns:fx="http://javafx.com/fxml">
+                            <String fx:value="button"/>
+                            <String fx:value="jfx-button"/>
+                            <String fx:value="normal-tooltip"/>
+                          </styleClass>
+                        </com.jfoenix.controls.JFXButton>
+                        <Data cursor="HAND" enabled="1" id="data-buttonUpdateMod" tooltipText="Обновить список модов" visible="1"/>
+                      </children>
+                      <titleFont>
+                        <Font name="System Regular" size="12"/>
+                      </titleFont>
+                    </Panel>
+                    <Data cursor="DEFAULT" enabled="1" id="data-panelListMods" visible="1"/>
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Текстуры">
+              <content>
+                <AnchorPane focusTraversable="false" id="" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="568" prefWidth="944" styleClass="">
+                  <children>
+                    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelTextures" layoutX="0" layoutY="0" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="568" prefWidth="440" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+                      <children>
+                        <ImageViewEx AnchorPane.leftAnchor="0" autoSize="false" centered="false" focusTraversable="false" height="568" id="transparentTextures" layoutX="0" layoutY="0" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="440">
+                          <font>
+                            <Font name="System Regular" size="12"/>
+                          </font>
+                        </ImageViewEx>
+                        <ListViewEx editable="false" fixedCellSize="-1" focusTraversable="true" id="boxTextures" layoutX="0" layoutY="44" prefHeight="520" prefWidth="440" style="-fx-background-color: transparent;" styleClass="list-view list-textures ">
+                          <items xmlns:fx="http://javafx.com/fxml">
+                            <FXCollections fx:factory="observableArrayList"/>
+                          </items>
+                        </ListViewEx>
+                        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-transparentTextures" image=".data/img/transparent.png" visible="1"/>
+                        <Data cursor="DEFAULT" enabled="1" id="data-boxTextures" visible="1"/>
+                        <LabelEx alignment="CENTER_LEFT" autoSize="true" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelTextures" layoutX="79" layoutY="8" prefHeight="24" prefWidth="282" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 24px;&#10;-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.4), 10, 0.0, 0, 0);" styleClass="label " text="Доступные пакеты" textAlignment="LEFT" textFill="#f2f2f2" underline="false" wrapText="false">
+                          <font>
+                            <Font name="Minecraft Rus Regular" size="24"/>
+                          </font>
+                        </LabelEx>
+                        <Data cursor="DEFAULT" enabled="1" id="data-labelTextures" visible="1"/>
+                      </children>
+                      <titleFont>
+                        <Font name="System Regular" size="12"/>
+                      </titleFont>
+                    </Panel>
+                    <Data cursor="DEFAULT" enabled="1" id="data-panelTextures" visible="1"/>
+                    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelEnTextures" layoutX="504" layoutY="0" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="568" prefWidth="440" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+                      <children>
+                        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="568" id="transparentEnTextures" layoutX="0" layoutY="0" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="440">
+                          <font>
+                            <Font name="System Regular" size="12"/>
+                          </font>
+                        </ImageViewEx>
+                        <ListViewEx editable="false" fixedCellSize="-1" focusTraversable="true" id="boxEnTextures" layoutX="0" layoutY="44" prefHeight="520" prefWidth="440" style="-fx-background-color: transparent;" styleClass="list-view list-textures ">
+                          <items xmlns:fx="http://javafx.com/fxml">
+                            <FXCollections fx:factory="observableArrayList"/>
+                          </items>
+                        </ListViewEx>
+                        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-transparentEnTextures" image=".data/img/transparent.png" visible="1"/>
+                        <Data cursor="DEFAULT" enabled="1" id="data-boxEnTextures" visible="1"/>
+                        <LabelEx alignment="CENTER_LEFT" autoSize="true" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelEnTextures" layoutX="88" layoutY="8" prefHeight="24" prefWidth="264" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 24px;&#10;-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.4), 10, 0.0, 0, 0);" styleClass="label " text="Активные пакеты" textAlignment="LEFT" textFill="#f2f2f2" underline="false" wrapText="false">
+                          <font>
+                            <Font name="Minecraft Rus Regular" size="24"/>
+                          </font>
+                        </LabelEx>
+                        <Data cursor="DEFAULT" enabled="1" id="data-labelEnTextures" visible="1"/>
+                      </children>
+                      <titleFont>
+                        <Font name="System Regular" size="12"/>
+                      </titleFont>
+                    </Panel>
+                    <Data cursor="DEFAULT" enabled="1" id="data-panelEnTextures" visible="1"/>
+                    <Data cursor="HAND" enabled="1" id="data-buttonUpdateTexture" tooltipText="Обновить список текстур-паков" visible="1"/>
+                    <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="0" id="buttonUpdateTexture" layoutX="448" layoutY="512" prefHeight="48" prefWidth="48" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;" text="" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
+                      <font>
+                        <Font name="Minecraft Rus Regular" size="16"/>
+                      </font>
+                      <styleClass xmlns:fx="http://javafx.com/fxml">
+                        <String fx:value="button"/>
+                        <String fx:value="jfx-button"/>
+                        <String fx:value="texture-buttonUpdate"/>
+                        <String fx:value="normal-tooltip"/>
+                      </styleClass>
+                    </com.jfoenix.controls.JFXButton>
+                    <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="0" id="buttonSelectTexture" layoutX="448" layoutY="400" prefHeight="48" prefWidth="48" ripplerFill="#f2f2f2" style="-fx-background-color: #6fa16f;&#10;-fx-background-radius: 0;" text="" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
+                      <font>
+                        <Font name="Minecraft Rus Regular" size="16"/>
+                      </font>
+                      <styleClass xmlns:fx="http://javafx.com/fxml">
+                        <String fx:value="button"/>
+                        <String fx:value="jfx-button"/>
+                        <String fx:value="texture-buttonAdd"/>
+                        <String fx:value="normal-tooltip"/>
+                      </styleClass>
+                    </com.jfoenix.controls.JFXButton>
+                    <Data cursor="HAND" enabled="1" id="data-buttonSelectTexture" tooltipText="Добавить текстур-пак" visible="1"/>
+                    <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="0" id="buttonFolderTexture" layoutX="448" layoutY="456" prefHeight="48" prefWidth="48" ripplerFill="#f2f2f2" style="-fx-background-color: #7290B5;&#10;-fx-background-radius: 0;" text="" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
+                      <font>
+                        <Font name="Minecraft Rus Regular" size="16"/>
+                      </font>
+                      <styleClass xmlns:fx="http://javafx.com/fxml">
+                        <String fx:value="button"/>
+                        <String fx:value="jfx-button"/>
+                        <String fx:value="texture-buttonFolder"/>
+                        <String fx:value="normal-tooltip"/>
+                      </styleClass>
+                    </com.jfoenix.controls.JFXButton>
+                    <Data cursor="HAND" enabled="1" id="data-buttonFolderTexture" tooltipText="Перейти к папке с шейдерами" visible="1"/>
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Шейдеры">
+              <content>
+                <AnchorPane focusTraversable="false" id="" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="566" prefWidth="944" styleClass="">
+                  <children>
+                    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelListShader" layoutX="16" layoutY="48" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="432" prefWidth="616" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+                      <children>
+                        <ImageViewEx AnchorPane.leftAnchor="0" autoSize="false" centered="false" focusTraversable="false" height="432" id="transparentShaders" layoutX="0" layoutY="0" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="600">
+                          <font>
+                            <Font name="System Regular" size="12"/>
+                          </font>
+                        </ImageViewEx>
+                        <ListViewEx editable="false" fixedCellSize="-1" focusTraversable="true" id="boxShaders" layoutX="0" layoutY="0" prefHeight="432" prefWidth="600" style="-fx-background-color: transparent;" styleClass="list-view list-shaders ">
+                          <items xmlns:fx="http://javafx.com/fxml">
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Нет"/>
+                              <String fx:value="(Встроенный)"/>
+                            </FXCollections>
+                          </items>
+                        </ListViewEx>
+                        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-transparentShaders" image=".data/img/transparent.png" visible="1"/>
+                        <Data cursor="DEFAULT" enabled="1" id="data-boxShaders" visible="1"/>
+                      </children>
+                      <titleFont>
+                        <Font name="System Regular" size="12"/>
+                      </titleFont>
+                    </Panel>
+                    <Data cursor="DEFAULT" enabled="1" id="data-panelListShader" visible="1"/>
+                    <LabelEx alignment="CENTER_LEFT" autoSize="true" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelShaders" layoutX="408" layoutY="8" prefHeight="24" prefWidth="129" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 24px;&#10;-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.7), 10, 0.0, 0, 0);" styleClass="label " text="Шейдеры" textAlignment="LEFT" textFill="#f2f2f2" underline="false" wrapText="false">
+                      <font>
+                        <Font name="Minecraft Rus Regular" size="24"/>
+                      </font>
+                    </LabelEx>
+                    <Data cursor="DEFAULT" enabled="1" id="data-labelShaders" visible="1"/>
+                    <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelShaderVideo" layoutX="16" layoutY="490" prefHeight="24" prefWidth="912" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 20px;&#10;-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.7), 10, 0.0, 0, 0);" styleClass="label " text="" textAlignment="CENTER" textFill="#f2f2f2" underline="false" wrapText="false">
+                      <font>
+                        <Font name="Minecraft Rus Regular" size="20"/>
+                      </font>
+                    </LabelEx>
+                    <Data cursor="DEFAULT" enabled="1" id="data-labelShaderVideo" visible="1"/>
+                    <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="button" layoutX="16" layoutY="520" prefHeight="32" prefWidth="160" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Обновить" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                      <font>
+                        <Font name="Minecraft Rus Regular" size="16"/>
+                      </font>
+                      <styleClass xmlns:fx="http://javafx.com/fxml">
+                        <String fx:value="button"/>
+                        <String fx:value="jfx-button"/>
+                        <String fx:value="normal-tooltip"/>
+                      </styleClass>
+                    </com.jfoenix.controls.JFXButton>
+                    <Data cursor="HAND" enabled="1" id="data-button" tooltipText="Обновить список модов" visible="1"/>
+                    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelBtnShader" layoutX="632" layoutY="48" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="376" prefWidth="296" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+                      <children>
+                        <ImageViewEx AnchorPane.leftAnchor="0" autoSize="false" centered="false" focusTraversable="false" height="376" id="transparentBtnShader" layoutX="0" layoutY="0" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="296">
+                          <font>
+                            <Font name="System Regular" size="12"/>
+                          </font>
+                        </ImageViewEx>
+                        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-transparentBtnShader" image=".data/img/transparent.png" visible="1"/>
+                        <VBox alignment="CENTER" focusTraversable="false" id="boxBtnShader" layoutX="8" layoutY="8" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="360" prefWidth="280" spacing="6" styleClass="">
+                          <children>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="antialiasingLevel" layoutX="0" layoutY="0" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Антиалиасинг" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-antialiasingLevel" tooltipText="Обновить список модов" visible="1"/>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="normalMapEnabled" layoutX="0" layoutY="45" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Карта нормалей" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-normalMapEnabled" tooltipText="Обновить список модов" visible="1"/>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="specularMapEnabled" layoutX="0" layoutY="90" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Карта отражений" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-specularMapEnabled" tooltipText="Обновить список модов" visible="1"/>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="renderResMul" layoutX="0" layoutY="136" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Качество рендера" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-renderResMul" tooltipText="Обновить список модов" visible="1"/>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="shadowResMul" layoutX="0" layoutY="182" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Качество теней" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-shadowResMul" tooltipText="Обновить список модов" visible="1"/>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="handDepthMul" layoutX="0" layoutY="228" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Глубина руки" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-handDepthMul" tooltipText="Обновить список модов" visible="1"/>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="oldHandLight" layoutX="0" layoutY="274" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="СО руки" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-oldHandLight" tooltipText="Обновить список модов" visible="1"/>
+                            <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="oldLighting" layoutX="0" layoutY="320" prefHeight="40" prefWidth="280" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" text="Ст. освещ." textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+                              <font>
+                                <Font name="Minecraft Rus Regular" size="16"/>
+                              </font>
+                              <styleClass xmlns:fx="http://javafx.com/fxml">
+                                <String fx:value="button"/>
+                                <String fx:value="jfx-button"/>
+                                <String fx:value="normal-tooltip"/>
+                              </styleClass>
+                            </com.jfoenix.controls.JFXButton>
+                            <Data cursor="HAND" enabled="1" id="data-oldLighting" tooltipText="Обновить список модов" visible="1"/>
+                          </children>
+                        </VBox>
+                        <Data cursor="DEFAULT" enabled="1" id="data-boxBtnShader" visible="1"/>
+                      </children>
+                      <titleFont>
+                        <Font name="System Regular" size="12"/>
+                      </titleFont>
+                    </Panel>
+                    <Data cursor="DEFAULT" enabled="1" id="data-panelBtnShader" visible="1"/>
+                  </children>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Сохранения">
+              <content>
+                <AnchorPane focusTraversable="false" id="" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="566" prefWidth="944" styleClass="">
+                  <children/>
+                </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Версии">
+              <content>
+                <AnchorPane focusTraversable="false" id="" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="566" prefWidth="944" styleClass="">
+                  <children/>
+                </AnchorPane>
+              </content>
+            </Tab>
+          </tabs>
+        </org.develnext.jphp.ext.javafx.jfoenix.support.JFXTabPaneFixed>
+        <Data cursor="DEFAULT" enabled="1" id="data-imageGlobal" image=".data/img/MainForm_1.png" visible="1"/>
+        <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="0" id="buttonSettings" layoutX="824" layoutY="30" prefHeight="36" prefWidth="120" ripplerFill="#ffffff" style="-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 14px;" styleClass="button jfx-button " text="Настройки" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
+          <font>
+            <Font name="Minecraft Rus Regular" size="14"/>
+          </font>
+        </com.jfoenix.controls.JFXButton>
+        <Data cursor="HAND" enabled="1" graphic="" id="data-buttonSettings" tooltipText="" visible="1"/>
+        <Panel backgroundColor="#999999" borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelBar" layoutX="0" layoutY="0" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="32" prefWidth="944" styleClass="" titleColor="#999999" titleOffset="15" titlePosition="TOP_LEFT">
+          <children>
+            <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="24" id="imageIco" layoutX="4" layoutY="4" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="24">
+              <font>
+                <Font name="System Regular" size="12"/>
+              </font>
+            </ImageViewEx>
+            <Data cursor="DEFAULT" enabled="1" id="data-imageIco" image=".data/img/ico-24.png" visible="1"/>
+            <LabelEx alignment="CENTER_LEFT" autoSize="true" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelAppName" layoutX="32" layoutY="4" prefHeight="23" prefWidth="160" style="-fx-font-family: &quot;Minecraft Title Cyrillic&quot;;&#10;-fx-font-size: 16px;" styleClass="label " text="AddonCraft" textAlignment="LEFT" textFill="#f2f2f2" underline="false" wrapText="false">
+              <font>
+                <Font name="Minecraft Title Cyrillic Regular" size="16"/>
+              </font>
+            </LabelEx>
+            <Data cursor="DEFAULT" enabled="1" id="data-labelAppName" visible="1"/>
+          </children>
+          <titleFont>
+            <Font name="System Regular" size="12"/>
+          </titleFont>
+        </Panel>
+      </children>
+      <titleFont>
+        <Font name="System Regular" size="12"/>
+      </titleFont>
+    </Panel>
+    <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="10" id="imageHide" layoutX="914" layoutY="31" mosaic="false" mosaicGap="0" proportional="false" stretch="false" styleClass="" textFill="#000000" width="16">
+      <font>
+        <Font name="System Regular" size="12"/>
+      </font>
+    </ImageViewEx>
+    <Data clickImage="" cursor="DEFAULT" enabled="1" hoverImage=".data/img/line_hover.png" id="data-imageHide" image=".data/img/line.png" visible="1"/>
+    <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="16" id="imageExit" layoutX="938" layoutY="24" mosaic="false" mosaicGap="0" proportional="false" stretch="false" styleClass="" textFill="#000000" width="16">
+      <font>
+        <Font name="System Regular" size="12"/>
+      </font>
+    </ImageViewEx>
+    <Data clickImage="" cursor="DEFAULT" enabled="1" hoverImage=".data/img/close_hover.png" id="data-imageExit" image=".data/img/close.png" visible="1"/>
+  </children>
+</AnchorPane>

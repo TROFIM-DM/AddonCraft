@@ -1,0 +1,54 @@
+{
+  "props": {
+    "version": "0.1",
+    "author": "TROFIM"
+  },
+  "components": {
+    "iniShader": {
+      "type": "script\\storage\\IniStorage",
+      "x": 32,
+      "y": 112,
+      "props": {
+        "path": "",
+        "autoSave": false,
+        "trimValues": true,
+        "multiLineValues": "1"
+      }
+    },
+    "iniOptions": {
+      "type": "script\\storage\\IniStorage",
+      "x": 112,
+      "y": 112,
+      "props": {
+        "path": "",
+        "autoSave": false,
+        "trimValues": true,
+        "multiLineValues": "1"
+      }
+    },
+    "selectTexture": {
+      "type": "script\\FileChooserScript",
+      "x": 112,
+      "y": 32,
+      "props": {
+        "filterName": "Текстур-пак Minecraft (*.zip*)",
+        "filterExtensions": "*.zip*",
+        "filterAny": "0",
+        "inputNode": "",
+        "actionNode": "buttonSelectTexture"
+      }
+    },
+    "selectMod": {
+      "type": "script\\FileChooserScript",
+      "x": 32,
+      "y": 32,
+      "props": {
+        "filterName": "Мод Minecraft (*.jar*)",
+        "filterExtensions": "*.jar*",
+        "filterAny": "0",
+        "inputNode": "",
+        "actionNode": "buttonSelectMod"
+      }
+    }
+  }
+}

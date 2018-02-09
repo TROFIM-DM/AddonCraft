@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project author="TROFIMOV" authorOS="Windows 10" createdAt="1514221834738" ideName="DevelNext" ideVersion="16.7.0" ideVersionHash="2017103112" name="AddonCraft" packageName="trofim" template="ide\project\templates\DefaultGuiProjectTemplate" updatedAt="1518209158975">
+  <tree>
+    <expanded>
+    <path src=""/>
+      <path src="/src"/>
+      <path src="/src/trofim"/>
+      <path src="/src/trofim/forms"/>
+      <path src="/src/trofim/modules"/>
+      <path src="/src/trofim/scripts"/>
+      <path src="/src/trofim/scripts/api"/>
+      <path src="/src/trofim/scripts/design"/>
+      <path src="/src/trofim/scripts/examples"/>
+    </expanded>
+  </tree>
+  <openedFiles>
+  <file selected="1" src="AddonCraft.dnproject"/>
+    <file src="src/trofim/forms/StartForm.php"/>
+    <file src="src/trofim/forms/MainForm.php"/>
+    <file src="src/trofim/modules/AddonCraft.php"/>
+    <file src="src/.theme/style.fx.css"/>
+    <file src="src/trofim/scripts/api/ApiMods.php"/>
+    <file src="src/trofim/scripts/design/DesignMods.php"/>
+    <file src="src/trofim/scripts/api/ApiTextures.php"/>
+    <file src="src/trofim/scripts/design/DesignTextures.php"/>
+    <file src="src/trofim/scripts/api/ApiShaders.php"/>
+    <file src=".gitignore"/>
+  </openedFiles>
+  <files/>
+  <behaviours>
+  <behaviour class="ide\project\behaviours\BundleProjectBehaviour"/>
+    <behaviour class="ide\project\behaviours\PhpProjectBehaviour"/>
+    <behaviour class="ide\project\behaviours\JavaPlatformBehaviour"/>
+    <behaviour class="ide\project\behaviours\GuiFrameworkProjectBehaviour"/>
+    <behaviour class="ide\project\behaviours\RunBuildProjectBehaviour"/>
+    <behaviour class="ide\project\behaviours\ShareProjectBehaviour"/>
+    <behaviour class="ide\project\behaviours\BackupProjectBehaviour"/>
+    <behaviour class="ide\project\behaviours\GradleProjectBehaviour"/>
+  </behaviours>
+</project>
