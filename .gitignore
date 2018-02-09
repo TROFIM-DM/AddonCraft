@@ -1,16 +1,8 @@
 # Ignore rules for GIT (github.com, bitbucket.com, etc.)
 
-/.dn/backup
-/.dn/bundles
-/.dn/ide
-/.dn/cache
-/.dn/ide.lock
-/.dn/tmp
-/.dn/index.json
-/.dn/buckup.conf
-
 /others
 /vendor
+/.dn
 /src_generated
 /src/JPHP-INF
 /src/lang
@@ -18,6 +10,7 @@
 /src/.system
 /src/files
 /src/.debug
+/src/trofim/scripts/examples
 /build
 /build.xml
 /build.gradle
