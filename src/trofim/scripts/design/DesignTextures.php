@@ -1,9 +1,7 @@
 <?php
 namespace trofim\scripts\design;
 
-use std;
-use trofim;
-use gui;
+use std, trofim, gui;
 
 /**
  * Класс для работы с Design текстур-паков.
@@ -83,7 +81,7 @@ class DesignTextures
             $alert->graphic = new UXImageView(new UXImage('res://.data/img/delete_alert.png'));
             
             $textUrl = new UXLabelEx(fs::nameNoExt($buttonDelete->nameTexture));
-            $textUrl->style = '-fx-font-family: "Impact"; -fx-font-size: 26px; -fx-text-alignment: CENTER; -fx-alignment: CENTER;';
+            $textUrl->style = '-fx-font-family: "Impact"; -fx-font-size: 22px; -fx-text-alignment: CENTER; -fx-alignment: CENTER;';
             $box = new UXVBox([$textUrl]);
             $box->style = '-fx-alignment: CENTER;';
             

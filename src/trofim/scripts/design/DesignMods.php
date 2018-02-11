@@ -1,10 +1,7 @@
 <?php
 namespace trofim\scripts\design;
 
-use framework;
-use trofim;
-use gui;
-use std;
+use std, trofim, gui, framework;
 
 /**
  * Класс для работы с Design модов.
@@ -78,10 +75,12 @@ class DesignMods
             $labelModID->classes->add('infoMod-modid');
             $infoMod[] = $labelModID;
             
-            $labelAuthor = new UXLabel('Авторы: ' . implode(', ', $modInfo['authorList']));
-            $labelAuthor->wrapText = true;
-            $labelAuthor->classes->add('infoMod-author');
-            $infoMod[] = $labelAuthor;
+            if ($modInfo['authorList']) {
+                $labelAuthor = new UXLabelEx('Авторы: ' . implode(', ', $modInfo['authorList']));
+                $labelAuthor->wrapText = true;
+                $labelAuthor->classes->add('infoMod-author');
+                $infoMod[] = $labelAuthor;
+            }
             
             if ($modInfo['url']) {
                 $labelTextUrl = new UXLabel('Url: ');
