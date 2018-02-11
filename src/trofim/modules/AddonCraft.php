@@ -31,17 +31,18 @@ class AddonCraft extends AbstractModule
      * Главные константы.
      */
     private const APP_NAME           = 'AddonCraft',
-                  APP_SITE           = 'bit.ly/TROFIM',
+                  APP_SITE           = 'http://bit.ly/TROFIM',
                   APP_SERVER         = 'http://addoncraft.xyz/',
                   APP_KEY            = 'i6LDwKX3IgCXokL79D4CwfLd',
-                  APP_VERSION        = 0.1,
+                  APP_VERSION        = '0.1',
                   APP_VERSION_PREFIX = 'alpha';
     
     /**
+     * Загрузка компонента.
+     * 
      * @event construct 
      */
-    function doConstruct(ScriptEvent $e = null)
-    {    
+    function doConstruct (ScriptEvent $e = null) {    
         /*if (count($GLOBALS['argv']) > 1) {
             $args = $GLOBALS['argv'];
             if ($args[1] == 'pre' && isset($args[2])) {
@@ -128,11 +129,18 @@ class AddonCraft extends AbstractModule
     }
     
     /**
+     * Очистка значений класса.
+     */
+    static function clearValue ($value) {
+        self::{$value} = false;
+    }
+    
+    /**
      * Получение настроек Minecraft.
      */
     static function getMinecraftOptions () {
-        if (fs::exists(AddonCraft::getPathMinecraft() . '\\options.txt'))
-            $pathOptions = AddonCraft::getPathMinecraft() . '\\options.txt';
+        if (fs::exists(self::getPathMinecraft() . '\\options.txt'))
+            $pathOptions = self::getPathMinecraft() . '\\options.txt';
         else $pathOptions = 'res://files/options.txt';
         
         $fileOptions = file($pathOptions);
@@ -150,11 +158,11 @@ class AddonCraft extends AbstractModule
      * Изменение настроек Minecraft.
      */
     static function setMinecraftOptions ($options) {
-        if (fs::exists(AddonCraft::getPathMinecraft())) {
+        if (fs::exists(self::getPathMinecraft())) {
             foreach ($options[''] as $key => $option) 
                 if (isset($key) && isset($option))
                     $fileOptions[] = $key . ':' . $option;
-            if (Stream::putContents(AddonCraft::getPathMinecraft() . '\\options.txt', implode("\n", $fileOptions))) return true;
+            if (Stream::putContents(self::getPathMinecraft() . '\\options.txt', implode("\n", $fileOptions))) return true;
         }
         return false;
     }
