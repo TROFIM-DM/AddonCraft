@@ -38,6 +38,18 @@
         "actionNode": "buttonSelectTexture"
       }
     },
+    "selectShader": {
+      "type": "script\\FileChooserScript",
+      "x": 208,
+      "y": 32,
+      "props": {
+        "filterName": "Шейдер Minecraft (*.zip*)",
+        "filterExtensions": "*.zip*",
+        "filterAny": "0",
+        "inputNode": "",
+        "actionNode": "buttonSelectShader"
+      }
+    },
     "selectMod": {
       "type": "script\\FileChooserScript",
       "x": 32,

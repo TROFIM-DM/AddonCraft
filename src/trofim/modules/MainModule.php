@@ -25,4 +25,12 @@ class MainModule extends AbstractModule
         ApiTextures::addTexture($e->sender->file);
     }
 
+    /**
+     * @event selectShader.action 
+     */
+    function doSelectShaderAction(ScriptEvent $e = null)
+    {    
+        ApiShaders::addShader($e->sender->file);
+    }
+    
 }

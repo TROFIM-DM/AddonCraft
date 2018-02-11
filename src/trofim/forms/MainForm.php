@@ -21,7 +21,8 @@ class MainForm extends AbstractForm
         $this->on('dragOver', function (UXDragEvent $drag) {
             if (count($drag->dragboard->files) == 1) {
                 if (($this->tabPane->selectedIndex == 0 && fs::ext($drag->dragboard->files[0]->getName()) == 'jar') ||
-                    ($this->tabPane->selectedIndex == 1 && fs::ext($drag->dragboard->files[0]->getName()) == 'zip')) {
+                    ($this->tabPane->selectedIndex == 1 && fs::ext($drag->dragboard->files[0]->getName()) == 'zip') ||
+                    ($this->tabPane->selectedIndex == 2 && fs::ext($drag->dragboard->files[0]->getName()) == 'zip')) {
                     $drag->acceptTransferModes(['MOVE', 'COPY']);
                 }
             }
@@ -34,6 +35,8 @@ class MainForm extends AbstractForm
                         ApiMods::addMod($file);
                     } else if ($this->tabPane->selectedIndex == 1 && fs::ext($file->getName()) == 'zip') {
                         ApiTextures::addTexture($file);
+                    } else if ($this->tabPane->selectedIndex == 2 && fs::ext($file->getName()) == 'zip') {
+                        ApiShaders::addShader($file);
                     }
                 }
                 return;
@@ -50,7 +53,7 @@ class MainForm extends AbstractForm
     {    
         /*Плавное появление окна*/
         Animation::fadeOut($this, 1, function () {
-            Animation::fadeOut($this->panelInfoMod, 1);
+            $this->panelInfoMod->visible = false;
             Animation::fadeIn($this, 350);
         });
         
@@ -81,8 +84,8 @@ class MainForm extends AbstractForm
      */
     function doBoxModsAction(UXEvent $e = null)
     {
-        if ($e->sender->items->count > 0) {
-            if (!$this->panelInfoMod->opacity) Animation::fadeIn($this->panelInfoMod, 200);
+        if ($e->sender->items->count > 0 && $e->sender->selectedIndex > -1) {
+            if (!$this->panelInfoMod->visible) $this->panelInfoMod->visible = true;
             $this->boxInfoMod->items->clear();
             DesignMods::showInfoMod(AddonCraft::$listMods[$e->sender->selectedIndex]);
         }
@@ -129,13 +132,13 @@ class MainForm extends AbstractForm
     function doButtonUpdateModAction(UXEvent $e = null)
     {    
         $this->buttonUpdateMod->enabled = false;
-        Animation::fadeOut($this->panelInfoMod, 150, function () {
-            AddonCraft::$listMods = false;
-            $this->boxMods->items->clear();
-            $this->boxInfoMod->items->clear();
         
-            ApiMods::findMods();
-        });
+        AddonCraft::clearValue('listMods');
+        $this->panelInfoMod->visible = false;
+        $this->boxMods->items->clear();
+        $this->boxInfoMod->items->clear();
+        
+        ApiMods::findMods();
         
         waitAsync(3000, function () {
             $this->buttonUpdateMod->enabled = true;
@@ -147,9 +150,8 @@ class MainForm extends AbstractForm
      */
     function doButtonModeModAction(UXEvent $e = null)
     {
-        if ($this->boxMods->selectedIndex > -1) {
+        if ($this->boxMods->selectedIndex > -1) 
             ApiMods::setMode($this->boxMods->selectedIndex);
-        }
     }
 
     /**
@@ -174,7 +176,8 @@ class MainForm extends AbstractForm
     function doButtonUpdateTextureAction(UXEvent $e = null)
     {    
         $this->buttonUpdateTexture->enabled = false;
-        AddonCraft::$listTextures = false;
+        
+        AddonCraft::clearValue('listTextures');
         $this->boxTextures->items->clear();
         $this->boxEnTextures->items->clear();
         
@@ -203,18 +206,37 @@ class MainForm extends AbstractForm
     }
 
     /**
-     * @event antialiasingLevel.action 
+     * @event buttonFolderShader.action 
      */
-    function doAntialiasingLevelAction(UXEvent $e = null)
+    function doButtonFolderShaderAction(UXEvent $e = null)
     {    
+        open(AddonCraft::getPathMinecraft() . '\\shaderpacks\\');
+    }
+
+    /**
+     * @event buttonUpdateShader.action 
+     */
+    function doButtonUpdateShaderAction(UXEvent $e = null)
+    {    
+        $this->buttonUpdateShader->enabled = false;
         
+        AddonCraft::clearValue('listShaders');
+        AddonCraft::$listShaders = ['list' => [['name' => 'OFF'], ['name' => '(internal)']]];
+        $this->boxShaders->items->clear();
+        $this->boxShaders->items->addAll(['Нет', '(Встроенный)']);
+        
+        ApiShaders::findShaders();
+        
+        waitAsync(3000, function () {
+            $this->buttonUpdateShader->enabled = true;
+        });
     }
 
     function setModeMod ($mode) {
         if ($mode) {
             $this->buttonModeMod->text = 'Отключить';
             $this->buttonModeMod->textColor = '#b31a1a';
-        } else if (!$mode) {
+        } else {
             $this->buttonModeMod->text = 'Включить';
             $this->buttonModeMod->textColor = '#00e209';
         }
