@@ -21,3 +21,4 @@
 *.pid
 *.tmp
 *.sourcemap
+*.dnproject
