@@ -158,6 +158,8 @@ class ApiShaders
     
     /**
      * Выбор шейдеров.
+     * 
+     * @param $index
      */
     public static function selectedShader ($index) {
         if (app()->form(MainForm)->boxShaders->selectedIndex == -1)
@@ -177,6 +179,8 @@ class ApiShaders
     
     /**
      * Изменение настроек шейдеров.
+     * 
+     * @param $setting
      */
     public static function changeSetting ($setting) {
         $change = self::$CHANGE_SETTINGS[$setting];
@@ -220,6 +224,9 @@ class ApiShaders
     
     /**
      * Изменение опций под действием кнопок.
+     * 
+     * @param $settings
+     * @param $put
      */
     private static function handlerSettings ($settings, $put = true) {
         foreach (self::$LIST_SETTINGS as $setting) {

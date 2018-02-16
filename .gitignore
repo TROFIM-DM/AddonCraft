@@ -1,6 +1,7 @@
 # Ignore rules for GIT (github.com, bitbucket.com, etc.)
 
 /others
+/AddonCraft-Updater
 /vendor
 /.dn
 /src_generated
