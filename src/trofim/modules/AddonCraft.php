@@ -28,16 +28,6 @@ class AddonCraft extends AbstractModule
     public static $fileStream        = false;
     
     /**
-     * Главные константы.
-     */
-    private const APP_NAME           = 'AddonCraft',
-                  APP_SITE           = 'http://bit.ly/TROFIM',
-                  APP_SERVER         = 'http://addoncraft.xyz/',
-                  APP_KEY            = 'i6LDwKX3IgCXokL79D4CwfLd',
-                  APP_VERSION        = '0.1',
-                  APP_VERSION_PREFIX = 'alpha';
-    
-    /**
      * Загрузка компонента.
      * 
      * @event construct 
