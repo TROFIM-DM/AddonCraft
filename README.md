@@ -1,6 +1,6 @@
 # AddonCraft
 #### Программа, позволяющая с комфортом и удобством, максимально кастомизировать свою игру **Minecraft** !
-![Screenshot](http://addoncraft.xyz/files/pictures/screenshot_v1.0-1.png)
+![Screenshot](docs/1.0/AddonCraft-1.0_1.png)
 
 ### Возможности программы:
 - **Приятный дизайн** - Стильный и современный дизайн.
