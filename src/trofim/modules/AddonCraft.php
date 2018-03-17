@@ -1,41 +1,34 @@
 <?php
 namespace trofim\modules;
 
-use facade\Json;
-use bundle\windows\Windows;
 use std, gui, framework, trofim;
+use windows;
 
 /**
  * Главный модуль AddonCraft.
+ * 
+ * @author TROFIM
+ * @url https://github.com/TROFIM-YT/AddonCraft
  */
 class AddonCraft extends AbstractModule
 {
     /**
      * Папки необходимые для работы.
      */
-    public static $appPath           = ['\\disabled\\', '\\disabled\\mods\\'];
+    public static $appPath           = ['\\disabled\\', '\\disabled\\mods\\', '\\nbt\\'];
     
     /**
      * Необходимые списки объектов.
      */
     public static $listMods          = false,
                   $listTextures      = false,
-                  $listShaders       = ['list' => [['name' => 'OFF'], ['name' => '(internal)']]];
+                  $listShaders       = ['list' => [['name' => 'OFF'], ['name' => '(internal)']]],
+                  $listMaps          = false;
     
     /**
      * Список привязанных файлов к программе.
      */
     public static $fileStream        = false;
-    
-    /**
-     * Главные константы.
-     */
-    private const APP_NAME           = 'AddonCraft',
-                  APP_SITE           = 'http://bit.ly/TROFIM',
-                  APP_SERVER         = 'http://addoncraft.xyz/',
-                  APP_KEY            = 'i6LDwKX3IgCXokL79D4CwfLd',
-                  APP_VERSION        = '0.1',
-                  APP_VERSION_PREFIX = 'alpha';
     
     /**
      * Загрузка компонента.
@@ -54,77 +47,77 @@ class AddonCraft extends AbstractModule
     /**
      * Название программы.
      */
-    static function getAppName () {
+    static function getAppName () : string {
         return self::APP_NAME;
     }
     
     /**
      * Сервер программы.
      */
-    static function getAppServer () {
+    static function getAppServer () : string {
         return self::APP_SERVER;
     }
     
     /**
      * Секретный ключ программы.
      */
-    static function getAppKey () {
+    static function getAppKey () : string {
         return self::APP_KEY;
     }
     
     /**
      * Сайт программы.
      */
-    static function getAppSite () {
+    static function getAppSite () : string {
         return self::APP_SITE;
     }
     
     /**
      * Версия программы.
      */
-    static function getAppVersion () {
+    static function getAppVersion () : string {
         return self::APP_VERSION;
     }
     
     /**
      * Префикс версии программы.
      */
-    static function getAppVersionPrefix () {
+    static function getAppVersionPrefix () : string {
         return self::APP_VERSION_PREFIX;
     }
     
     /**
      * Путь к папки для временных файлов.
      */
-    static function getTemp () {
+    static function getTemp () : string {
         return Windows::expandEnv('%TEMP%');
     }
     
     /**
      * Путь к временным файлам программы.
      */
-    static function getAppTemp () {
+    static function getAppTemp () : string {
         return Windows::expandEnv('%TEMP%').'\\AddonCraft';
     }
     
     /**
      * Путь к папке с данными пользователя.
      */
-    static function getAppData () {
+    static function getAppData () : string {
         return Windows::expandEnv('%APPDATA%');
     }
     
     /**
      * Путь к главной папке программы.
      */
-    static function getAppPath () {
+    static function getAppPath () : string {
         return Windows::expandEnv('%APPDATA%').'\\.AddonCraft';
     }
     
     /**
      * Путь к папке с Minecraft.
      */
-    static function getPathMinecraft () {
+    static function getPathMinecraft () : string {
         return Windows::expandEnv('%APPDATA%').'\\.minecraft';
     }
     
@@ -138,10 +131,10 @@ class AddonCraft extends AbstractModule
     /**
      * Получение настроек Minecraft.
      */
-    static function getMinecraftOptions () {
+    static function getMinecraftOptions () : bool {
         if (fs::exists(self::getPathMinecraft() . '\\options.txt'))
             $pathOptions = self::getPathMinecraft() . '\\options.txt';
-        else $pathOptions = 'res://files/options.txt';
+        else $pathOptions = 'res://assets/minecraft/options.txt';
         
         $fileOptions = file($pathOptions);
         if ($fileOptions) {
@@ -157,7 +150,7 @@ class AddonCraft extends AbstractModule
     /**
      * Изменение настроек Minecraft.
      */
-    static function setMinecraftOptions ($options) {
+    static function setMinecraftOptions ($options) : bool {
         if (fs::exists(self::getPathMinecraft())) {
             foreach ($options[''] as $key => $option) 
                 if (isset($key) && isset($option))
@@ -193,7 +186,7 @@ class AddonCraft extends AbstractModule
     /**
      * Создание Placeholder.
      */
-    static function createPlaceholder ($text = "Список\nпуст") {
+    static function createPlaceholder ($text = "Список\nпуст") : UXLabelEx {
         $placeholder = new UXLabelEx($text);
         $placeholder->classes->add('list-placeholder');
         return $placeholder;
