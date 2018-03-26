@@ -1,16 +1,15 @@
 # Ignore rules for GIT (github.com, bitbucket.com, etc.)
 
 /others
-/AddonCraft-Updater
 /vendor
 /.dn
 /src_generated
 /src/JPHP-INF
-/src/lang
+/src/.lang
 /src/.data
 /src/.system
-/src/files
 /src/.debug
+/src/assets
 /src/trofim/scripts/examples
 /build
 /build.xml
