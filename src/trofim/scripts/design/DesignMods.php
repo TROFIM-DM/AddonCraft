@@ -1,10 +1,13 @@
 <?php
 namespace trofim\scripts\design;
 
-use std, trofim, gui, framework;
+use std, gui, trofim;
 
 /**
  * Класс для работы с Design модов.
+ * 
+ * @author TROFIM
+ * @url https://github.com/TROFIM-YT/AddonCraft
  */
 class DesignMods 
 {
@@ -14,18 +17,18 @@ class DesignMods
      * 
      * @param $modInfo
      */
-    public static function addItemMod ($modInfo) {
+    public static function addItem ($modInfo) {
                        
         $box = new UXPanel();
-        $box->classes->add('listMod-box');
+        $box->classes->add('itemMod-box');
         
         $labelName = new UXLabel($modInfo['name']);
         if ($modInfo['mode'] == 'disabled') $labelName->style = '-fx-text-fill: red;';
-        $labelName->classes->add('listMod-name');
+        $labelName->classes->add('itemMod-name');
         $labelName->wrapText = true;
         
         $labelVersion = new UXLabel($modInfo['version']);
-        $labelVersion->classes->add('listMod-version');
+        $labelVersion->classes->add('itemMod-version');
         
         $vBox = new UXVBox([$labelName, $labelVersion]);
         $box->add($vBox);
@@ -38,7 +41,7 @@ class DesignMods
      * 
      * @param $modInfo
      */
-    public static function showInfoMod ($modInfo) {
+    public static function showInfo ($modInfo) {
         
         $thread = new Thread(function () use ($modInfo) {
             
@@ -60,23 +63,23 @@ class DesignMods
             $labelName->classes->add('infoMod-name');
             $infoMod[] = $labelName;
             
-            $labelVersion = new UXLabel('Версия мода: ' . $modInfo['version']);
+            $labelVersion = new UXLabel(Language::translate('mainform.mods.info.version') . ' ' . $modInfo['version']);
             $labelVersion->wrapText = true;
             $labelVersion->classes->add('infoMod-version');
             $infoMod[] = $labelVersion;
             
-            $labelMCVersion = new UXLabel('Версия Minecraft: ' . $modInfo['mcversion']);
+            $labelMCVersion = new UXLabel(Language::translate('mainform.mods.info.mcversion') . ' ' . $modInfo['mcversion']);
             $labelMCVersion->wrapText = true;
             $labelMCVersion->classes->add('infoMod-mcversion');
             $infoMod[] = $labelMCVersion;
             
-            $labelModID = new UXLabel('Мод ID: ' . $modInfo['modid']);
+            $labelModID = new UXLabel(Language::translate('mainform.mods.info.id') . ' ' . $modInfo['modid']);
             $labelModID->wrapText = true;
             $labelModID->classes->add('infoMod-modid');
             $infoMod[] = $labelModID;
             
             if ($modInfo['authorList']) {
-                $labelAuthor = new UXLabelEx('Авторы: ' . implode(', ', $modInfo['authorList']));
+                $labelAuthor = new UXLabelEx(Language::translate('mainform.mods.info.author') . ' ' . implode(', ', $modInfo['authorList']));
                 $labelAuthor->wrapText = true;
                 $labelAuthor->classes->add('infoMod-author');
                 $infoMod[] = $labelAuthor;
@@ -92,16 +95,18 @@ class DesignMods
                 $labelURL->tooltip->style = "-fx-font-size: 12px; -fx-font-family: 'System';";
                 $labelURL->on('action', function () use ($modInfo) {
                     $alert = new UXAlert('INFORMATION');
-                    $alert->title = 'AddonCraft';
-                    $alert->headerText = 'Переход по ссылке...';
-                    $alert->contentText = 'Вы действительно хотите перейти по ссылке?';
-                    $alert->setButtonTypes(['Да', 'Копировать', 'Нет']);
-                    $alert->graphic = new UXImageView(new UXImage('res://.data/img/link_alert.png'));
+                    $alert->title = app()->getName();
+                    $alert->headerText = Language::translate('mainform.message.mods.url.header');
+                    $alert->contentText = Language::translate('mainform.message.mods.url.content');
+                    $alert->setButtonTypes([Language::translate('word.yes'), Language::translate('word.copy'), Language::translate('word.no')]);
+                    $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/link_alert-24.png'));
                     
                     $textUrl = new UXLabelEx($modInfo['url']);
                     $textUrl->style = '-fx-font-family: "System"; -fx-font-size: 14px; -fx-text-alignment: CENTER; -fx-alignment: CENTER; -fx-padding: 0 0 7 0;';
-                    $textWarning = new UXLabelEx('Не переходите по ссылкам от людей, которым не доверяете!');
+                    
+                    $textWarning = new UXLabelEx(Language::translate('mainform.message.mods.url.content.label.warning'));
                     $textWarning->style = '-fx-font-family: "Minecraft Rus"; -fx-font-size: 12px; -fx-text-fill: red; -fx-text-alignment: CENTER; -fx-alignment: CENTER;';
+                    
                     $box = new UXVBox([$textUrl, $textWarning]);
                     $box->style = '-fx-alignment: CENTER;';
                     
@@ -109,10 +114,10 @@ class DesignMods
                     $alert->expanded = true;
                     
                     switch ($alert->showAndWait()) {
-                        case 'Да':
+                        case Language::translate('word.yes'):
                             open($modInfo['url']);
                         break;
-                        case 'Копировать':
+                        case Language::translate('word.copy'):
                             UXClipboard::setText($modInfo['url']);
                         break;
                     }
