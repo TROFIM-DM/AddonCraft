@@ -1,13 +1,12 @@
 <?php
 namespace trofim\scripts\api;
 
-use gui;
-use std, framework, trofim;
+use std, framework, trofim, gui;
 use Exception;
 use php\compress\ZipFile;
 
 /**
- * Класс для работы с API текстур-паков.
+ * Класс для работы с API текстур.
  * 
  * @author TROFIM
  * @url https://github.com/TROFIM-YT/AddonCraft
@@ -16,42 +15,49 @@ class ApiTextures
 {
     
     /**
+     * Список информации о текстурах.
+     * 
+     * @var array
+     */
+    private static $objectsInfo = [];
+    
+    /**
      * Поиск текстур-паков.
      */
-    public static function findTextures () {
-    
+    static function find ()
+    {
         // Проверка на существование папки resourcepacks
-        if (fs::exists(AddonCraft::getPathMinecraft() . '\\resourcepacks\\')) {
+        if (fs::exists(Path::getPathMinecraft() . '\\resourcepacks\\')) {
             
             uiLater(function () {
-                app()->form(StartForm)->setStatus(Language::translate('word.textures') . '...');
+                app()->getForm(StartForm)->setStatus(Language::translate('word.textures') . '...');
             });
             
-            // Поиск файлов resourcepacks
-            $fileTextures = new File(AddonCraft::getPathMinecraft() . '\\resourcepacks\\');
-            foreach ($fileTextures->findFiles() as $file) {
+            // Поиск файлов textures
+            $files = new File(Path::getPathMinecraft() . '\\resourcepacks\\');
+            foreach ($files->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) && fs::ext($file->getName()) == 'zip')
-                    $listTextures[] = ['path' => $file->getPath(), 'hash' => sha1_file($file->getPath())];
+                    $objects[] = ['path' => $file->getPath()];
             }
             
-            // Если resourcepacks нет
-            if (empty($listTextures)) return;
+            // Если textures нет
+            if (empty($objects)) return;
             
-            // Список подключенных resourcepacks
+            // Список подключенных textures
             $enabledTextures = self::getEnabledTextures();
             
-            foreach ($listTextures as $texture) {
+            foreach ($objects as $object) {
             
                 try {
                         
                     // Создание ZIP
-                    $zipFile = new ZipFile($texture['path']);
+                    $zipFile = new ZipFile($object['path']);
                     
                     // Проверка на наличие файла pack.mcmeta
                     if ($zipFile->has('pack.mcmeta')) {
                         
-                        // Путь к Temp для resourcepack'a
-                        $pathTemp = AddonCraft::getAppTemp() . '\\' . fs::nameNoExt($texture['path']) . '\\';
+                        // Путь к Temp для texture
+                        $pathTemp = Path::getAppTemp() . '\\' . fs::nameNoExt($object['path']) . '\\';
                         
                         // Разархивирование pack.mcmeta
                         $zipFile->read('pack.mcmeta', function ($entry, MiscStream $stream) use ($pathTemp) {
@@ -60,51 +66,50 @@ class ApiTextures
                         });
                         
                         // Получение содержимого pack.mcmeta
-                        if (fs::exists($pathTemp . 'pack.mcmeta'))
-                            $textureInfo = Json::decode(Stream::getContents($pathTemp . 'pack.mcmeta'));
+                        if (fs::exists($pathTemp . 'pack.mcmeta')) {
+                            $objectInfo = false;
+                            $objectInfo['info'] = Json::decode(Stream::getContents($pathTemp . 'pack.mcmeta'))['pack'];
+                            $objectInfo['info']['name'] = fs::nameNoExt($object['path']);
+                        }
                         else return;
-                        
+
                         // Если файл pack.mcmeta успешно прочитан
-                        if (isset($textureInfo['pack']['pack_format'])) {
+                        if (isset($objectInfo['info']['pack_format'])) {
                             
-                            // Добавление названия для resourcepack'a
-                            $textureInfo['pack']['name'] = fs::nameNoExt($texture['path']);
-                            
-                            // Добавление путей до resourcepack'a
-                            $textureInfo['path']['texture'] = $texture['path'];
-                            $textureInfo['path']['temp'] = $pathTemp;
-                            
-                            // Проверка, есть ли logo у resourcepack'a
+                            // Добавление названия и путей для texture
+                            $objectInfo = array_merge($objectInfo, ['path' => ['texture' => $object['path'],
+                                                                               'temp' => $pathTemp]]);
+
+                            // Проверка, есть ли logo у texture
                             if ($zipFile->has('pack.png')) {
                                 
-                                // Разархивирование logo resourcepack'a
-                                $zipFile->read('pack.png', function ($entry, MiscStream $stream) use (&$textureInfo) {
-                                    $pathLogo = $textureInfo['path']['temp'] . 'logo.png';
+                                // Разархивирование logo texture
+                                $zipFile->read('pack.png', function ($entry, MiscStream $stream) use (&$objectInfo) {
+                                    $pathLogo = $objectInfo['path']['temp'] . 'logo.png';
                                     if (fs::copy($stream, $pathLogo))
-                                        $textureInfo['path']['logo'] = $pathLogo;
+                                        $objectInfo['path']['logo'] = $pathLogo;
                                 });
                             }
                             
-                            // Проверка на подключение resourcepack'a
-                            if ($enabledTextures && in_array(fs::name($texture['path']), $enabledTextures))
-                                $textureInfo['enabled'] = true;
-                            
+                            // Проверка на подключение texture
+                            if ($enabledTextures && in_array(fs::name($object['path']), $enabledTextures))
+                                $objectInfo['enabled'] = true;
+
                             // Создание файла с hash-суммой
-                            Stream::putContents($pathTemp . 'hash', $texture['hash']);
+                            Stream::putContents($pathTemp . 'hash', sha1_file($object['path']));
                             
-                            // Добавление resourcepack'a в список
-                            AddonCraft::$listTextures[fs::name($textureInfo['path']['texture'])] = $textureInfo;
+                            // Добавление texture в список
+                            self::$objectsInfo[fs::name($object['path'])] = $objectInfo;
                             
-                            // Создание item resourcepack
-                            DesignTextures::addItem($textureInfo);
+                            // Создание item texture
+                            DesignTextures::addItem($objectInfo);
                             
                             // Регистрация файлов для запрета на изменение
-                            AddonCraft::registerFile($textureInfo['path']['texture']);
-                            AddonCraft::registerFile($pathTemp . 'pack.mcmeta');
-                            if (isset($textureInfo['path']['logo'])) AddonCraft::registerFile($textureInfo['path']['logo']);
+                            FileSystem::registerFile($objectInfo['path']['texture']);
+                            FileSystem::registerFile($pathTemp . 'pack.mcmeta');
+                            if (isset($objectInfo['path']['logo'])) FileSystem::registerFile($objectInfo['path']['logo']);
                         }
                     }
-                    
                     unset($zipFile);
                     
                 } catch (Exception $error) {
@@ -113,26 +118,25 @@ class ApiTextures
                 
             }
         }
-        
     }
     
     /**
-     * Добавление текстур-пака.
+     * Добавить текстур-пак.
      * 
-     * @param $TEXTURE
+     * @param File $object
      */
-    public static function addTexture ($TEXTURE) {
-        
+    static function add (File $object)
+    {
         // Проверки
-        if (fs::isFile($TEXTURE->getPath()) && fs::ext($TEXTURE->getPath()) == 'zip') {
+        if (fs::isFile($object->getPath()) && fs::ext($object->getPath()) == 'zip') {
         
             // Поиск файлов в папке resourcepacks
-            $filesTextures = new File(AddonCraft::getPathMinecraft() . '\\resourcepacks\\');
-            foreach ($filesTextures->findFiles() as $file) {
+            $files = new File(Path::getPathMinecraft() . '\\resourcepacks\\');
+            foreach ($files->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'zip' &&
-                    $file->getName() == $TEXTURE->getName()) {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.exist'));
+                    $file->getName() == $object->getName()) {
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.exist'));
                     return;
                 }
             }
@@ -140,13 +144,13 @@ class ApiTextures
             try {
                 
                 // Создание ZIP
-                $zipFile = new ZipFile($TEXTURE->getPath());
+                $zipFile = new ZipFile($object->getPath());
                 
                 // Проверка на наличие файла pack.mcmeta
                 if ($zipFile->has('pack.mcmeta')) {
                 
-                    // Путь к Temp для resourcepack'a
-                    $pathTemp = AddonCraft::getAppTemp() . '\\' . fs::nameNoExt($TEXTURE->getName()) . '\\';
+                    // Путь к Temp для texture
+                    $pathTemp = Path::getAppTemp() . '\\' . fs::nameNoExt($object->getName()) . '\\';
                     
                     // Разархивирование pack.mcmeta
                     $zipFile->read('pack.mcmeta', function ($entry, MiscStream $stream) use ($pathTemp) {
@@ -155,96 +159,93 @@ class ApiTextures
                     });
                     
                     // Получение содержимого pack.mcmeta
-                    if (fs::exists($pathTemp . 'pack.mcmeta'))
-                        $textureInfo = Json::decode(Stream::getContents($pathTemp . 'pack.mcmeta'));
+                    if (fs::exists($pathTemp . 'pack.mcmeta')) {
+                        $objectInfo['info'] = Json::decode(Stream::getContents($pathTemp . 'pack.mcmeta'))['pack'];
+                        $objectInfo['info']['name'] = fs::nameNoExt($object->getName());
+                    }
                     else {
-                        app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.not.read'));
+                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.read'));
                         return;
                     }
                     
                     // Если файл pack.mcmeta успешно прочитан
-                    if (isset($textureInfo)) {
+                    if (isset($objectInfo['info']['pack_format'])) {
                         
-                        // Путь добавленного resourcepack'a
-                        $pathTexture = AddonCraft::getPathMinecraft() . '\\resourcepacks\\' . $TEXTURE->getName();
+                        // Путь добавленного texture
+                        $pathTexture = Path::getPathMinecraft() . '\\resourcepacks\\' . $object->getName();
                         
-                        // Создание папки resourcepacks, если нет
-                        if (!fs::exists(AddonCraft::getPathMinecraft() . '\\resourcepacks\\'))
-                            fs::makeDir(AddonCraft::getPathMinecraft() . '\\resourcepacks\\');
+                        // Создание папки texture, если нет
+                        if (!fs::exists(Path::getPathMinecraft() . '\\resourcepacks\\'))
+                            fs::makeDir(Path::getPathMinecraft() . '\\resourcepacks\\');
                         
-                        // Добавление resourcepack'a
-                        if (!fs::copy($TEXTURE->getPath(), $pathTexture)) {
-                            app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.not.setup'));
+                        // Добавление texture
+                        if (!fs::copy($object->getPath(), $pathTexture)) {
+                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.setup'));
                             return;
                         }
                         
-                        // Добавление названия для resourcepack'a
-                        $textureInfo['pack']['name'] = fs::nameNoExt($TEXTURE->getPath());
+                        // Добавление названия и путей для texture
+                        $objectInfo = array_merge($objectInfo, ['path' => ['texture' => $pathTexture,
+                                                                           'temp' => $pathTemp]]);
                         
-                        // Добавление путей до resourcepack'a
-                        $textureInfo['path']['texture'] = $pathTexture;
-                        $textureInfo['path']['temp'] = $pathTemp;
-                        
-                        // Проверка, есть ли logo у resourcepack'a
+                        // Проверка, есть ли logo у texture
                         if ($zipFile->has('pack.png')) {
                             
-                            // Разархивирование logo resourcepack'a
-                            $zipFile->read('pack.png', function ($entry, MiscStream $stream) use (&$textureInfo) {
-                                $pathLogo = $textureInfo['path']['temp'] . 'logo.png';
+                            // Разархивирование logo texture
+                            $zipFile->read('pack.png', function ($entry, MiscStream $stream) use (&$objectInfo) {
+                                $pathLogo = $objectInfo['path']['temp'] . 'logo.png';
                                 if (fs::copy($stream, $pathLogo))
-                                    $textureInfo['path']['logo'] = $pathLogo;
+                                    $objectInfo['path']['logo'] = $pathLogo;
                             });
                         }
                         
-                        // Список подключенных resourcepacks
+                        // Список подключенных textures
                         $enabledTextures = self::getEnabledTextures();
                         
-                        // Проверка на подключение resourcepack'a
-                        if ($enabledTextures && in_array(fs::name($TEXTURE->getPath()), $enabledTextures))
-                            $textureInfo['enabled'] = true;
+                        // Проверка на подключение texture
+                        if ($enabledTextures && in_array($object->getName(), $enabledTextures))
+                            $objectInfo['enabled'] = true;
                         
                         // Создание файла с hash-суммой
-                        Stream::putContents($pathTemp . 'hash', sha1_file($TEXTURE->getPath()));
+                        Stream::putContents($pathTemp . 'hash', sha1_file($object->getPath()));
                         
-                        // Добавление resourcepack'a в список
-                        AddonCraft::$listTextures[fs::name($textureInfo['path']['texture'])] = $textureInfo;
+                        // Добавление texture в список
+                        self::$objectsInfo[$object->getName()] = $objectInfo;
                         
-                        // Создание item resourcepack
-                        DesignTextures::addItem($textureInfo);
+                        // Создание item texture
+                        DesignTextures::addItem($objectInfo);
                         
                         // Регистрация файлов для запрета на изменение
-                        AddonCraft::registerFile($textureInfo['path']['texture']);
-                        AddonCraft::registerFile($pathTemp . 'pack.mcmeta');
-                        if (isset($textureInfo['path']['logo'])) AddonCraft::registerFile($textureInfo['path']['logo']);
+                        FileSystem::registerFile($objectInfo['path']['texture']);
+                        FileSystem::registerFile($pathTemp . 'pack.mcmeta');
+                        if (isset($objectInfo['path']['logo'])) FileSystem::registerFile($objectInfo['path']['logo']);
                         
                         // Сообщение о успешном добавлении текстур-пака
-                        app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.added'));
+                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.added'));
                     }
                 } else {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.incorrect'));
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.incorrect'));
                 }
-                
                 unset($zipFile);
                 
             } catch (Exception $error) {
-                app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.unknown.error'));
+                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.unknown.error'));
                 return;
             }
             
         } else {
-            app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.select.file'));
+            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.select.file'));
         }
-        
     }
     
     /**
-     * Подключение текстур-пака.
+     * Подключить текстур-пак.
      * 
-     * @param $nameTexture
-     * @param $buttonMode
+     * @param string $nameTexture
+     * @param UXMaterialButton $buttonMode
      */
-    public static function enabledTexture ($nameTexture, $buttonMode) {
-    
+    static function enabled (string $nameTexture, UXMaterialButton $buttonMode)
+    {
         // Получение активных textures
         $enabledTextures = self::getEnabledTextures();
         
@@ -255,33 +256,31 @@ class ApiTextures
             $enabledTextures[] = $nameTexture;
             
             // Изменение настроек Minecraft
-            app()->form(MainForm)->iniOptions->set('resourcePacks', '["' . implode('", "', $enabledTextures) . '"]');
+            app()->getForm(MainForm)->iniOptions->set('resourcePacks', '["' . implode('", "', $enabledTextures) . '"]');
             
             // Сохранение настроек Minecraft
-            if (AddonCraft::setMinecraftOptions(app()->form(MainForm)->iniOptions->toArray())) {
+            if (Minecraft::setMinecraftOptions(app()->getForm(MainForm)->iniOptions->toArray())) {
             
                 // Включен texture
-                AddonCraft::$listTextures[$nameTexture]['enabled'] = true;
+                self::$objectsInfo[$nameTexture]['enabled'] = true;
                 
                 // Действия
-                app()->form(MainForm)->boxEnTextures->items->add(app()->form(MainForm)->boxTextures->selectedItem);
-                app()->form(MainForm)->boxTextures->items->removeByIndex(app()->form(MainForm)->boxTextures->selectedIndex);
+                app()->getForm(MainForm)->boxEnTextures->items->add(app()->getForm(MainForm)->boxTextures->selectedItem);
+                app()->getForm(MainForm)->boxTextures->items->removeByIndex(app()->getForm(MainForm)->boxTextures->selectedIndex);
                 $buttonMode->graphic->free();
                 $buttonMode->graphic = new UXImageView(new UXImage('res://.data/img/icon/line-16.png'));
-                return;
             }
-        }
-        app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.not.enabled'));
+        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.enabled'));
     }
     
     /**
-     * Отключение текстур-пака.
+     * Отключить текстур-пак.
      * 
-     * @param $nameTexture
-     * @param $buttonMode
+     * @param string $nameTexture
+     * @param UXMaterialButton $buttonMode
      */
-    public static function disabledTexture ($nameTexture, $buttonMode) {
-    
+    static function disabled (string $nameTexture, UXMaterialButton $buttonMode)
+    {
         // Получение активных textures
         $enabledTextures = self::getEnabledTextures();
         
@@ -295,54 +294,75 @@ class ApiTextures
             sort($enabledTextures, SORT_NUMERIC);
             
             // Изменение настроек Minecraft
-            app()->form(MainForm)->iniOptions->set('resourcePacks', '["' . implode('", "', $enabledTextures) . '"]');
+            app()->getForm(MainForm)->iniOptions->set('resourcePacks', '["' . implode('", "', $enabledTextures) . '"]');
             
             // Сохранение настроек Minecraft
-            if (AddonCraft::setMinecraftOptions(app()->form(MainForm)->iniOptions->toArray())) {
+            if (Minecraft::setMinecraftOptions(app()->getForm(MainForm)->iniOptions->toArray())) {
                 
                 // Отключен texture
-                unset(AddonCraft::$listTextures[$nameTexture]['enabled']);
+                unset(self::$objectsInfo[$nameTexture]['enabled']);
                 
                 // Действия
-                app()->form(MainForm)->boxTextures->items->add(app()->form(MainForm)->boxEnTextures->selectedItem);
-                app()->form(MainForm)->boxEnTextures->items->removeByIndex(app()->form(MainForm)->boxEnTextures->selectedIndex);
+                app()->getForm(MainForm)->boxTextures->items->add(app()->getForm(MainForm)->boxEnTextures->selectedItem);
+                app()->getForm(MainForm)->boxEnTextures->items->removeByIndex(app()->getForm(MainForm)->boxEnTextures->selectedIndex);
                 $buttonMode->graphic->free();
                 $buttonMode->graphic = new UXImageView(new UXImage('res://.data/img/icon/add-16.png'));
-                return;
-            } 
-        }
-        app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.not.disabled'));
+            }
+        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.disabled'));
     }
     
     /**
-     * Удаление текстур-пака.
+     * Удалить текстур-пак.
      * 
-     * @param $nameTexture
+     * @param string $nameTexture
      */
-    public static function deleteTexture ($nameTexture) {
-    
+    static function delete (string $nameTexture)
+    {
+        $objectInfo = self::$objectsInfo[$nameTexture];
+        
         // Разрегистрация resourcepack'a && удаление resourcepack'a
-        if (AddonCraft::unRegisterFile(AddonCraft::$listTextures[$nameTexture]['path']['texture']) && fs::delete(AddonCraft::$listTextures[$nameTexture]['path']['texture'])) {
+        if (FileSystem::unRegisterFile($objectInfo['path']['texture']) && fs::delete($objectInfo['path']['texture'])) {
         
             // Подключен || Отключен
-            if (isset(AddonCraft::$listTextures[$nameTexture]['enabled']))
-                app()->form(MainForm)->boxEnTextures->items->removeByIndex(app()->form(MainForm)->boxEnTextures->selectedIndex);
-            else app()->form(MainForm)->boxTextures->items->removeByIndex(app()->form(MainForm)->boxTextures->selectedIndex);
+            if (isset($objectInfo['enabled']))
+                app()->getForm(MainForm)->boxEnTextures->items->removeByIndex(app()->getForm(MainForm)->boxEnTextures->selectedIndex);
+            else app()->getForm(MainForm)->boxTextures->items->removeByIndex(app()->getForm(MainForm)->boxTextures->selectedIndex);
             
             // Удаление resourcepack'a из списка
-            unset(AddonCraft::$listTextures[$nameTexture]);
+            unset(self::$objectsInfo[$nameTexture]);
             
             // Успех!
-            app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.delete.success'));
-        } else app()->form(MainForm)->toast(Language::translate('mainform.toast.textures.delete.not'));
+            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.delete.success'));
+        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.delete.not'));
     }
     
     /**
-     * Получение списка подключенных текстур-паков.
+     * Получить список подключенных текстур-паков.
      */
-    public static function getEnabledTextures () {
-        $enabledTextures = Json::decode(app()->form(MainForm)->iniOptions->get('resourcePacks'));
+    static function getEnabledTextures ()
+    {
+        $enabledTextures = Json::decode(app()->getForm(MainForm)->iniOptions->get('resourcePacks'));
         return empty($enabledTextures) ? false : $enabledTextures;
+    }
+    
+    /**
+     * Очистить значения класса.
+     * 
+     * @param string $value
+     */
+    static function clearValue (string $value)
+    {
+        self::{$value} = false;
+    }
+    
+    /**
+     * Получить список объектов класса.
+     * 
+     * @return array
+     */
+    static function getObjects () : array
+    {
+        return self::$objectsInfo;
     }
     
 }

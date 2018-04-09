@@ -2,8 +2,7 @@
 namespace trofim\scripts\api;
 
 use std, gui, framework, trofim;
-use windows;
-use Exception;
+use Exception, windows;
 use php\compress\ZipFile;
 
 /**
@@ -16,78 +15,85 @@ class ApiShaders
 {
 
     /**
-     * 1 - Список настроек для шейдера.
-     * 2 - Параметры настроек.
+     * Список информации о шейдерах.
+     * 
+     * @var array
      */
-    private static $LIST_SETTINGS   = ['shaderPack', 'antialiasingLevel', 'normalMapEnabled', 'specularMapEnabled', 'renderResMul', 'shadowResMul', 'handDepthMul', 'oldHandLight', 'oldLighting'],
-                   $CHANGE_SETTINGS = ['antialiasingLevel' => ['0', '2', '4'], 'normalMapEnabled' => ['false', 'true'], 'specularMapEnabled' => ['false', 'true'],
-                                       'renderResMul' => ['0.5', '1.0', '2.0'], 'shadowResMul' => ['0.5', '1.0', '2.0'], 'handDepthMul' => ['0.0625', '0.125', '0.25'],
-                                       'oldHandLight' => ['default', 'false', 'true'], 'oldLighting' => ['default', 'false', 'true']];
+    private static $objectsInfo = ['list' => [['name' => 'OFF'], ['name' => '(internal)']]];
+
+    /**
+     * Основные настройки шейдеров.
+     * 
+     * @var array
+     */
+    private static $LIST_SETTINGS   = ['shaderPack', 'antialiasingLevel', 'normalMapEnabled', 'specularMapEnabled', 'renderResMul', 'shadowResMul', 'handDepthMul', 'oldHandLight', 'oldLighting'];
+    
+    /**
+     * Значения настроек шейдеров.
+     * 
+     * @var array
+     */
+    private static $CHANGE_SETTINGS = ['antialiasingLevel' => ['0', '2', '4'], 'normalMapEnabled' => ['false', 'true'], 'specularMapEnabled' => ['false', 'true'],
+                                     'renderResMul' => ['0.5', '1.0', '2.0'], 'shadowResMul' => ['0.5', '1.0', '2.0'], 'handDepthMul' => ['0.0625', '0.125', '0.25'],
+                                     'oldHandLight' => ['default', 'false', 'true'], 'oldLighting' => ['default', 'false', 'true']];
     
     /**
      * Поиск шейдер-паков.
      */
-    public static function findShaders () {
-
+    static function find ()
+    {
         // Проверка на существование папки shaderpacks
-        if (fs::exists(AddonCraft::getPathMinecraft() . '\\shaderpacks\\')) {
-            
+        if (fs::exists(Path::getPathMinecraft() . '\\shaderpacks\\')) {
+
             uiLater(function () {
-                app()->form(StartForm)->setStatus(Language::translate('word.shaders') . '...');
+                app()->getForm(StartForm)->setStatus(Language::translate('word.shaders') . '...');
             });
             
-            // Поиск файлов shaderpacks
-            $fileShaders = new File(AddonCraft::getPathMinecraft() . '\\shaderpacks\\');
-            
-            foreach ($fileShaders->findFiles() as $file) {
+            // Поиск файлов в папке shaderpacks
+            $files = new File(Path::getPathMinecraft() . '\\shaderpacks\\');
+            foreach ($files->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) && fs::ext($file->getName()) == 'zip') {
-                
-                    // Добавление названия для shaderpack'a
-                    $shaderInfo['name'] = fs::name($file->getPath());
                     
-                    // Добавление путей до shaderpack'a
-                    $shaderInfo['path']['shader'] = $file->getPath();
+                    // Добавление названия и путей для shaderpack'a
+                    $objectInfo = ['name' => fs::name($file->getPath()),
+                                   'path' => ['shader' => $file->getPath()]];
                     
                     // Добавление shaderpack'a в список
-                    AddonCraft::$listShaders['list'][] = $shaderInfo;
+                    self::$objectsInfo['list'][] = $objectInfo;
                     
                     // Создание item shaderpack
-                    app()->form(MainForm)->boxShaders->items->add(fs::nameNoExt($file->getPath()));
-                    
-                    // Регистрация файлов для запрета на изменение
-                    //AddonCraft::registerFile($file->getPath());
+                    app()->getForm(MainForm)->boxShaders->items->add(fs::nameNoExt($objectInfo['name']));
                 }
             }
-            
         }
         
         // Поиск активного shaderpack'a
-        $enabledShader = app()->form(MainForm)->iniShader->get('shaderPack');
-        foreach (AddonCraft::$listShaders['list'] as $key => $shader) {
+        $enabledShader = app()->getForm(MainForm)->iniShader->get('shaderPack');
+        foreach (self::$objectsInfo['list'] as $key => $shader) {
             if ($enabledShader == $shader['name']) {
-                self::selectedShader($key);
+                self::selected($key);
                 break;
             }
         }
     }
     
     /**
-     * Добавление шейдера.
+     * Добавить шейдер.
      * 
-     * @param $SHADER
+     * @param File $object
      */
-    public static function addShader ($SHADER) {
-    
+    static function add (File $object)
+    {
         // Проверки
-        if (fs::isFile($SHADER->getPath()) && fs::ext($SHADER->getPath()) == 'zip') {
+        if (fs::isFile($object->getPath()) && fs::ext($object->getPath()) == 'zip') {
             
             // Поиск файлов в папке shaderpacks
-            $filesShaders = new File(AddonCraft::getPathMinecraft() . '\\shaderpacks\\');
-            foreach ($filesShaders->findFiles() as $file) {
+            $files = new File(Path::getPathMinecraft() . '\\shaderpacks\\');
+            foreach ($files->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'zip' &&
-                    $file->getName() == $SHADER->getName()) {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.shaders.exist'));
+                    $file->getName() == $object->getName()) {
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.exist'));
                     return;
                 }
             }
@@ -95,7 +101,7 @@ class ApiShaders
             try {
                 
                  // Создание ZIP
-                $zipFile = new ZipFile($SHADER->getPath());
+                $zipFile = new ZipFile($object->getPath());
                 
                 // Проверка на наличие папки shaders
                 if (!$zipFile->has('shaders/')) {
@@ -106,7 +112,7 @@ class ApiShaders
                     $alert->setButtonTypes([Language::translate('word.yes'), Language::translate('word.no')]);
                     $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/add-24.png'));
                     
-                    $nameFile = new UXLabelEx(fs::nameNoExt($SHADER->getPath()));
+                    $nameFile = new UXLabelEx(fs::nameNoExt($object->getPath()));
                     $nameFile->style = '-fx-font-family: "Impact"; -fx-font-size: 22px; -fx-text-alignment: CENTER; -fx-alignment: CENTER;';
                     $box = new UXVBox([$nameFile]);
                     $box->style = '-fx-alignment: CENTER;';
@@ -116,151 +122,151 @@ class ApiShaders
                     
                     switch ($alert->showAndWait()) {
                         case Language::translate('word.no'):
-                            app()->form(MainForm)->toast(Language::translate('mainform.toast.shaders.not.setup.error'));
+                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.not.setup.error'));
                             return;
                         break;
                     }
+                    unset($zipFile);
                 }
                 
                 // Путь добавленного shaderpack'a
-                $pathShader = AddonCraft::getPathMinecraft() . '\\shaderpacks\\' . $SHADER->getName();
+                $pathShader = Path::getPathMinecraft() . '\\shaderpacks\\' . $object->getName();
                 
                 // Создание папки shaderpacks, если нет
-                if (!fs::exists(AddonCraft::getPathMinecraft() . '\\shaderpacks\\'))
-                    fs::makeDir(AddonCraft::getPathMinecraft() . '\\shaderpacks\\');
+                if (!fs::exists(Path::getPathMinecraft() . '\\shaderpacks\\'))
+                    fs::makeDir(Path::getPathMinecraft() . '\\shaderpacks\\');
                 
                 // Добавление shaderpack'a
-                if (!fs::copy($SHADER->getPath(), $pathShader)) {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.shaders.not.setup'));
+                if (!fs::copy($object->getPath(), $pathShader)) {
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.not.setup'));
                     return;
                 }
                 
-                // Добавление названия для shaderpack'a
-                $shaderInfo['name'] = fs::name($SHADER->getPath());
-                
-                // Добавление путей до shaderpack'a
-                $shaderInfo['path']['shader'] = $pathShader;
+                // Добавление названия и путей для shaderpack'a
+                $objectInfo = ['name' => $object->getName(),
+                               'path' => ['shader' => $pathShader]];
                 
                 // Добавление shaderpack'a в список
-                AddonCraft::$listShaders['list'][] = $shaderInfo;
+                self::$objectsInfo['list'][] = $objectInfo;
                 
                 // Создание item shaderpack
-                app()->form(MainForm)->boxShaders->items->add(fs::nameNoExt($SHADER->getPath()));
-                
-                // Регистрация файлов для запрета на изменение
-                //AddonCraft::registerFile($SHADER->getPath());
+                app()->getForm(MainForm)->boxShaders->items->add(fs::nameNoExt($objectInfo['name']));
                 
                 // Сообщение о успешном добавлении текстур-пака
-                app()->form(MainForm)->toast(Language::translate('mainform.toast.shaders.added'));
+                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.added'));
                 
             } catch (Exception $error) {
-                app()->form(MainForm)->toast(Language::translate('mainform.toast.shaders.unknown.error'));
+                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.unknown.error'));
                 return;
             }
             
         } else {
-            app()->form(MainForm)->toast(Language::translate('mainform.toast.shaders.select.file'));
+            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.select.file'));
         }
-        
     }
     
     /**
-     * Выбор шейдеров.
+     * Выбрать шейдер.
      * 
-     * @param $index
+     * @param int $index
      */
-    public static function selectedShader ($index) {
-        if (app()->form(MainForm)->boxShaders->selectedIndex == -1)
-            app()->form(MainForm)->boxShaders->selectedIndex = $index;
-        AddonCraft::$listShaders['enabled'] = $index;
+    static function selected (int $index)
+    {
+        if (app()->getForm(MainForm)->boxShaders->selectedIndex == -1)
+            app()->getForm(MainForm)->boxShaders->selectedIndex = $index;
+        self::$objectsInfo['enabled'] = $index;
+        app()->getForm(MainForm)->iniShader->set('shaderPack', self::$objectsInfo['list'][$index]['name']);
         
-        app()->form(MainForm)->iniShader->set('shaderPack', AddonCraft::$listShaders['list'][$index]['name']);
         self::setShadersOptions();
         
         foreach (self::$LIST_SETTINGS as $key => $setting) {
             if ($index == 0 && $key > 1)
-                app()->form(MainForm)->{$setting}->enabled = false;
+                app()->getForm(MainForm)->{$setting}->enabled = false;
             elseif ($index > 0 && $key > 1)
-                app()->form(MainForm)->{$setting}->enabled = true;
+                app()->getForm(MainForm)->{$setting}->enabled = true;
         }
     }
     
     /**
-     * Изменение настроек шейдеров.
+     * Изменить настройки шейдеров.
      * 
-     * @param $setting
+     * @param string $setting
      */
-    public static function changeSetting ($setting) {
+    static function changeSetting (string $setting)
+    {
         $change = self::$CHANGE_SETTINGS[$setting];
-        $searchKey = array_search($change, app()->form(MainForm)->iniShader->get($setting), false);
+        $searchKey = array_search($change, app()->getForm(MainForm)->iniShader->get($setting), false);
         if (++$searchKey == count($change)) $searchKey = 0;
-        app()->form(MainForm)->iniShader->set($setting, $change[$searchKey]);
+        app()->getForm(MainForm)->iniShader->set($setting, $change[$searchKey]);
         self::setShadersOptions();
-        self::handlerSettings(app()->form(MainForm)->iniShader->toArray()[''], false);
+        self::handlerSettings(app()->getForm(MainForm)->iniShader->toArray()[''], false);
     }
     
     /**
-     * Получение опций шейдеров.
+     * Получить опции шейдеров.
+     * 
+     * @return bool
      */
-    public static function getShadersOptions () {
-        if (fs::exists(AddonCraft::getPathMinecraft() . '\\optionsshaders.txt'))
-            $pathOptions = AddonCraft::getPathMinecraft() . '\\optionsshaders.txt';
-        else {
-            $pathOptions = 'res://assets/minecraft/optionsshaders.txt';
-            copy($pathOptions, AddonCraft::getPathMinecraft() . '\\optionsshaders.txt');
-        }
+    static function getShadersOptions () : bool
+    {
+        if (!fs::exists(Path::getPathMinecraft() . '\\optionsshaders.txt'))
+            copy('res://assets/minecraft/optionsshaders.txt', Path::getPathMinecraft() . '\\optionsshaders.txt');
         
-        app()->form(MainForm)->iniShader->path = AddonCraft::getPathMinecraft() . '\\optionsshaders.txt';
-        if (app()->form(MainForm)->iniShader->load()) {
+        app()->getForm(MainForm)->iniShader->path = Path::getPathMinecraft() . '\\optionsshaders.txt';
+        if (app()->getForm(MainForm)->iniShader->load()) {
             self::createActionBtn();
-            self::handlerSettings(app()->form(MainForm)->iniShader->toArray()['']);
-            return true;
-        }
-        else return false;
-    }
-    
-    /**
-     * Сохранение опций шейдеров.
-     */
-    private static function setShadersOptions () {
-        if (fs::exists(AddonCraft::getPathMinecraft())) {
-            app()->form(MainForm)->iniShader->save();
+            self::handlerSettings(app()->getForm(MainForm)->iniShader->toArray()['']);
             return true;
         }
         return false;
     }
     
     /**
-     * Изменение опций под действием кнопок.
+     * Сохранить опции шейдеров.
      * 
-     * @param $settings
-     * @param $put
+     * @return bool
      */
-    private static function handlerSettings ($settings, $put = true) {
+    private static function setShadersOptions () : bool
+    {
+        if (fs::exists(Path::getPathMinecraft())) {
+            app()->getForm(MainForm)->iniShader->save();
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Изменить настройки под действием кнопок.
+     * 
+     * @param array $settings
+     * @param bool $put
+     */
+    static function handlerSettings (array $settings, bool $put = true)
+    {
         foreach (self::$LIST_SETTINGS as $setting) {
             switch ($setting) {
                 case 'shaderPack':
                     if (empty($settings[$setting]) ||
                         ($put && !in_array($settings[$setting], ['OFF', '(internal)']) &&
-                        !fs::exists(AddonCraft::getPathMinecraft() . '\\shaderpacks\\' . $settings[$setting])))
+                        !fs::exists(Path::getPathMinecraft() . '\\shaderpacks\\' . $settings[$setting])))
                             $settings[$setting] = 'OFF';
                 break;
                 case 'antialiasingLevel':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['0', '2', '4'])) 
                         $settings[$setting] = 0;
-                    app()->form(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('mainform.shaders.option.' . $setting . '.' . $settings[$setting]);
+                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('mainform.shaders.option.' . $setting . '.' . $settings[$setting]);
                 break;
                 case 'normalMapEnabled':
                 case 'specularMapEnabled':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['false', 'true']))
                         $settings[$setting] = 'true';
-                    app()->form(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('command.' . $settings[$setting]);
+                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('command.' . $settings[$setting]);
                 break;
                 case 'renderResMul':
                 case 'shadowResMul':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['0.5', '1.0', '2.0']))
                         $settings[$setting] = '1.0';
-                    app()->form(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . $settings[$setting] . 'x';
+                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . $settings[$setting] . 'x';
                 break;
                 case 'handDepthMul':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['0.0625', '0.125', '0.25']))
@@ -276,37 +282,39 @@ class ApiShaders
                             $value = '2x';
                         break;
                     }
-                    app()->form(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . $value;
+                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . $value;
                 break;
                 case 'oldHandLight':
                 case 'oldLighting':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['default', 'false', 'true']))
                         $settings[$setting] = 'default';
-                    app()->form(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('command.' . $settings[$setting]);
+                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('command.' . $settings[$setting]);
                 break;
             }
         }
-        if ($put) app()->form(MainForm)->iniShader->put($settings);
+        if ($put) app()->getForm(MainForm)->iniShader->put($settings);
     }
     
     /**
-     * Присваивание действий кнопкам настроек шейдеров.
+     * Присвоить действия кнопкам настроек шейдеров.
      */
-    private static function createActionBtn () {
+    private static function createActionBtn ()
+    {
         foreach (self::$LIST_SETTINGS as $key => $setting) {
             if ($key > 0) {
-                app()->form(MainForm)->{$setting}->tooltip->style = '-fx-text-alignment: LEFT;';
-                app()->form(MainForm)->{$setting}->on('action', function () use ($setting) {
-                    ApiShaders::changeSetting($setting);
+                app()->getForm(MainForm)->{$setting}->tooltip->style = '-fx-text-alignment: LEFT;';
+                app()->getForm(MainForm)->{$setting}->on('action', function () use ($setting) {
+                    self::changeSetting($setting);
                 });
             }
         }
     }
     
     /**
-     * Получение настроек видеокарты.
+     * Получить настройки видеокарты.
      */
-    public static function getVideoCard () {
+    static function getVideoCard ()
+    {
         if ($videoCard = Windows::getVideo()[0])
             $infoVideo = $videoCard['VideoProcessor'] . ' ' .
                          $videoCard['AdapterRAM'][0] . 'GB' . ' (' .
@@ -314,4 +322,25 @@ class ApiShaders
                          $videoCard['CurrentVerticalResolution'] . ')';
         return empty($infoVideo) ? false : $infoVideo;
     }
+    
+    /**
+     * Очистить значения класса.
+     * 
+     * @param string $value
+     */
+    static function clearValue (string $value)
+    {
+        self::{$value} = ($value == 'objectsInfo') ? ['list' => [['name' => 'OFF'], ['name' => '(internal)']]] : false;
+    }
+    
+    /**
+     * Получить список объектов класса.
+     * 
+     * @return array
+     */
+    static function getObjects () : array
+    {
+        return self::$objectsInfo;
+    }
+    
 }

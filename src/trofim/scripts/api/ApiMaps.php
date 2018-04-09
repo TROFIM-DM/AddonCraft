@@ -13,62 +13,72 @@ use Exception;
 class ApiMaps
 {
     
-    private static $mapValue = ['Name', 'LevelName', 'GameType', 'LastPlayed', 'allowCommands', 'hardcore'];
+    /**
+     * Список информации о картах.
+     * 
+     * @var array
+     */
+    private static $objectsInfo = [];
+    
+    /**
+     * Значение, которые необходимы для работы.
+     * 
+     * @var array
+     */
+    private static $mapValue    = ['Name', 'LevelName', 'GameType', 'LastPlayed', 'allowCommands', 'hardcore'];
     
     /**
      * Поиск карт.
      */
-    public static function findMaps ()
+    static function find ()
     {
-        
         // Проверка на существование папки saves
-        if (fs::exists(AddonCraft::getPathMinecraft() . '\\saves\\')) {
+        if (fs::exists(Path::getPathMinecraft() . '\\saves\\')) {
         
             uiLater(function () {
-                app()->form(StartForm)->setStatus(Language::translate('word.maps') . '...');
+                app()->getForm(StartForm)->setStatus(Language::translate('word.maps') . '...');
             });
         
-            // Поиск файлов saves
-            $fileMaps = new File(AddonCraft::getPathMinecraft() . '\\saves\\');
-            foreach ($fileMaps->findFiles() as $file) {
+            // Поиск файлов maps
+            $files = new File(Path::getPathMinecraft() . '\\saves\\');
+            foreach ($files->findFiles() as $file) {
                 if (fs::isDir($file->getPath()))
-                    $maps[] = ['path' => $file->getPath()];
+                    $objects[] = ['path' => $file->getPath()];
             }
             
-            // Если saves нет
-            if (empty($maps)) return;
+            // Если maps нет
+            if (empty($objects)) return;
             
-            foreach ($maps as $map) {
+            foreach ($objects as $object) {
                 
                 try {
                     
-                    // Проверка, карта это или нет
-                    if (fs::exists($map['path'] . '\\level.dat') && fs::exists($map['path'] . '\\session.lock') && fs::exists($map['path'] . '\\region\\')) {
+                    // Проверка, map это или нет
+                    if (fs::exists($object['path'] . '\\level.dat') && fs::exists($object['path'] . '\\session.lock') && fs::exists($object['path'] . '\\region\\')) {
                         
-                        $mapInfo = false;
+                        $objectInfo = false;
                         
                         // Получение данных NBT
-                        $NBT = new NBT($map['path'] . '\\level.dat');
+                        $NBT = new NBT($object['path'] . '\\level.dat');
                         $listInfo = $NBT->getList();
-                        unset($NBT);
                         foreach (self::$mapValue as $value)
-                            if ($listInfo[$value]) $mapInfo['info'][$value] = $listInfo[$value];
+                            if ($listInfo[$value]) $objectInfo['info'][$value] = $listInfo[$value];
                         
-                        // Если все данные вернулись
-                        if ($mapInfo['info']['LevelName'] && $mapInfo['info']['LastPlayed']) {
+                        // Если все нужные данные вернулись
+                        if ($objectInfo['info']['LevelName'] && $objectInfo['info']['LastPlayed']) {
                             
-                            // Путь к save
-                            $mapInfo['path']['map'] = $map['path'];
+                            // Путь к map
+                            $objectInfo['path']['map'] = $object['path'];
                             
-                            // Проверка, есть ли icon у save
-                            if (fs::exists($map['path'] . '\\icon.png'))
-                                $mapInfo['path']['icon'] = $map['path'] . '\\icon.png';
+                            // Проверка, есть ли icon у map
+                            if (fs::exists($object['path'] . '\\icon.png'))
+                                $objectInfo['path']['icon'] = $object['path'] . '\\icon.png';
                             
-                            // Добавление save в список
-                            AddonCraft::$listMaps[] = $mapInfo;
+                            // Добавление map в список
+                            self::$objectsInfo[] = $objectInfo;
                             
-                            // Создание item save
-                            DesignMaps::addItem($mapInfo);
+                            // Создание item map
+                            DesignMaps::addItem($objectInfo);
                         }
                         
                     }
@@ -80,87 +90,90 @@ class ApiMaps
             }
             
         }
-        
     }
     
     /**
-     * Добавление карт.
+     * Добавить карту.
      * 
-     * @param $MAP
+     * @param File $object
      */
-    public static function addMap ($MAP)
+    static function add (File $object)
     {
-        
-        if (fs::isDir($MAP->getPath())) {
+        // Проверка
+        if (fs::isDir($object->getPath())) {
         
             // Поиск файлов saves
-            $fileMaps = new File(AddonCraft::getPathMinecraft() . '\\saves\\');
-            foreach ($fileMaps->findFiles() as $file) {
-                if (fs::isDir($file->getPath()) && $file->getName() == $MAP->getName()) {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.exist'));
+            $files = new File(Path::getPathMinecraft() . '\\saves\\');
+            foreach ($files->findFiles() as $file) {
+                if (fs::isDir($file->getPath()) && $file->getName() == $object->getName()) {
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.exist'));
                     return;
                 }
             }
                 
             try {
                 
-                // Проверка, карта это или нет
-                if (fs::exists($MAP->getPath() . '\\level.dat') && fs::exists($MAP->getPath() . '\\session.lock') && fs::exists($MAP->getPath() . '\\region\\')) {
+                // Проверка, map это или нет
+                if (fs::exists($object->getPath() . '\\level.dat') && fs::exists($object->getPath() . '\\session.lock') && fs::exists($object->getPath() . '\\region\\')) {
                     
                     // Создание NBT
-                    $NBT = new NBT($MAP->getPath() . '\\level.dat');
+                    $NBT = new NBT($object->getPath() . '\\level.dat');
                     $listInfo = $NBT->getList();
                     foreach (self::$mapValue as $value)
-                        if ($listInfo[$value]) $mapInfo['info'][$value] = $listInfo[$value];
+                        if ($listInfo[$value]) $objectInfo['info'][$value] = $listInfo[$value];
                     
-                    // Если все данные вернулись
-                    if ($mapInfo['info']['LevelName'] && $mapInfo['info']['LastPlayed']) {
+                    // Если все нужные данные вернулись
+                    if ($objectInfo['info']['LevelName'] && $objectInfo['info']['LastPlayed']) {
                         
-                        // Путь к save
-                        $mapInfo['path']['map'] = $MAP->getPath() . '\\';
+                        // Путь к map
+                        $objectInfo['path']['map'] = $object->getPath();
                         
                         // Создание папки saves, если нет
-                        if (!fs::exists(AddonCraft::getPathMinecraft() . '\\saves\\'))
-                            fs::makeDir(AddonCraft::getPathMinecraft() . '\\saves\\');
+                        if (!fs::exists(Path::getPathMinecraft() . '\\saves\\'))
+                            fs::makeDir(Path::getPathMinecraft() . '\\saves\\');
                         
-                        // Копирование save
-                        if (!fs::makeDir($mapInfo['path']['map']) && !Dir::copy($MAP->getPath(), $mapInfo['path']['map'])) {
-                            app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.not.setup'));
+                        // Копирование map
+                        if (!fs::makeDir($objectInfo['path']['map']) && !Dir::copy($object->getPath(), $objectInfo['path']['map'])) {
+                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.not.setup'));
                             return;
                         }
                         
-                        // Проверка, есть ли icon у save
-                        if (fs::exists($mapInfo['path']['map'] . '\\icon.png'))
-                            $mapInfo['path']['icon'] = $mapInfo['path']['map'] . '\\icon.png';
+                        // Проверка, есть ли icon у map
+                        if (fs::exists($objectInfo['path']['map'] . '\\icon.png'))
+                            $objectInfo['path']['icon'] = $objectInfo['path']['map'] . '\\icon.png';
                         
-                        // Добавление save в список
-                        AddonCraft::$listMaps[] = $mapInfo;
+                        // Добавление map в список
+                        self::$objectsInfo[] = $objectInfo;
                         
-                        // Создание item save
-                        DesignMaps::addItem($mapInfo);
+                        // Создание item map
+                        DesignMaps::addItem($objectInfo);
                         
                         // Сообщение о успешном добавлении карты
-                        app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.added'));
+                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.added'));
                     } else {
-                        app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.not.read'));
+                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.not.read'));
                     }
                     
                 } else {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.incorrect'));
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.incorrect'));
                 }
                 
             } catch (Exception $error) {
-                app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.unknown.error'));
+                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.unknown.error'));
                 return;
             }
             
         } else {
-            app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.select.file'));
+            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.select.file'));
         }
-        
     }
     
-    public static function saveMap (array $mapInfo)
+    /**
+     * Сохранить карту.
+     * 
+     * @param array $mapInfo
+     */
+    /*public static function saveMap (array $mapInfo)
     {
         $values = ['LevelName', 'GameType', 'allowCommands', 'hardcore'];
         foreach ($mapInfo['info'] as $key => $value) {
@@ -169,42 +182,39 @@ class ApiMaps
                     NBT::setValue($mapInfo['path']['map'] . '\\level.dat\\Data\\' . $key, '"' . $value . '"');
                 });
         }
-    }
+    }*/
     
     /**
-     * Удаление карты.
+     * Удалить карту.
      * 
-     * @param $index
+     * @param int $index
      */
-    public static function deleteMap ($index)
+    static function delete (int $index)
     {
-    
-        // Удаление save
-        if (Dir::delete(AddonCraft::$listMaps[$index]['path']['map'])) {
+        // Удаление map
+        if (Dir::delete(self::$objectsInfo[$index]['path']['map'])) {
         
             // Удаление save из списка
-            unset(AddonCraft::$listMaps[$index]);
+            unset(self::$objectsInfo[$index]);
             
             // Сортировка
-            sort(AddonCraft::$listMaps, SORT_NUMERIC);
+            sort(self::$objectsInfo, SORT_NUMERIC);
             
             // Действия
-            app()->form(MainForm)->boxMaps->items->removeByIndex($index);
+            app()->getForm(MainForm)->boxMaps->items->removeByIndex($index);
             
             // Успех!
-            app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.delete.success'));
-        } else app()->form(MainForm)->toast(Language::translate('mainform.toast.maps.delete.not.success'));
-        
+            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.delete.success'));
+        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.delete.not.success'));
     }
     
     /**
-     * Удаление icon.
+     * Удалить icon.
      * 
-     * @param $index
+     * @param int $index
      */
-    public static function deleteIcon ($index) : bool
+    /*public static function deleteIcon (int $index) : bool
     {
-        
         // Проверка
         if (fs::exists(AddonCraft::$listMaps[$index]['path']['icon'])) {
         
@@ -214,15 +224,35 @@ class ApiMaps
                 // Удаление icon из списка
                 unset(AddonCraft::$listMaps[$index]['path']['icon']);
                 
-                //Действия
-                app()->form(MainForm)->{'imageMaps'.++$index}->image = new UXImage('res://.data/img/map_icon.png');
+                // Действия
+                app()->getForm(MainForm)->{'imageMaps'.++$index}->image = new UXImage('res://.data/img/map_icon.png');
                 
                 // Успех!
-                app()->form(MainForm)->toast(Language::translate('editmapform.toast.delete.success'));
+                app()->getForm(MainForm)->toast(Language::translate('editmapform.toast.delete.success'));
                 return true;
             }
-        } else app()->form(MainForm)->toast(Language::translate('editmapform.toast.delete.not.success'));
+        } else app()->getForm(MainForm)->toast(Language::translate('editmapform.toast.delete.not.success'));
         return false;
+    }*/
+    
+    /**
+     * Очистить значения класса.
+     * 
+     * @param string $value
+     */
+    static function clearValue (string $value)
+    {
+        self::{$value} = false;
+    }
+    
+    /**
+     * Получить список объектов класса.
+     * 
+     * @return array
+     */
+    static function getObjects () : array
+    {
+        return self::$objectsInfo;
     }
     
 }

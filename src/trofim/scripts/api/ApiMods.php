@@ -13,48 +13,58 @@ use php\compress\ZipFile;
  */
 class ApiMods 
 {
-
+    
+    /**
+     * Список информации о модах.
+     * 
+     * @var array
+     */
+    private static $objectsInfo = [];
+    
     /**
      * Поиск модов.
      */
-    public static function findMods () {
-    
+    static function find ()
+    {
         // Проверка на существование папки mods
-        if (fs::exists(AddonCraft::getPathMinecraft() . '\\mods\\')) {
+        if (fs::exists(Path::getPathMinecraft() . '\\mods\\')) {
             
             uiLater(function () {
-                app()->form(StartForm)->setStatus(Language::translate('word.mods') . '...');
+                app()->getForm(StartForm)->setStatus(Language::translate('word.mods') . '...');
             });
         
             // Поиск файлов mods
-            $fileMods = new File(AddonCraft::getPathMinecraft() . '\\mods\\');
-            foreach ($fileMods->findFiles() as $file) {
+            $files = new File(Path::getPathMinecraft() . '\\mods\\');
+            foreach ($files->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) && fs::ext($file->getPath()) == 'jar')
-                    $mods[] = ['path' => $file->getPath(), 'mode' => 'enabled', 'hash' => sha1_file($file->getPath())];
+                    $objects[] = ['path' => $file->getPath(), 'mode' => 'enabled'];
             }
             
             // Поиск файлов disabled_mods
-            $disabledMods = new File(AddonCraft::getAppPath() . '\\disabled\\mods\\');
-            foreach ($disabledMods->findFiles() as $file) {
+            $disabledFiles = new File(Path::getAppPath() . '\\disabled\\mods\\');
+            foreach ($disabledFiles->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) && fs::ext($file->getPath()) == 'jar')
-                    $mods[] = ['path' => $file->getPath(), 'mode' => 'disabled', 'hash' => sha1_file($file->getPath())];
+                    $objects[] = ['path' => $file->getPath(), 'mode' => 'disabled'];
             }
             
             // Если mods нет
-            if (empty($mods)) return;
+            if (empty($objects)) return;
             
-            foreach ($mods as $mod) {
+            foreach ($objects as $object) {
                 
                 try {
                        
                     // Создание ZIP
-                    $zipFile = new ZipFile($mod['path']);
+                    $zipFile = new ZipFile($object['path']);
                     
                     // Проверка на наличие файла mcmod.info
                     if ($zipFile->has('mcmod.info')) {
                     
                         // Путь к Temp для mod'а
-                        $pathTemp = AddonCraft::getAppTemp() . '\\' . fs::nameNoExt($mod['path']) . '\\';
+                        $pathTemp = Path::getAppTemp() . '\\' . fs::nameNoExt($object['path']) . '\\';
+                        
+                        // Очистка информации
+                        //$objectInfo = false;
                         
                         // Разархивирование mcmod.info
                         $zipFile->read('mcmod.info', function ($entry, MiscStream $stream) use ($pathTemp) {
@@ -64,50 +74,47 @@ class ApiMods
                         
                         // Получение содержимого mcmod.info
                         if (fs::exists($pathTemp . 'mcmod.info'))
-                            $modInfo = Json::decode(Stream::getContents($pathTemp . 'mcmod.info'));
+                            $objectInfo['info'] = Json::decode(Stream::getContents($pathTemp . 'mcmod.info'))[0];
                         else return;
                         
                         // Если файл mcmod.info успешно прочитан
-                        if (isset($modInfo)) {
+                        if (isset($objectInfo['info'])) {
                             
-                            // Замена modInfo
-                            if ($modInfo['modList']) $modInfo = $modInfo['modList'];
+                            // Замена modlist
+                            if ($objectInfo['info']['modList']) $objectInfo['info'] = $objectInfo['info']['modList'];
                             
-                            // Добавление режима mod'a
-                            $modInfo[0]['mode'] = $mod['mode'];
-                            
-                            // Добавление путей до mod'a
-                            $modInfo[0]['path']['mod'] = $mod['path'];
-                            $modInfo[0]['path']['temp'] = $pathTemp;
+                            // Добавление путей и режима mod'a
+                            $objectInfo = array_merge($objectInfo, ['mode' => $object['mode'],
+                                                                    'path' => ['mod' => $object['path'],
+                                                                               'temp' => $pathTemp]]);
                             
                             // Проверка, есть ли logo у mod'a
-                            if ($modInfo[0]['logoFile'] && $zipFile->has($modInfo[0]['logoFile'])) {
+                            if ($objectInfo['info']['logoFile'] && $zipFile->has($objectInfo['info']['logoFile'])) {
                                 
                                 // Разархивирование logo mod'a
-                                $zipFile->read($modInfo[0]['logoFile'], function ($entry, MiscStream $stream) use (&$modInfo) {
-                                    $pathLogo = $modInfo[0]['path']['temp'] . 'logo.png';
+                                $zipFile->read($objectInfo['info']['logoFile'], function ($entry, MiscStream $stream) use (&$objectInfo) {
+                                    $pathLogo = $objectInfo['path']['temp'] . 'logo.png';
                                     if (fs::copy($stream, $pathLogo))
-                                        $modInfo[0]['path']['logo'] = $pathLogo;
+                                        $objectInfo['path']['logo'] = $pathLogo;
                                 });
                             }
-                            
+
                             // Создание файла с hash-суммой
-                            Stream::putContents($pathTemp . 'hash', $mod['hash']);
+                            Stream::putContents($pathTemp . 'hash', sha1_file($object['path']));
                             
                             // Добавление mod'а в список
-                            AddonCraft::$listMods[] = $modInfo[0];
+                            self::$objectsInfo[] = $objectInfo;
                             
                             // Создание item mod
-                            DesignMods::addItem($modInfo[0]);
+                            DesignMods::addItem($objectInfo);
                             
                             // Регистрация файлов для запрета на изменение
-                            AddonCraft::registerFile($modInfo[0]['path']['mod']);
-                            AddonCraft::registerFile($pathTemp . 'mcmod.info');
-                            AddonCraft::registerFile($pathTemp . 'hash');
-                            if (isset($modInfo[0]['path']['logo'])) AddonCraft::registerFile($modInfo[0]['path']['logo']);
+                            FileSystem::registerFile($objectInfo['path']['mod']);
+                            FileSystem::registerFile($pathTemp . 'mcmod.info');
+                            FileSystem::registerFile($pathTemp . 'hash');
+                            if (isset($objectInfo['path']['logo'])) FileSystem::registerFile($objectInfo['path']['logo']);
                         }
                     }
-                    
                     unset($zipFile);
                     
                 } catch (Exception $error) {
@@ -116,37 +123,36 @@ class ApiMods
                 
             }
         }
-        
     }
 
     /**
-     * Добавление мода.
+     * Добавить мод.
      * 
-     * @param $MOD
+     * @param File $object
      */
-    public static function addMod ($MOD) {
-        
+    static function add (File $object)
+    {
         // Проверки
-        if (fs::isFile($MOD->getPath()) && fs::ext($MOD->getPath()) == 'jar') {
+        if (fs::isFile($object->getPath()) && fs::ext($object->getPath()) == 'jar') {
         
             // Поиск файлов в папке mods
-            $filesMods = new File(AddonCraft::getPathMinecraft() . '\\mods\\');
-            foreach ($filesMods->findFiles() as $file) {
+            $files = new File(Path::getPathMinecraft() . '\\mods\\');
+            foreach ($files->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'jar' &&
-                    $file->getName() == $MOD->getName()) {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.exist'));
+                    $file->getName() == $object->getName()) {
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.exist'));
                     return;
                 }
             }
                 
             // Поиск файлов в папке disabled 
-            $disabledMods = new File(AddonCraft::getAppPath() . '\\disabled\\mods\\');
-            foreach ($disabledMods->findFiles() as $file) {
+            $disabledFiles = new File(Path::getAppPath() . '\\disabled\\mods\\');
+            foreach ($disabledFiles->findFiles() as $file) {
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'jar' &&
-                    $file->getName() == $MOD->getName()) {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.exist'));
+                    $file->getName() == $object->getName()) {
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.exist'));
                     return;
                 }
             }
@@ -154,13 +160,13 @@ class ApiMods
             try {
                 
                 // Создание ZIP
-                $zipFile = new ZipFile($MOD->getPath());
+                $zipFile = new ZipFile($object->getPath());
                 
                 // Проверка на наличие файла mcmod.info
                 if ($zipFile->has('mcmod.info')) {
                 
                     // Путь к Temp для mod'а
-                    $pathTemp = AddonCraft::getAppTemp() . '\\' . fs::nameNoExt($MOD->getName()) . '\\';
+                    $pathTemp = Path::getAppTemp() . '\\' . fs::nameNoExt($object->getName()) . '\\';
                     
                     // Разархивирование mcmod.info
                     $zipFile->read('mcmod.info', function ($entry, MiscStream $stream) use ($pathTemp) {
@@ -170,164 +176,180 @@ class ApiMods
                     
                     // Получение содержимого mcmod.info
                     if (fs::exists($pathTemp . 'mcmod.info'))
-                        $modInfo = Json::decode(Stream::getContents($pathTemp . 'mcmod.info'));
+                        $objectInfo['info'] = Json::decode(Stream::getContents($pathTemp . 'mcmod.info'))[0];
                     else {
-                        app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.not.read'));
+                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.read'));
                         return;
                     }
                     
                     // Если файл mcmod.info успешно прочитан
-                    if (isset($modInfo)) {
+                    if (isset($objectInfo['info'])) {
                     
                         // Путь добавленного mod'a
-                        $pathMod = AddonCraft::getPathMinecraft() . '\\mods\\' . $MOD->getName();
+                        $pathMod = Path::getPathMinecraft() . '\\mods\\' . $object->getName();
                         
                         // Создание папки mods, если нет
-                        if (!fs::exists(AddonCraft::getPathMinecraft() . '\\mods\\'))
-                            fs::makeDir(AddonCraft::getPathMinecraft() . '\\mods\\');
+                        if (!fs::exists(Path::getPathMinecraft() . '\\mods\\'))
+                            fs::makeDir(Path::getPathMinecraft() . '\\mods\\');
                         
                         // Копирование mod'a
-                        if (!fs::copy($MOD->getPath(), $pathMod)) {
-                            app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.not.setup'));
+                        if (!fs::copy($object->getPath(), $pathMod)) {
+                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.setup'));
                             return;
                         }
                         
                         // Замена modInfo
-                        if (isset($modInfo['modList'])) $modInfo = $modInfo['modList'];
+                        if (isset($objectInfo['info']['modList'])) $objectInfo['info'] = $objectInfo['info']['modList'];
                         
-                        // Добавление путей до mod'a
-                        $modInfo[0]['path']['mod'] = $pathMod;
-                        $modInfo[0]['path']['temp'] = $pathTemp;
-                        
-                        // Добавление режима mod'a
-                        $modInfo[0]['mode'] = 'enabled';
+                        // Добавление путей и режима до mod'a
+                        $objectInfo = array_merge($objectInfo, ['mode' => 'enabled',
+                                                                'path' => ['mod' => $pathMod,
+                                                                           'temp' => $pathTemp]]);
                         
                         // Проверка, есть ли logo у mod'a
-                        if ($modInfo[0]['logoFile'] && $zipFile->has($modInfo[0]['logoFile'])) {
+                        if ($objectInfo['info']['logoFile'] && $zipFile->has($objectInfo['info']['logoFile'])) {
                             
                             // Разархивирование logo mod'a
-                            $zipFile->read($modInfo[0]['logoFile'], function ($entry, MiscStream $stream) use (&$modInfo) {
-                                $pathLogo = $modInfo[0]['path']['temp'] . 'logo.png';
+                            $zipFile->read($objectInfo['info']['logoFile'], function ($entry, MiscStream $stream) use (&$objectInfo) {
+                                $pathLogo = $objectInfo['path']['temp'] . 'logo.png';
                                 if (fs::copy($stream, $pathLogo))
-                                    $modInfo[0]['path']['logo'] = $pathLogo;
+                                    $objectInfo['path']['logo'] = $pathLogo;
                             });
                         }
                         
                         // Создание файла с hash-суммой
-                        Stream::putContents($pathTemp . 'hash', sha1_file($MOD->getPath()));
+                        Stream::putContents($pathTemp . 'hash', sha1_file($object->getPath()));
                         
                         // Добавление mod'а в список
-                        AddonCraft::$listMods[] = $modInfo[0];
+                        self::$objectsInfo[] = $objectInfo;
                     
                         // Создание item mod
-                        DesignMods::addItem($modInfo[0]);
+                        DesignMods::addItem($objectInfo);
                         
                         // Регистрация файлов для запрета на изменение
-                        AddonCraft::registerFile($modInfo[0]['path']['mod']);
-                        AddonCraft::registerFile($pathTemp . 'mcmod.info');
-                        if (isset($modInfo[0]['path']['logo'])) AddonCraft::registerFile($modInfo[0]['path']['logo']);
+                        FileSystem::registerFile($objectInfo['path']['mod']);
+                        FileSystem::registerFile($pathTemp . 'mcmod.info');
+                        if (isset($objectInfo['path']['logo'])) FileSystem::registerFile($objectInfo['path']['logo']);
                         
                         // Сообщение о успешном добавлении мода
-                        app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.added'));
+                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.added'));
                     }
                 } else {
-                    app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.incorrect'));
+                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.incorrect'));
                 }
-                
                 unset($zipFile);
                 
             } catch (Exception $error) {
-                app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.unknown.error'));
+                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.unknown.error'));
                 return;
             }
             
         } else {
-            app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.select.file'));
+            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.select.file'));
         }
-        
     }
     
     /**
-     * Изменение режима для мода.
+     * Изменить режим для мода.
      * 
-     * @param $index
+     * @param int $index
      */
-    public static function setMode ($index) {
-    
+    static function setMode (int $index)
+    {
         // Если mod включен
-        if (AddonCraft::$listMods[$index]['mode'] == 'enabled') {
+        if (self::$objectsInfo[$index]['mode'] == 'enabled') {
         
             // Путь отключенного mod'a
-            $pathMod = AddonCraft::getAppPath() . '\\disabled\\mods\\' . fs::name(AddonCraft::$listMods[$index]['path']['mod']);
+            $pathMod = Path::getAppPath() . '\\disabled\\mods\\' . fs::name(self::$objectsInfo[$index]['path']['mod']);
             
             // Создаем папки
-            fs::makeDir(AddonCraft::getAppPath() . '\\disabled\\');
-            fs::makeDir(AddonCraft::getAppPath() . '\\disabled\\mods\\');
+            fs::makeDir(Path::getAppPath() . '\\disabled\\');
+            fs::makeDir(Path::getAppPath() . '\\disabled\\mods\\');
 
             // Разрегистрация mod'a && перемещение mod'a
-            if (AddonCraft::unRegisterFile(AddonCraft::$listMods[$index]['path']['mod']) && fs::move(AddonCraft::$listMods[$index]['path']['mod'], $pathMod)) {
+            if (FileSystem::unRegisterFile(self::$objectsInfo[$index]['path']['mod']) && fs::move(self::$objectsInfo[$index]['path']['mod'], $pathMod)) {
             
                 // Изменение информации о mod
-                AddonCraft::$listMods[$index]['path']['mod'] = $pathMod;
-                AddonCraft::$listMods[$index]['mode'] = 'disabled';
+                self::$objectsInfo[$index]['path']['mod'] = $pathMod;
+                self::$objectsInfo[$index]['mode'] = 'disabled';
                 
                 // Действия
-                app()->form(MainForm)->boxMods->items[$index]->children[1]->children[0]->style = '-fx-text-fill: red;';
-                app()->form(MainForm)->setModeMod(false);
-                app()->form(MainForm)->infoMod_name->style = '-fx-text-fill: red;';
+                app()->getForm(MainForm)->boxMods->items[$index]->children[1]->children[0]->style = '-fx-text-fill: red;';
+                app()->getForm(MainForm)->setModeMod(false);
+                app()->getForm(MainForm)->infoMod_name->style = '-fx-text-fill: red;';
                 
                 // Регистрация mod'a
-                AddonCraft::registerFile(AddonCraft::$listMods[$index]['path']['mod']);
-            } else app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.not.disabled'));
+                FileSystem::registerFile(self::$objectsInfo[$index]['path']['mod']);
+            } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.disabled'));
         }
         
         // Если mod отключен
-        else if (AddonCraft::$listMods[$index]['mode'] == 'disabled') {
+        else if (self::$objectsInfo[$index]['mode'] == 'disabled') {
         
             // Путь включенного mod'a
-            $pathMod = AddonCraft::getPathMinecraft() . '\\mods\\' . fs::name(AddonCraft::$listMods[$index]['path']['mod']);
+            $pathMod = Path::getPathMinecraft() . '\\mods\\' . fs::name(self::$objectsInfo[$index]['path']['mod']);
             
             // Разрегистрация mod'a && перемещение mod'a
-            if (AddonCraft::unRegisterFile(AddonCraft::$listMods[$index]['path']['mod']) && fs::move(AddonCraft::$listMods[$index]['path']['mod'], $pathMod)) {
+            if (FileSystem::unRegisterFile(self::$objectsInfo[$index]['path']['mod']) && fs::move(self::$objectsInfo[$index]['path']['mod'], $pathMod)) {
             
                 // Изменение информации о mod
-                AddonCraft::$listMods[$index]['path']['mod'] = $pathMod;
-                AddonCraft::$listMods[$index]['mode'] = 'enabled';
+                self::$objectsInfo[$index]['path']['mod'] = $pathMod;
+                self::$objectsInfo[$index]['mode'] = 'enabled';
                 
                 // Действия
-                app()->form(MainForm)->boxMods->items[$index]->children[1]->children[0]->style = '-fx-text-fill: white;';
-                app()->form(MainForm)->setModeMod(true);
-                app()->form(MainForm)->infoMod_name->style = '-fx-text-fill: white;';
+                app()->getForm(MainForm)->boxMods->items[$index]->children[1]->children[0]->style = '-fx-text-fill: white;';
+                app()->getForm(MainForm)->setModeMod(true);
+                app()->getForm(MainForm)->infoMod_name->style = '-fx-text-fill: white;';
                 
                 // Регистрация mod'a
-                AddonCraft::registerFile(AddonCraft::$listMods[$index]['path']['mod']);
-            } else app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.not.enabled'));
+                FileSystem::registerFile(self::$objectsInfo[$index]['path']['mod']);
+            } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.enabled'));
         }
     }
     
     /**
-     * Удаление мода.
+     * Удалить мод.
      * 
-     * @param $index
+     * @param int $index
      */
-    public static function deleteMod ($index) {
-    
+    static function delete (int $index)
+    {
         // Разрегистрация mod'a && удаление mod'a
-        if (AddonCraft::unRegisterFile(AddonCraft::$listMods[$index]['path']['mod']) && fs::delete(AddonCraft::$listMods[$index]['path']['mod'])) {
+        if (FileSystem::unRegisterFile(self::$objectsInfo[$index]['path']['mod']) && fs::delete(self::$objectsInfo[$index]['path']['mod'])) {
         
             // Удаление mod'a из списка
-            unset(AddonCraft::$listMods[$index]);
+            unset(self::$objectsInfo[$index]);
             
             // Сортировка
-            sort(AddonCraft::$listMods, SORT_NUMERIC);
+            sort(self::$objectsInfo, SORT_NUMERIC);
             
             // Действия
-            app()->form(MainForm)->boxInfoMod->items->clear();
-            app()->form(MainForm)->boxMods->items->removeByIndex($index);
+            app()->getForm(MainForm)->boxInfoMod->items->clear();
+            app()->getForm(MainForm)->boxMods->items->removeByIndex($index);
             
             // Успех!
-            app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.delete.success'));
-        } else app()->form(MainForm)->toast(Language::translate('mainform.toast.mods.delete.not.success'));
+            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.delete.success'));
+        } app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.delete.not.success'));
+    }
+    
+    /**
+     * Очистить значения класса.
+     * 
+     * @param string $value
+     */
+    static function clearValue (string $value)
+    {
+        self::{$value} = false;
+    }
+    
+    /**
+     * Получить список объектов класса.
+     * 
+     * @return array
+     */
+    static function getObjects () : array
+    {
+        return self::$objectsInfo;
     }
 
 }
