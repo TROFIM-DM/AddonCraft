@@ -16,4 +16,7 @@
   <target id="label">
     <behaviour color="#000000" offsetX="0" offsetY="0" radius="6.0975609756098" spread="0.39024390243902" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
   </target>
+  <target id="labelVersion">
+    <behaviour color="#000000" offsetX="0" offsetY="0" radius="6.0975609756098" spread="0.39024390243902" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
+  </target>
 </behaviours>
