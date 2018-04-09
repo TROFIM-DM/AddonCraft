@@ -13,17 +13,17 @@ class DesignTextures
 {
 
     /**
-     * Добавление нового item в список textures.
+     * Добавить новый item в список textures.
      * 
-     * @param $textureInfo
+     * @param array $objectInfo
      */
-    public static function addItem ($textureInfo) {
+    static function addItem (array $objectInfo)
+    {
+        $GUI = new UXPanel();
+        $GUI->classes->add('itemTexture-box');
         
-        $box = new UXPanel();
-        $box->classes->add('itemTexture-box');
-        
-        if ($textureInfo['path']['logo']) {
-            $imageLogo = new UXImageArea(new UXImage($textureInfo['path']['logo']));
+        if ($objectInfo['path']['logo']) {
+            $imageLogo = new UXImageArea(new UXImage($objectInfo['path']['logo']));
             $imageLogo->stretch = true;
             $imageLogo->size = [86, 86];
             
@@ -31,11 +31,11 @@ class DesignTextures
             $boxLogo->classes->add('itemTexture-logo');
         }
         
-        $labelName = new UXLabel($textureInfo['pack']['name']);
+        $labelName = new UXLabel($objectInfo['info']['name']);
         $labelName->classes->add('itemTexture-name');
         $labelName->wrapText = true;
         
-        $labelDescription = new UXLabel(MojangAPI::replaceColor($textureInfo['pack']['description']));
+        $labelDescription = new UXLabel(MojangAPI::replaceColor($objectInfo['info']['description']));
         $labelDescription->classes->add('itemTexture-description');
         $labelDescription->wrapText = true;
         
@@ -44,7 +44,7 @@ class DesignTextures
         $allBox = new UXHBox([$boxLogo, $labelBox]);
         
         $buttonMode = new UXMaterialButton();
-        if (empty($textureInfo['enabled'])) $buttonMode->graphic = new UXImageView(new UXImage('res://.data/img/icon/add-16.png'));
+        if (empty($objectInfo['enabled'])) $buttonMode->graphic = new UXImageView(new UXImage('res://.data/img/icon/add-16.png'));
         else $buttonMode->graphic = new UXImageView(new UXImage('res://.data/img/icon/line-16.png'));
         $buttonMode->contentDisplay = 'GRAPHIC_ONLY';
         $buttonMode->focusTraversable = false;
@@ -55,14 +55,14 @@ class DesignTextures
         $buttonMode->tooltipText = Language::translate('mainform.tooltip.textures.btn.mode');
         $buttonMode->cursor = 'HAND';
         $buttonMode->classes->addAll(['itemTexture-mode', 'help-tooltip']);
-        $buttonMode->nameTexture = fs::name($textureInfo['path']['texture']);
+        $buttonMode->nameTexture = fs::name($objectInfo['path']['texture']);
         $buttonMode->on('action', function () use (UXMaterialButton $buttonMode) {
-            if (AddonCraft::$listTextures[$buttonMode->nameTexture]['enabled']) 
-                ApiTextures::disabledTexture($buttonMode->nameTexture, $buttonMode);
+            if (ApiTextures::getObjects()[$buttonMode->nameTexture]['enabled']) 
+                ApiTextures::disabled($buttonMode->nameTexture, $buttonMode);
             else 
-                ApiTextures::enabledTexture($buttonMode->nameTexture, $buttonMode);
+                ApiTextures::enabled($buttonMode->nameTexture, $buttonMode);
         });
-        $box->add($buttonMode);
+        $GUI->add($buttonMode);
         
         $buttonDelete = new UXMaterialButton();
         $buttonDelete->graphic = new UXImageView(new UXImage('res://.data/img/icon/close-16.png'));
@@ -75,7 +75,7 @@ class DesignTextures
         $buttonDelete->tooltipText = Language::translate('mainform.tooltip.textures.btn.delete');
         $buttonDelete->cursor = 'HAND';
         $buttonDelete->classes->addAll(['itemTexture-delete', 'help-tooltip']);
-        $buttonDelete->nameTexture = fs::name($textureInfo['path']['texture']);
+        $buttonDelete->nameTexture = fs::name($objectInfo['path']['texture']);
         $buttonDelete->on('action', function () use (UXMaterialButton $buttonDelete) {
             $alert = new UXAlert('INFORMATION');
             $alert->title = app()->getName();
@@ -94,16 +94,16 @@ class DesignTextures
             
             switch ($alert->showAndWait()) {
                 case Language::translate('word.yes'):
-                    ApiTextures::deleteTexture($buttonDelete->nameTexture);
+                    ApiTextures::delete($buttonDelete->nameTexture);
                 break;
             }
         });
-        $box->add($buttonDelete);
+        $GUI->add($buttonDelete);
         
-        $box->add($allBox);
+        $GUI->add($allBox);
         
-        if ($textureInfo['enabled']) app()->form(MainForm)->boxEnTextures->items->add($box);
-        else app()->form(MainForm)->boxTextures->items->add($box);
+        if ($objectInfo['enabled']) app()->getForm(MainForm)->boxEnTextures->items->add($GUI);
+        else app()->getForm(MainForm)->boxTextures->items->add($GUI);
     }
     
 }
