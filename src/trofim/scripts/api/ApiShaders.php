@@ -4,6 +4,7 @@ namespace trofim\scripts\api;
 use std, gui, framework, trofim;
 use Exception, windows;
 use php\compress\ZipFile;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс для работы с API шейдеров.
@@ -46,7 +47,7 @@ class ApiShaders
         if (fs::exists(Path::getPathMinecraft() . '\\shaderpacks\\')) {
 
             uiLater(function () {
-                app()->getForm(StartForm)->setStatus(Language::translate('word.shaders') . '...');
+                app()->getForm(StartForm)->setStatus(L::translate('word.shaders') . '...');
             });
             
             // Поиск файлов в папке shaderpacks
@@ -93,7 +94,7 @@ class ApiShaders
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'zip' &&
                     $file->getName() == $object->getName()) {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.exist'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.shaders.exist'));
                     return;
                 }
             }
@@ -107,9 +108,9 @@ class ApiShaders
                 if (!$zipFile->has('shaders/')) {
                     $alert = new UXAlert('INFORMATION');
                     $alert->title = app()->getName();
-                    $alert->headerText = Language::translate('mainform.message.shaders.setup.header');
-                    $alert->contentText = Language::translate('mainform.message.shaders.setup.content');
-                    $alert->setButtonTypes([Language::translate('word.yes'), Language::translate('word.no')]);
+                    $alert->headerText = L::translate('mainform.message.shaders.setup.header');
+                    $alert->contentText = L::translate('mainform.message.shaders.setup.content');
+                    $alert->setButtonTypes([L::translate('word.yes'), L::translate('word.no')]);
                     $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/add-24.png'));
                     
                     $nameFile = new UXLabelEx(fs::nameNoExt($object->getPath()));
@@ -121,8 +122,8 @@ class ApiShaders
                     $alert->expanded = true;
                     
                     switch ($alert->showAndWait()) {
-                        case Language::translate('word.no'):
-                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.not.setup.error'));
+                        case L::translate('word.no'):
+                            app()->getForm(MainForm)->toast(L::translate('mainform.toast.shaders.not.setup.error'));
                             return;
                         break;
                     }
@@ -138,7 +139,7 @@ class ApiShaders
                 
                 // Добавление shaderpack'a
                 if (!fs::copy($object->getPath(), $pathShader)) {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.not.setup'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.shaders.not.setup'));
                     return;
                 }
                 
@@ -153,15 +154,15 @@ class ApiShaders
                 app()->getForm(MainForm)->boxShaders->items->add(fs::nameNoExt($objectInfo['name']));
                 
                 // Сообщение о успешном добавлении текстур-пака
-                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.added'));
+                app()->getForm(MainForm)->toast(L::translate('mainform.toast.shaders.added'));
                 
             } catch (Exception $error) {
-                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.unknown.error'));
+                app()->getForm(MainForm)->toast(L::translate('mainform.toast.shaders.unknown.error'));
                 return;
             }
             
         } else {
-            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.shaders.select.file'));
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.shaders.select.file'));
         }
     }
     
@@ -254,19 +255,19 @@ class ApiShaders
                 case 'antialiasingLevel':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['0', '2', '4'])) 
                         $settings[$setting] = 0;
-                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('mainform.shaders.option.' . $setting . '.' . $settings[$setting]);
+                    app()->getForm(MainForm)->{$setting}->text = L::translate('mainform.shaders.option.' . $setting) . ': ' . L::translate('mainform.shaders.option.' . $setting . '.' . $settings[$setting]);
                 break;
                 case 'normalMapEnabled':
                 case 'specularMapEnabled':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['false', 'true']))
                         $settings[$setting] = 'true';
-                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('command.' . $settings[$setting]);
+                    app()->getForm(MainForm)->{$setting}->text = L::translate('mainform.shaders.option.' . $setting) . ': ' . L::translate('command.' . $settings[$setting]);
                 break;
                 case 'renderResMul':
                 case 'shadowResMul':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['0.5', '1.0', '2.0']))
                         $settings[$setting] = '1.0';
-                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . $settings[$setting] . 'x';
+                    app()->getForm(MainForm)->{$setting}->text = L::translate('mainform.shaders.option.' . $setting) . ': ' . $settings[$setting] . 'x';
                 break;
                 case 'handDepthMul':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['0.0625', '0.125', '0.25']))
@@ -282,13 +283,13 @@ class ApiShaders
                             $value = '2x';
                         break;
                     }
-                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . $value;
+                    app()->getForm(MainForm)->{$setting}->text = L::translate('mainform.shaders.option.' . $setting) . ': ' . $value;
                 break;
                 case 'oldHandLight':
                 case 'oldLighting':
                     if ($put && !key_exists($setting, $settings) || !in_array($settings[$setting], ['default', 'false', 'true']))
                         $settings[$setting] = 'default';
-                    app()->getForm(MainForm)->{$setting}->text = Language::translate('mainform.shaders.option.' . $setting) . ': ' . Language::translate('command.' . $settings[$setting]);
+                    app()->getForm(MainForm)->{$setting}->text = L::translate('mainform.shaders.option.' . $setting) . ': ' . L::translate('command.' . $settings[$setting]);
                 break;
             }
         }

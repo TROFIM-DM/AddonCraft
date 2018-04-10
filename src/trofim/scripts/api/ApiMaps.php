@@ -3,6 +3,7 @@ namespace trofim\scripts\api;
 
 use std, trofim, gui;
 use Exception;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс для работы с API карт.
@@ -36,7 +37,7 @@ class ApiMaps
         if (fs::exists(Path::getPathMinecraft() . '\\saves\\')) {
         
             uiLater(function () {
-                app()->getForm(StartForm)->setStatus(Language::translate('word.maps') . '...');
+                app()->getForm(StartForm)->setStatus(L::translate('word.maps') . '...');
             });
         
             // Поиск файлов maps
@@ -106,7 +107,7 @@ class ApiMaps
             $files = new File(Path::getPathMinecraft() . '\\saves\\');
             foreach ($files->findFiles() as $file) {
                 if (fs::isDir($file->getPath()) && $file->getName() == $object->getName()) {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.exist'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.exist'));
                     return;
                 }
             }
@@ -134,7 +135,7 @@ class ApiMaps
                         
                         // Копирование map
                         if (!fs::makeDir($objectInfo['path']['map']) && !Dir::copy($object->getPath(), $objectInfo['path']['map'])) {
-                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.not.setup'));
+                            app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.not.setup'));
                             return;
                         }
                         
@@ -149,22 +150,22 @@ class ApiMaps
                         DesignMaps::addItem($objectInfo);
                         
                         // Сообщение о успешном добавлении карты
-                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.added'));
+                        app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.added'));
                     } else {
-                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.not.read'));
+                        app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.not.read'));
                     }
                     
                 } else {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.incorrect'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.incorrect'));
                 }
                 
             } catch (Exception $error) {
-                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.unknown.error'));
+                app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.unknown.error'));
                 return;
             }
             
         } else {
-            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.select.file'));
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.select.file'));
         }
     }
     
@@ -204,8 +205,8 @@ class ApiMaps
             app()->getForm(MainForm)->boxMaps->items->removeByIndex($index);
             
             // Успех!
-            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.delete.success'));
-        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.maps.delete.not.success'));
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.delete.success'));
+        } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.maps.delete.not.success'));
     }
     
     /**
@@ -228,10 +229,10 @@ class ApiMaps
                 app()->getForm(MainForm)->{'imageMaps'.++$index}->image = new UXImage('res://.data/img/map_icon.png');
                 
                 // Успех!
-                app()->getForm(MainForm)->toast(Language::translate('editmapform.toast.delete.success'));
+                app()->getForm(MainForm)->toast(L::translate('editmapform.toast.delete.success'));
                 return true;
             }
-        } else app()->getForm(MainForm)->toast(Language::translate('editmapform.toast.delete.not.success'));
+        } else app()->getForm(MainForm)->toast(L::translate('editmapform.toast.delete.not.success'));
         return false;
     }*/
     

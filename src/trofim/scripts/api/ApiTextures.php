@@ -4,6 +4,7 @@ namespace trofim\scripts\api;
 use std, framework, trofim, gui;
 use Exception;
 use php\compress\ZipFile;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс для работы с API текстур.
@@ -30,7 +31,7 @@ class ApiTextures
         if (fs::exists(Path::getPathMinecraft() . '\\resourcepacks\\')) {
             
             uiLater(function () {
-                app()->getForm(StartForm)->setStatus(Language::translate('word.textures') . '...');
+                app()->getForm(StartForm)->setStatus(L::translate('word.textures') . '...');
             });
             
             // Поиск файлов textures
@@ -136,7 +137,7 @@ class ApiTextures
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'zip' &&
                     $file->getName() == $object->getName()) {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.exist'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.exist'));
                     return;
                 }
             }
@@ -164,7 +165,7 @@ class ApiTextures
                         $objectInfo['info']['name'] = fs::nameNoExt($object->getName());
                     }
                     else {
-                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.read'));
+                        app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.not.read'));
                         return;
                     }
                     
@@ -180,7 +181,7 @@ class ApiTextures
                         
                         // Добавление texture
                         if (!fs::copy($object->getPath(), $pathTexture)) {
-                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.setup'));
+                            app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.not.setup'));
                             return;
                         }
                         
@@ -221,20 +222,20 @@ class ApiTextures
                         if (isset($objectInfo['path']['logo'])) FileSystem::registerFile($objectInfo['path']['logo']);
                         
                         // Сообщение о успешном добавлении текстур-пака
-                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.added'));
+                        app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.added'));
                     }
                 } else {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.incorrect'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.incorrect'));
                 }
                 unset($zipFile);
                 
             } catch (Exception $error) {
-                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.unknown.error'));
+                app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.unknown.error'));
                 return;
             }
             
         } else {
-            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.select.file'));
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.select.file'));
         }
     }
     
@@ -270,7 +271,7 @@ class ApiTextures
                 $buttonMode->graphic->free();
                 $buttonMode->graphic = new UXImageView(new UXImage('res://.data/img/icon/line-16.png'));
             }
-        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.enabled'));
+        } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.not.enabled'));
     }
     
     /**
@@ -308,7 +309,7 @@ class ApiTextures
                 $buttonMode->graphic->free();
                 $buttonMode->graphic = new UXImageView(new UXImage('res://.data/img/icon/add-16.png'));
             }
-        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.not.disabled'));
+        } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.not.disabled'));
     }
     
     /**
@@ -332,8 +333,8 @@ class ApiTextures
             unset(self::$objectsInfo[$nameTexture]);
             
             // Успех!
-            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.delete.success'));
-        } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.textures.delete.not'));
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.delete.success'));
+        } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.textures.delete.not'));
     }
     
     /**

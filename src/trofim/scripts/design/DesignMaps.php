@@ -3,6 +3,7 @@ namespace trofim\scripts\design;
 
 use std, gui, trofim;
 use php\gui\UXRichTextArea;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс для работы с Design карт.
@@ -42,15 +43,15 @@ class DesignMaps
         $labelLine2->classes->addAll(['itemMap-line2', 'scroll-pane']);
         
         if (!$objectInfo['info']['hardcore'])
-            $labelLine2->appendText((!$objectInfo['info']['GameType']) ? Language::translate('mainform.maps.item.survival') : Language::translate('mainform.maps.item.creative'), '-fx-fill: "#cccccc";');
+            $labelLine2->appendText((!$objectInfo['info']['GameType']) ? L::translate('mainform.maps.item.survival') : L::translate('mainform.maps.item.creative'), '-fx-fill: "#cccccc";');
         else
-            $labelLine2->appendText(Language::translate('mainform.maps.item.hardcore'), '-fx-fill: red; -fx-font-size: 20px;');
+            $labelLine2->appendText(L::translate('mainform.maps.item.hardcore'), '-fx-fill: red; -fx-font-size: 20px;');
             
         if ($objectInfo['info']['allowCommands'])
-            $labelLine2->appendText(', ' . Language::translate('word.cheats'), '-fx-fill: "#cccccc";');
+            $labelLine2->appendText(', ' . L::translate('word.cheats'), '-fx-fill: "#cccccc";');
             
-        $versionText = ($objectInfo['info']['Name']) ? $objectInfo['info']['Name'] : Language::translate('word.unknown');
-        $labelLine2->appendText(', ' . Language::translate('word.version') . ': ' . $versionText, '-fx-fill: "#cccccc";');
+        $versionText = ($objectInfo['info']['Name']) ? $objectInfo['info']['Name'] : L::translate('word.unknown');
+        $labelLine2->appendText(', ' . L::translate('word.version') . ': ' . $versionText, '-fx-fill: "#cccccc";');
         
         $labelBox = new UXVBox([$labelName, $labelLine1, $labelLine2]);
         

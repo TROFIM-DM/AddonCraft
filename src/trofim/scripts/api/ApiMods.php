@@ -4,6 +4,7 @@ namespace trofim\scripts\api;
 use std, framework, trofim;
 use Exception;
 use php\compress\ZipFile;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс для работы с API модов.
@@ -30,7 +31,7 @@ class ApiMods
         if (fs::exists(Path::getPathMinecraft() . '\\mods\\')) {
             
             uiLater(function () {
-                app()->getForm(StartForm)->setStatus(Language::translate('word.mods') . '...');
+                app()->getForm(StartForm)->setStatus(L::translate('word.mods') . '...');
             });
         
             // Поиск файлов mods
@@ -141,7 +142,7 @@ class ApiMods
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'jar' &&
                     $file->getName() == $object->getName()) {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.exist'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.exist'));
                     return;
                 }
             }
@@ -152,7 +153,7 @@ class ApiMods
                 if (fs::isFile($file->getPath()) &&
                     fs::ext($file->getPath()) == 'jar' &&
                     $file->getName() == $object->getName()) {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.exist'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.exist'));
                     return;
                 }
             }
@@ -178,7 +179,7 @@ class ApiMods
                     if (fs::exists($pathTemp . 'mcmod.info'))
                         $objectInfo['info'] = Json::decode(Stream::getContents($pathTemp . 'mcmod.info'))[0];
                     else {
-                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.read'));
+                        app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.not.read'));
                         return;
                     }
                     
@@ -194,7 +195,7 @@ class ApiMods
                         
                         // Копирование mod'a
                         if (!fs::copy($object->getPath(), $pathMod)) {
-                            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.setup'));
+                            app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.not.setup'));
                             return;
                         }
                         
@@ -232,20 +233,20 @@ class ApiMods
                         if (isset($objectInfo['path']['logo'])) FileSystem::registerFile($objectInfo['path']['logo']);
                         
                         // Сообщение о успешном добавлении мода
-                        app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.added'));
+                        app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.added'));
                     }
                 } else {
-                    app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.incorrect'));
+                    app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.incorrect'));
                 }
                 unset($zipFile);
                 
             } catch (Exception $error) {
-                app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.unknown.error'));
+                app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.unknown.error'));
                 return;
             }
             
         } else {
-            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.select.file'));
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.select.file'));
         }
     }
     
@@ -280,7 +281,7 @@ class ApiMods
                 
                 // Регистрация mod'a
                 FileSystem::registerFile(self::$objectsInfo[$index]['path']['mod']);
-            } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.disabled'));
+            } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.not.disabled'));
         }
         
         // Если mod отключен
@@ -303,7 +304,7 @@ class ApiMods
                 
                 // Регистрация mod'a
                 FileSystem::registerFile(self::$objectsInfo[$index]['path']['mod']);
-            } else app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.not.enabled'));
+            } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.not.enabled'));
         }
     }
     
@@ -328,8 +329,8 @@ class ApiMods
             app()->getForm(MainForm)->boxMods->items->removeByIndex($index);
             
             // Успех!
-            app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.delete.success'));
-        } app()->getForm(MainForm)->toast(Language::translate('mainform.toast.mods.delete.not.success'));
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.delete.success'));
+        } app()->getForm(MainForm)->toast(L::translate('mainform.toast.mods.delete.not.success'));
     }
     
     /**

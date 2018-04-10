@@ -2,6 +2,7 @@
 namespace trofim\scripts\design;
 
 use std, gui, trofim;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс для работы с Design текстур-паков.
@@ -52,7 +53,7 @@ class DesignTextures
         $buttonMode->bottomAnchor = 1;
         $buttonMode->rightAnchor = 1;
         $buttonMode->size = [39, 44];
-        $buttonMode->tooltipText = Language::translate('mainform.tooltip.textures.btn.mode');
+        $buttonMode->tooltipText = L::translate('mainform.tooltip.textures.btn.mode');
         $buttonMode->cursor = 'HAND';
         $buttonMode->classes->addAll(['itemTexture-mode', 'help-tooltip']);
         $buttonMode->nameTexture = fs::name($objectInfo['path']['texture']);
@@ -72,16 +73,16 @@ class DesignTextures
         $buttonDelete->topAnchor = 1;
         $buttonDelete->rightAnchor = 1;
         $buttonDelete->size = [39, 44];
-        $buttonDelete->tooltipText = Language::translate('mainform.tooltip.textures.btn.delete');
+        $buttonDelete->tooltipText = L::translate('mainform.tooltip.textures.btn.delete');
         $buttonDelete->cursor = 'HAND';
         $buttonDelete->classes->addAll(['itemTexture-delete', 'help-tooltip']);
         $buttonDelete->nameTexture = fs::name($objectInfo['path']['texture']);
         $buttonDelete->on('action', function () use (UXMaterialButton $buttonDelete) {
             $alert = new UXAlert('INFORMATION');
             $alert->title = app()->getName();
-            $alert->headerText = Language::translate('mainform.message.textures.delete.header');
-            $alert->contentText = Language::translate('mainform.message.textures.delete.content');
-            $alert->setButtonTypes([Language::translate('word.yes'), Language::translate('word.no')]);
+            $alert->headerText = L::translate('mainform.message.textures.delete.header');
+            $alert->contentText = L::translate('mainform.message.textures.delete.content');
+            $alert->setButtonTypes([L::translate('word.yes'), L::translate('word.no')]);
             $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/delete_alert-24.png'));
             
             $textUrl = new UXLabelEx(fs::nameNoExt($buttonDelete->nameTexture));
@@ -93,7 +94,7 @@ class DesignTextures
             $alert->expanded = true;
             
             switch ($alert->showAndWait()) {
-                case Language::translate('word.yes'):
+                case L::translate('word.yes'):
                     ApiTextures::delete($buttonDelete->nameTexture);
                 break;
             }

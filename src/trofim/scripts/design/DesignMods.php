@@ -2,6 +2,7 @@
 namespace trofim\scripts\design;
 
 use std, gui, trofim;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс для работы с Design модов.
@@ -64,23 +65,23 @@ class DesignMods
             $labelName->classes->add('infoMod-name');
             $GUI[] = $labelName;
             
-            $labelVersion = new UXLabel(Language::translate('mainform.mods.info.version') . ' ' . $objectInfo['info']['version']);
+            $labelVersion = new UXLabel(L::translate('mainform.mods.info.version') . ' ' . $objectInfo['info']['version']);
             $labelVersion->wrapText = true;
             $labelVersion->classes->add('infoMod-version');
             $GUI[] = $labelVersion;
             
-            $labelMCVersion = new UXLabel(Language::translate('mainform.mods.info.mcversion') . ' ' . $objectInfo['info']['mcversion']);
+            $labelMCVersion = new UXLabel(L::translate('mainform.mods.info.mcversion') . ' ' . $objectInfo['info']['mcversion']);
             $labelMCVersion->wrapText = true;
             $labelMCVersion->classes->add('infoMod-mcversion');
             $GUI[] = $labelMCVersion;
             
-            $labelModID = new UXLabel(Language::translate('mainform.mods.info.id') . ' ' . $objectInfo['info']['modid']);
+            $labelModID = new UXLabel(L::translate('mainform.mods.info.id') . ' ' . $objectInfo['info']['modid']);
             $labelModID->wrapText = true;
             $labelModID->classes->add('infoMod-modid');
             $GUI[] = $labelModID;
             
             if ($objectInfo['info']['authorList']) {
-                $labelAuthor = new UXLabelEx(Language::translate('mainform.mods.info.author') . ' ' . implode(', ', $objectInfo['info']['authorList']));
+                $labelAuthor = new UXLabelEx(L::translate('mainform.mods.info.author') . ' ' . implode(', ', $objectInfo['info']['authorList']));
                 $labelAuthor->wrapText = true;
                 $labelAuthor->classes->add('infoMod-author');
                 $GUI[] = $labelAuthor;
@@ -97,15 +98,15 @@ class DesignMods
                 $labelURL->on('action', function () use ($objectInfo) {
                     $alert = new UXAlert('INFORMATION');
                     $alert->title = app()->getName();
-                    $alert->headerText = Language::translate('mainform.message.mods.url.header');
-                    $alert->contentText = Language::translate('mainform.message.mods.url.content');
-                    $alert->setButtonTypes([Language::translate('word.yes'), Language::translate('word.copy'), Language::translate('word.no')]);
+                    $alert->headerText = L::translate('mainform.message.mods.url.header');
+                    $alert->contentText = L::translate('mainform.message.mods.url.content');
+                    $alert->setButtonTypes([L::translate('word.yes'), L::translate('word.copy'), L::translate('word.no')]);
                     $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/link_alert-24.png'));
                     
                     $textUrl = new UXLabelEx($objectInfo['info']['url']);
                     $textUrl->style = '-fx-font-family: "System"; -fx-font-size: 14px; -fx-text-alignment: CENTER; -fx-alignment: CENTER; -fx-padding: 0 0 7 0;';
                     
-                    $textWarning = new UXLabelEx(Language::translate('mainform.message.mods.url.content.label.warning'));
+                    $textWarning = new UXLabelEx(L::translate('mainform.message.mods.url.content.label.warning'));
                     $textWarning->style = '-fx-font-family: "Minecraft Rus"; -fx-font-size: 12px; -fx-text-fill: red; -fx-text-alignment: CENTER; -fx-alignment: CENTER;';
                     
                     $box = new UXVBox([$textUrl, $textWarning]);
@@ -115,10 +116,10 @@ class DesignMods
                     $alert->expanded = true;
                     
                     switch ($alert->showAndWait()) {
-                        case Language::translate('word.yes'):
+                        case L::translate('word.yes'):
                             open($objectInfo['info']['url']);
                         break;
-                        case Language::translate('word.copy'):
+                        case L::translate('word.copy'):
                             UXClipboard::setText($objectInfo['info']['url']);
                         break;
                     }
