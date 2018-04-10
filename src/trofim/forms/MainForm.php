@@ -4,6 +4,7 @@ namespace trofim\forms;
 use std, gui, framework, trofim;
 use Exception;
 use php\compress\ZipFile;
+use trofim\scripts\lang\Language as L;
 
 /**
  * Класс формы MainForm.
@@ -119,9 +120,9 @@ class MainForm extends AbstractForm
     {    
         $alert = new UXAlert('INFORMATION');
         $alert->title = app()->getName();
-        $alert->headerText = Language::translate('mainform.message.mods.delete.header');
-        $alert->contentText = Language::translate('mainform.message.mods.delete.content');
-        $alert->setButtonTypes([Language::translate('word.yes'), Language::translate('word.no')]);
+        $alert->headerText = L::translate('mainform.message.mods.delete.header');
+        $alert->contentText = L::translate('mainform.message.mods.delete.content');
+        $alert->setButtonTypes([L::translate('word.yes'), L::translate('word.no')]);
         $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/delete_alert-24.png'));
         
         $textUrl = new UXLabelEx(ApiMods::getObjects()[$this->boxMods->selectedIndex]['name']);
@@ -133,7 +134,7 @@ class MainForm extends AbstractForm
         $alert->expanded = true;
         
         switch ($alert->showAndWait()) {
-            case Language::translate('word.yes'):
+            case L::translate('word.yes'):
                 ApiMods::delete($this->boxMods->selectedIndex);
             break;
         }
@@ -245,7 +246,7 @@ class MainForm extends AbstractForm
         
         ApiShaders::clearValue('objectsInfo');
         $this->boxShaders->items->clear();
-        $this->boxShaders->items->addAll([Language::translate('word.no'), '(' . Language::translate('word.internal') . ')']);
+        $this->boxShaders->items->addAll([L::translate('word.no'), '(' . L::translate('word.internal') . ')']);
         
         ApiShaders::find();
         
@@ -259,7 +260,7 @@ class MainForm extends AbstractForm
      */
     function doBoxShadersConstruct (UXEvent $e = null)
     {    
-        $e->sender->items->addAll([Language::translate('word.no'), '(' . Language::translate('word.internal') . ')']);
+        $e->sender->items->addAll([L::translate('word.no'), '(' . L::translate('word.internal') . ')']);
     }
 
     /**
@@ -310,9 +311,9 @@ class MainForm extends AbstractForm
     {    
         $alert = new UXAlert('INFORMATION');
         $alert->title = app()->getName();
-        $alert->headerText = Language::translate('mainform.message.maps.delete.header');
-        $alert->contentText = Language::translate('mainform.message.maps.delete.content');
-        $alert->setButtonTypes([Language::translate('word.yes'), Language::translate('word.no')]);
+        $alert->headerText = L::translate('mainform.message.maps.delete.header');
+        $alert->contentText = L::translate('mainform.message.maps.delete.content');
+        $alert->setButtonTypes([L::translate('word.yes'), L::translate('word.no')]);
         $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/delete_alert-24.png'));
         
         $textUrl = new UXLabelEx(ApiMaps::getObjects()[$this->boxMaps->selectedIndex]['info']['LevelName']);
@@ -324,7 +325,7 @@ class MainForm extends AbstractForm
         $alert->expanded = true;
         
         switch ($alert->showAndWait()) {
-            case Language::translate('word.yes'):
+            case L::translate('word.yes'):
                 ApiMaps::delete($this->boxMaps->selectedIndex);
             break;
         }
@@ -345,10 +346,10 @@ class MainForm extends AbstractForm
     {    
         $e->sender->enabled = false;
         
-        AddonCraft::clearValue('listVersions');
+        ApiVersions::clearValue('objectsInfo');
         $this->boxVersions->items->clear();
         
-        ApiVersions::findVersions();
+        ApiVersions::find();
         
         waitAsync(3000, function () use ($e) {
             $e->sender->enabled = true;
@@ -370,10 +371,10 @@ class MainForm extends AbstractForm
     function setModeMod ($mode)
     {
         if ($mode) {
-            $this->buttonModeMod->text = Language::translate('mainform.mods.btn.disabled');
+            $this->buttonModeMod->text = L::translate('mainform.mods.btn.disabled');
             $this->buttonModeMod->textColor = '#b31a1a';
         } else {
-            $this->buttonModeMod->text = Language::translate('mainform.mods.btn.enabled');
+            $this->buttonModeMod->text = L::translate('mainform.mods.btn.enabled');
             $this->buttonModeMod->textColor = '#00e209';
         }
     }
