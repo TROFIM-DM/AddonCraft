@@ -1,6 +1,6 @@
 {
   "props": {
-    "version": "0.1",
+    "version": "1.0",
     "author": "TROFIM"
   },
   "components": {
@@ -9,9 +9,9 @@
       "x": 32,
       "y": 16,
       "props": {
-        "interval": 450,
+        "interval": 400,
         "repeatable": "1",
-        "autoStart": false
+        "autoStart": true
       }
     }
   }

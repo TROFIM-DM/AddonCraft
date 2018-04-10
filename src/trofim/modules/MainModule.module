@@ -1,6 +1,6 @@
 {
   "props": {
-    "version": "0.1",
+    "version": "1.0",
     "author": "TROFIM"
   },
   "components": {
@@ -26,16 +26,13 @@
         "multiLineValues": "1"
       }
     },
-    "selectTexture": {
-      "type": "script\\FileChooserScript",
-      "x": 112,
+    "dirChooser": {
+      "type": "script\\DirectoryChooserScript",
+      "x": 288,
       "y": 32,
       "props": {
-        "filterName": "Текстур-пак Minecraft (*.zip*)",
-        "filterExtensions": "*.zip*",
-        "filterAny": "0",
         "inputNode": "",
-        "actionNode": "buttonSelectTexture"
+        "actionNode": "buttonAddMap"
       }
     },
     "selectShader": {
@@ -48,6 +45,18 @@
         "filterAny": "0",
         "inputNode": "",
         "actionNode": "buttonSelectShader"
+      }
+    },
+    "selectTexture": {
+      "type": "script\\FileChooserScript",
+      "x": 112,
+      "y": 32,
+      "props": {
+        "filterName": "Текстур-пак Minecraft (*.zip*)",
+        "filterExtensions": "*.zip*",
+        "filterAny": "0",
+        "inputNode": "",
+        "actionNode": "buttonSelectTexture"
       }
     },
     "selectMod": {

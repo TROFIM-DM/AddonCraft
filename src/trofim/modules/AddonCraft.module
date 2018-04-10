@@ -1,7 +1,7 @@
 {
   "props": {
     "singleton": true,
-    "version": "0.1",
+    "version": "1.0",
     "author": "TROFIM"
   },
   "components": []
