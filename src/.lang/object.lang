@@ -1,0 +1,152 @@
+{
+  "MainForm" : {
+    "tabPane" : [
+	  "mainform.tab.mods",
+	  "mainform.tab.textures",
+	  "mainform.tab.shaders",
+	  "mainform.tab.saves",
+	  "mainform.tab.versions"
+	],
+	"buttonSettings" : {
+	  "text" : "mainform.btn.settings",
+	  "tooltip" : "mainform.tooltip.btn.settings"
+	},
+	"buttonWiki" : {
+	  "tooltip" : ""
+	},
+	"buttonSelectMod" : {
+	  "text" : "mainform.mods.btn.add",
+	  "tooltip" : "mainform.tooltip.mods.btn.add"
+	},
+    "buttonUpdateMod" : {
+	  "text" : "mainform.mods.btn.update",
+	  "tooltip" : "mainform.tooltip.mods.btn.update"
+	},
+	"buttonDeleteMod" : {
+	  "text" : "mainform.mods.btn.delete",
+	  "tooltip" : "mainform.tooltip.mods.btn.delete"
+	},
+	"buttonModeMod" : {
+	  "tooltip" : "mainform.tooltip.mods.btn.mode"
+	},
+	"buttonOpenMod" : {
+	  "text" : "mainform.mods.btn.open",
+	  "tooltip" : "mainform.tooltip.mods.btn.open"
+	},
+	"labelTextures" : {
+	  "text" : "mainform.textures.label.textures"
+	},
+	"labelEnTextures" : {
+	  "text" : "mainform.textures.label.enTextures"
+	},
+	"buttonSelectTexture" : {
+	  "tooltip" : "mainform.tooltip.textures.btn.add"
+	},
+	"buttonFolderTexture" : {
+	  "tooltip" : "mainform.tooltip.textures.btn.open"
+	},
+	"buttonUpdateTexture" : {
+	  "tooltip" : "mainform.tooltip.textures.btn.update"
+	},
+	"labelShaders" : {
+	  "text" : "mainform.shaders.label.shaders"
+	}, 
+	"buttonSelectShader" : {
+	  "text" : "mainform.shaders.btn.add",
+	  "tooltip" : "mainform.tooltip.shaders.btn.add"
+	},
+	"buttonUpdateShader" : {
+	  "text" : "mainform.shaders.btn.update",
+	  "tooltip" : "mainform.tooltip.shaders.btn.update"
+	},
+	"buttonFolderShader" : {
+	  "text" : "mainform.shaders.btn.open",
+	  "tooltip" : "mainform.tooltip.shaders.btn.open"
+	},
+	"antialiasingLevel" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.antialiasingLevel"
+	},
+	"normalMapEnabled" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.normalMapEnabled"
+	},
+	"specularMapEnabled" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.specularMapEnabled"
+	},
+	"renderResMul" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.renderResMul"
+	},
+	"shadowResMul" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.shadowResMul"
+	},
+	"handDepthMul" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.handDepthMul"
+	},
+	"oldHandLight" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.oldHandLight"
+	},
+	"oldLighting" : {
+	  "tooltip" : "mainform.tooltip.shaders.option.oldLighting"
+	},
+	"labelMaps" : {
+	  "text" : "mainform.maps.label.maps"
+	},
+	"buttonEditMap" : {
+	  "text" : "mainform.maps.btn.edit",
+	  "tooltip" : "mainform.tooltip.maps.btn.edit"
+	},
+	"buttonDeleteMap" : {
+	  "text" : "mainform.maps.btn.delete",
+	  "tooltip" : "mainform.tooltip.maps.btn.delete"
+	},
+	"buttonFolderMap" : {
+	  "text" : "mainform.maps.btn.folder",
+	  "tooltip" : "mainform.tooltip.maps.btn.folder"
+	},
+	"buttonAddMap" : {
+	  "text" : "mainform.maps.btn.add",
+	  "tooltip" : "mainform.tooltip.maps.btn.add"
+	},
+	"buttonUpdateMap" : {
+	  "text" : "mainform.maps.btn.update",
+	  "tooltip" : "mainform.tooltip.maps.btn.update"
+	},
+	"labelVersionUn" : {
+	  "text" : "mainform.versions.label.un"
+	},
+	"labelMapsUn" : {
+	  "text" : "mainform.maps.label.un"
+	}
+  },
+  "EditMapForm" : {
+  	"labelNameForm" : {
+  	  "text" : "editmapform.label.name.form"
+  	},
+  	"labelNameMap" : {
+  	  "text" : "editmapform.label.name.map"
+  	},
+  	"labelIcon" : {
+  	  "text" : "editmapform.label.icon"
+  	},
+  	"labelSettings" : {
+  	  "text" : "editmapform.label.settings"
+  	},
+  	"listValue" : {
+  	  "list" : "editmapform.combobox.value"
+  	},
+  	"selectedValue" : {
+  	  "list" : "editmapform.combobox.selected.value"
+  	},
+  	"buttonDeleteIcon" : {
+  	  "text" : "editmapform.btn.delete.icon",
+  	  "tooltip" : "editmapform.tooltip.btn.delete.icon"
+  	},
+  	"buttonSave" : {
+  	  "text" : "editmapform.btn.save",
+  	  "tooltip" : "editmapform.tooltip.btn.save"
+  	},
+  	"buttonCancel" : {
+  	  "text" : "editmapform.btn.cancel",
+  	  "tooltip" : "editmapform.tooltip.btn.cancel"
+  	}
+  }
+}

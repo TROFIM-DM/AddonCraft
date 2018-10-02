@@ -1,0 +1,57 @@
+/**
+ * Русский стиль AddonCraft.
+ * 
+ * @author TROFIM
+ * @url https://github.com/TROFIM-YT/AddonCraft
+ */
+
+/*******************************************************************************
+ *                                                                             *
+ * MainForm (FORM)                                                             *
+ *                                                                             *
+ ******************************************************************************/
+ 
+/*******************************************************************************
+ * Tab-Mods                                                                    *
+ ******************************************************************************/
+ 
+ /***************************************Form***************************************/
+ 
+.mainForm #buttonSelectMod {
+     -fx-font-size: 14px;
+}
+ 
+.mainForm #buttonUpdateMod, .mainForm #buttonDeleteMod,
+    .mainForm #buttonModeMod, .mainForm #buttonOpenMod {
+    -fx-font-size: 16px;
+}
+
+
+/*******************************************************************************
+ * Tab-Shaders                                                                 *
+ ******************************************************************************/
+ 
+/***************************************Form***************************************/
+ 
+.mainForm #buttonSelectShader {
+    -fx-font-size: 14px;
+}
+ 
+.mainForm #buttonFolderShader, .mainForm #buttonUpdateShader {
+    -fx-font-size: 16px;
+}
+
+/*******************************************************************************
+ * Tab-Maps                                                                    *
+ ******************************************************************************/
+ 
+/***************************************Form***************************************/
+ 
+.mainForm #buttonAddMap {
+    -fx-font-size: 14px;
+}
+
+.mainForm #buttonDeleteMap, .mainForm #buttonFolderMap,
+    .mainForm #buttonUpdateMap, .mainForm #buttonEditMap {
+    -fx-font-size: 16px;
+}

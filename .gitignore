@@ -5,7 +5,6 @@
 /.dn
 /src_generated
 /src/JPHP-INF
-/src/.lang
 /src/.data
 /src/.system
 /src/.debug

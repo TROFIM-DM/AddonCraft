@@ -3,6 +3,12 @@ namespace trofim\scripts\minecraft;
 
 use trofim, std;
 
+/**
+ * Класс для работы с Minecraft файлами.
+ * 
+ * @author TROFIM
+ * @url https://github.com/TROFIM-YT/AddonCraft
+ */
 class Minecraft
 {
     

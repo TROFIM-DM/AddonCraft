@@ -1,8 +1,7 @@
 <?php
 namespace trofim\scripts\api\mojang;
 
-use facade\Json;
-use std;
+use std, framework, trofim;
 
 /**
  * Fast and easy way to access Mojang API
@@ -780,8 +779,10 @@ class MojangAPI
     public static function replaceColor ($text) {
         $colors1  = ['&0', '&1', '&2', '&3', '&4', '&5', '&6', '&7', '&8', '&9', '&a', '&b', '&c', '&d', '&e', '&f', '&l', '&m', '&n', '&o', '&k', '&r'];
         $colors2  = ['§0', '§1', '§2', '§3', '§4', '§5', '§6', '§7', '§8', '§9', '§a', '§b', '§c', '§d', '§e', '§f', '§l', '§m', '§n', '§o', '§k', '§r'];
-        $result = str_ireplace($colors1, '', $text);
-        $result = str_ireplace($colors2, '', $result);
+        $colors3  = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'l', 'm', 'n', 'o', 'k', 'r'];
+        $text = str_ireplace($colors1, '', $text);
+        $text = str_ireplace($colors2, '', $text);
+        $result = str_ireplace($colors3, '', $text);
         
         return empty($result) ? false : $result;
     }

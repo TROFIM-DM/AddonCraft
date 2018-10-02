@@ -1,5 +1,5 @@
 /**
- * Основной стиль AddonCraft.
+ * Системный стиль AddonCraft.
  * 
  * @author TROFIM
  * @url https://github.com/TROFIM-YT/AddonCraft
@@ -40,10 +40,9 @@
  *                                                                             *
  ******************************************************************************/
 
-.text { 
+.text {
     -fx-font-smoothing-type: gray;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.2), 1, 0.0, 0, -1);
-    //-fx-effect: dropshadow(one-pass-box, rgba(112, 112, 112, 1), 0, 0, 2, 2);
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.35), 0.3, 0.3, 1, -1);
 }
 
 /*******************************************************************************
@@ -56,16 +55,17 @@
     -fx-font-family: "Minecraft Rus";
     -fx-font-size: 20px;
     -fx-text-fill: white;
-    -fx-text-alignment: CENTER;
+    -fx-text-alignment: center;
     -fx-background-color: #1a1a1a;
     -fx-background-radius: 0;
     -fx-border-width: 3;
     -fx-border-color: gray;
+    -fx-padding: 7 5 7 7;
 }
 
-.help-tooltip .tooltip {
+.tip .tooltip {
     -fx-font-family: "Minecraft Rus";
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-text-fill: white;
     -fx-background-color: #1a1a1a;
     -fx-background-radius: 0;
@@ -79,13 +79,33 @@
  *                                                                             *
  ******************************************************************************/
 
-.list-placeholder {
+.placeholder-list {
     -fx-font-family: "Minecraft Title Cyrillic";
     -fx-font-size: 36px;
     -fx-text-fill: white;
-    -fx-text-alignment: CENTER;
-    -fx-alignment: CENTER;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.6), 10, 0.0, 0, 0);
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Progress                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.classProgress .label {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 16px;
+    -fx-text-fill: rgba(255, 255, 255, 1);
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-padding: 5 0 0 0;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.2), 1, 0.0, 0, -1);
+}
+
+.classProgress .text {
+    -fx-padding: 10 10 10 10;
 }
 
 /*******************************************************************************
@@ -138,16 +158,16 @@
     -fx-font-family: "Minecraft Rus";
     -fx-font-size: 16px;
     -fx-font-smoothing-type: lcd;
+    -fx-text-fill: white;
     -fx-background-radius: 0;
     -fx-background-color: #333333;
     -fx-border-width: 3;
     -fx-border-color: #cccccc;
-    -fx-text-fill: white;
 }
 
 /*******************************************************************************
  *                                                                             *
- * Combo-box                                                                   *
+ * Combo-Box                                                                   *
  *                                                                             *
  ******************************************************************************/
 
@@ -156,6 +176,7 @@
     -fx-background-color: #333333;
     -fx-border-width: 3;
     -fx-border-color: #cccccc;
+    //-fx-padding: 3 3 3 3;
 }
 
 .combo-box .list-cell {
@@ -166,9 +187,55 @@
     -fx-background-color: #333333;
 }
 
-.combo-box .list-cell:hover {
-    -fx-background-color: #1a1a1a;
-    -fx-text-fill: #cccccc;
+/*******************************************************************************
+ *                                                                             *
+ * Combo-Box-Popup                                                             *
+ *                                                                             *
+ ******************************************************************************/
+
+.combo-box-popup .list-view .list-cell {
+    -fx-text-fill: #9a9a9a;
+    -fx-background-color: #333333;
+    -fx-padding: 5 5 5 5;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-text-fill: #e6e6e6;
+    -fx-background-color: #4d4d4d;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * List-View                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+
+.list-mods .list-cell:filled:selected, .list-textures .list-cell:filled:selected,
+    .list-shaders .list-cell:filled:selected, .list-maps .list-cell:filled:selected,
+        .list-versions .list-cell:filled:selected {
+    -fx-background-image: url('/.data/img/transparent_selected.png');
+    -fx-border-color: '#cccccc';
+    -fx-border-width: 3;
+}
+
+.list-mods .list-cell:filled:hover, .list-textures .list-cell:filled:hover,
+    .list-shaders .list-cell:filled:hover, .list-maps .list-cell:filled:hover,
+        .list-versions .list-cell:filled:hover {
+    -fx-cursor: hand;
+}
+
+.list-mods .list-cell, .info-mod .list-cell,
+    .list-textures .list-cell, .list-shaders .list-cell,
+        .list-maps .list-cell, .list-versions .list-cell,
+            .info-version .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-mods .list-cell:filled:selected:hover, .list-textures .list-cell:filled:selected:hover,
+    .list-shaders .list-cell:filled:selected:hover, .list-maps .list-cell:filled:selected:hover,
+        .list-versions .list-cell:filled:selected:hover {
+    -fx-cursor: default;
 }
 
 /*******************************************************************************
@@ -183,13 +250,13 @@
 
 /*******************************************************************************
  *                                                                             *
- * jfx-Tab-Pane                                                                *
+ * JFX-Tab-Pane                                                                *
  *                                                                             *
  ******************************************************************************/
 
 .jfx-tab-pane .tab-header-area .tab-header-background {
-    -fx-opacity: 100;
     -fx-background-color: #999999;
+    -fx-opacity: 100;
 }
 
 .jfx-tab-pane .tab-selected-line {
@@ -200,9 +267,13 @@
     -fx-background-color: #666666;
 }
 
+.jfx-tab-pane .tab:selected .tab-label {
+    -fx-effect: dropshadow(one-pass-box, rgba(158, 158, 158, 1), 0.3, 0.3, 1, -1);
+}
+
 .jfx-tab-pane .tab {
     -fx-background-color: #999999;
-    -fx-alignment: CENTER;
+    -fx-alignment: center;
 }
 
 .jfx-tab-pane .tab .tab-label {
@@ -215,25 +286,183 @@
 
 /*******************************************************************************
  *                                                                             *
- * List-View                                                                   *
+ * JFX-Button                                                                  *
  *                                                                             *
  ******************************************************************************/
 
-.list-mods .list-cell:filled:selected, .list-textures .list-cell:filled:selected, .list-shaders .list-cell:filled:selected, .list-maps .list-cell:filled:selected {
-    -fx-background-image: url('/.data/img/transparent_selected.png');
-    -fx-border-color: '#cccccc';
-    -fx-border-width: 3;
+.jfx-button {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 14px;
+    -fx-background-color: #999999;
+    -fx-background-radius: 0;
 }
 
-.list-mods .list-cell:filled:hover, .list-textures .list-cell:filled:hover, .list-shaders .list-cell:filled:hover, .list-maps .list-cell:filled:hover {
-    -fx-cursor: hand;
+/*******************************************************************************
+ *                                                                             *
+ * StartForm (FORM)                                                            *
+ *                                                                             *
+ ******************************************************************************/
+ 
+.startForm .label {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1), 10, 0.2, 0, 0);
 }
 
-.list-mods .list-cell, .info-mod .list-cell, .list-textures .list-cell, .list-shaders .list-cell, .list-maps .list-cell {
-    -fx-padding: 0 0 0 0;
+.startForm #progressIndicator {
+    -fx-progress-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 1), 10, 0.5, 0, 0);
+}
+
+.startForm #labelLoad {
+    -fx-font-family: "Minecraft Title Cyrillic";
+    -fx-font-size: 16px;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * MainForm (FORM)                                                             *
+ *                                                                             *
+ ******************************************************************************/
+
+.mainForm #labelAppName {
+    -fx-font-family: "Minecraft Title Cyrillic";
+    -fx-font-size: 16px;
+}
+
+.mainForm #buttonWiki {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 24px;
     -fx-background-color: transparent;
+    -fx-background-image: url('/.data/img/transparent.png');
+    -fx-background-radius: 0;
+    -fx-border-width: 3;
+    -fx-border-color: #cccccc;
+    -fx-padding: 0 0 0 0;
 }
 
+.mainForm #buttonSettings {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 14px;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+/*******************************************************************************
+ * Tab-Mods                                                                    *
+ ******************************************************************************/
+
+/***************************************Item-Mod***************************************/
+
+// Бокс
+.itemMod-box {
+    -fx-border-radius: 0;
+}
+
+// Название
+.itemMod-name {
+    -fx-font-family: "Minecraft Title Cyrillic";
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-max-width: 310;
+    -fx-padding: 6 0 0 8;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+// Версия
+.itemMod-version {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 18px;
+    -fx-text-fill: '#cccccc';
+    -fx-padding: 0 0 6 8;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+/***************************************Info-Mod****************************************/
+
+// Логотип
+.infoMod-logo {
+    -fx-alignment: center;
+    -fx-padding: 10 0 0 0;
+}
+
+// Название
+.infoMod-name {
+    -fx-font-family: "Minecraft Title Cyrillic";
+    -fx-font-size: 34px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-max-width: 500;
+    -fx-max-height: 1000;
+    -fx-alignment: center;
+    -fx-padding: 10 0 1 25;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+// Версия мода && Minecraft Версия && ID мода && Авторы мода
+.infoMod-version, .infoMod-mcversion, .infoMod-modid, .infoMod-author {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-max-width: 500;
+    -fx-max-height: 500;
+    -fx-padding: 1 0 7 16;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+// Текст URL
+.infoMod-textUrl {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-padding: 1 0 7 16;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+// URL мода
+.infoMod-url {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 24px;
+    -fx-max-width: 455;
+    -fx-padding: 0 0 7 2;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+// Описание мода
+.infoMod-description {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-max-width: 500;
+    -fx-max-height: 2500;
+    -fx-padding: 25 0 7 16;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 0);
+}
+
+/*******************************************************************************
+ * Tab-Textures                                                                *
+ ******************************************************************************/
+ 
+/***************************************Form***************************************/
+
+.mainForm #buttonSelectTexture {
+    -fx-background-color: #6fa16f;
+    -fx-graphic: url('/.data/img/icon/add_hover-24.png');
+}
+
+.mainForm #buttonFolderTexture {
+    -fx-background-color: #7290B5;
+    -fx-graphic: url('/.data/img/icon/folder_hover-24.png');
+}
+
+.mainForm #buttonUpdateTexture {
+    -fx-background-color: #999999;
+    -fx-graphic: url('/.data/img/icon/refresh_hover-24.png');
+}
+ 
+/***************************************List-Textures***************************************/
+ 
 .list-textures .list-cell:filled:selected .itemTexture-mode {
     -fx-background-color: #999999;
     -fx-opacity: 1;
@@ -253,163 +482,42 @@
     -fx-max-width: 280;
     -fx-max-height: 55;
 }
-
-.list-mods .list-cell:filled:selected:hover, .list-textures .list-cell:filled:selected:hover, .list-shaders .list-cell:filled:selected:hover, .list-maps .list-cell:filled:selected:hover {
-    -fx-cursor: default;
-}
-
-/*******************************************************************************
- *                                                                             *
- * Tab-Mods                                                                    *
- *                                                                             *
- ******************************************************************************/
-
-/***************************************Item-Mod***************************************/
-
-/*Бокс*/
-.itemMod-box {
-    -fx-border-radius: 0;
-}
-
-/*Название*/
-.itemMod-name {
-    -fx-font-family: "Minecraft Title Cyrillic";
-    -fx-font-size: 18px;
-    -fx-text-fill: white;
-    -fx-padding: 6 0 0 8;
-    -fx-max-width: 310;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
-}
-
-/*Версия*/
-.itemMod-version {
-    -fx-font-family: "Minecraft Rus";
-    -fx-font-size: 18px;
-    -fx-text-fill: '#cccccc';
-    -fx-padding: 0 0 6 8;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
-}
-
-/***************************************Info-Mod****************************************/
-
-/*Логотип*/
-.infoMod-logo {
-    -fx-alignment: CENTER;
-    -fx-padding: 10 0 0 0;
-}
-
-/*Название*/
-.infoMod-name {
-    -fx-font-family: "Minecraft Title Cyrillic";
-    -fx-font-size: 34px;
-    -fx-text-fill: white;
-    -fx-text-alignment: CENTER;
-    -fx-max-width: 500;
-    -fx-max-height: 1000;
-    -fx-alignment: CENTER;
-    -fx-padding: 10 0 1 25;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
-}
-
-/*Версия мода && Minecraft Версия && ID мода && Авторы мода*/
-.infoMod-version, .infoMod-mcversion, .infoMod-modid, .infoMod-author {
-    -fx-font-family: "Minecraft Rus";
-    -fx-font-size: 22px;
-    -fx-text-fill: white;
-    -fx-max-width: 500;
-    -fx-max-height: 500;
-    -fx-padding: 1 0 7 16;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
-}
-
-/*Текст URL*/
-.infoMod-textUrl {
-    -fx-font-family: "Minecraft Rus";
-    -fx-font-size: 22px;
-    -fx-text-fill: white;
-    -fx-padding: 1 0 7 16;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
-}
-
-/*URL мода*/
-.infoMod-url {
-    -fx-font-family: "Minecraft Rus";
-    -fx-font-size: 24px;
-    -fx-max-width: 455;
-    -fx-padding: 0 0 7 2;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
-}
-
-/*Описание мода*/
-.infoMod-description {
-    -fx-font-family: "Minecraft Rus";
-    -fx-font-size: 20px;
-    -fx-text-fill: white;
-    -fx-max-width: 500;
-    -fx-max-height: 2500;
-    -fx-padding: 25 0 7 16;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 0);
-}
-
-/********************************************************************************/
-
-/*******************************************************************************
- *                                                                             *
- * Tab-Textures                                                                *
- *                                                                             *
- ******************************************************************************/
- 
-/***************************************Form-Textures***************************************/
- 
-.texture-buttonUpdate {
-    -fx-graphic: url('/.data/img/icon/refresh_hover-24.png');
-}
-
-.texture-buttonFolder {
-    -fx-graphic: url('/.data/img/icon/folder_hover-24.png');
-}
-
-.texture-buttonAdd {
-    -fx-graphic: url('/.data/img/icon/add_hover-24.png');
-}
- 
-/********************************************************************************/
  
 /***************************************Item-Texture***************************************/
 
-/*Бокс*/
+// Бокс
 .itemTexture-box {
     -fx-border-radius: 0;
 }
 
-/*Логотип*/
+// Логотип
 .itemTexture-logo {
-    -fx-alignment: CENTER;
+    -fx-alignment: center;
     -fx-padding: 3 3 3 3;
 }
 
-/*Название*/
+// Название
 .itemTexture-name {
     -fx-font-family: "Impact";
     -fx-font-size: 24px;
     -fx-text-fill: white;
-    -fx-padding: 4 0 0 2;
     -fx-max-width: 330;
     -fx-max-height: 35;
+    -fx-padding: 4 0 0 2;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
 }
 
-/*Описание*/
+// Описание
 .itemTexture-description {
     -fx-font-family: "Minecraft Rus";
     -fx-font-size: 18px;
-    -fx-text-fill: '#cccccc';
-    -fx-padding: 1 0 6 2;
+    -fx-text-fill: #cccccc;
     -fx-max-width: 330;
+    -fx-padding: 1 0 6 2;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
 }
 
-/*Кнопка "Добавить" & Кнопка "Удалить"*/
+// Кнопка "Добавить" & Кнопка "Удалить"
 .itemTexture-mode, .itemTexture-delete {
     -fx-font-family: "Minecraft Rus";
     -fx-font-size: 14px;
@@ -418,69 +526,62 @@
     -fx-opacity: 0;
 }
 
-/********************************************************************************/
-
 /*******************************************************************************
- *                                                                             *
  * Tab-Shaders                                                                 *
- *                                                                             *
  ******************************************************************************/
 
 /***************************************List-Shaders***************************************/
 
 .list-shaders .list-cell {
     -fx-font-family: "Minecraft Rus";
-    -fx-font-size: 20px;
+    -fx-font-size: 22px;
     -fx-text-fill: white;
-    -fx-text-alignment: CENTER;
-    -fx-alignment: CENTER;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
     -fx-padding: 6 0 6 0;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
 }
 
-/********************************************************************************/
-
 /*******************************************************************************
- *                                                                             *
  * Tab-Maps                                                                    *
- *                                                                             *
  ******************************************************************************/
  
 /***************************************Item-Map***************************************/
 
-/*Бокс*/
+// Бокс
 .itemMap-box {
     -fx-border-radius: 0;
 }
 
-/*Логотип*/
+// Логотип
 .itemMap-logo {
-    -fx-alignment: CENTER;
+    -fx-alignment: center;
     -fx-padding: 5 5 5 5;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.4), 4, 0.0, 0, 0);
 }
 
-/*Название*/
+// Название
 .itemMap-name {
     -fx-font-family: "Minecraft Title Cyrillic";
     -fx-font-size: 22px;
     -fx-text-fill: white;
-    -fx-padding: 2 0 0 0;
     -fx-max-width: 650;
     -fx-max-height: 50;
+    -fx-padding: 2 0 0 0;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
 }
 
-/*Линия 1*/
+// Линия 1
 .itemMap-line1 {
     -fx-font-family: "Minecraft Rus";
     -fx-font-size: 20px;
     -fx-text-fill: '#cccccc';
-    -fx-padding: 6 0 2 2;
     -fx-max-width: 650;
+    -fx-padding: 6 0 2 2;
     -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
 }
 
-/*Линия 2*/
+// Линия 2
 .itemMap-line2:disabled {
     -fx-font-family: "Minecraft Rus";
     -fx-font-size: 20px;
@@ -491,8 +592,51 @@
 }
 
 /*******************************************************************************
+ * Tab-Versions                                                                *
+ ******************************************************************************/
+ 
+/***************************************List-Versions***************************************/
+
+.list-versions .list-cell {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-max-width: 306;
+    -fx-padding: 6 0 6 0;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+/***************************************Info-Version***************************************/
+
+.infoVersion-box {
+    -fx-alignment: center;
+}
+
+.infoVersion-header {
+    -fx-font-family: "Minecraft Rus";
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-padding: 8 0 8 0;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.9), 10, 0.0, 0, 0);
+}
+
+.infoVersion-fileTextures {
+
+}
+
+.infoVersion-fileTextures .cell {
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-padding: 4 0 4 0;
+}
+
+/*******************************************************************************
  *                                                                             *
- * EditMapForm                                                                 *
+ * EditMapForm (FORM)                                                          *
  *                                                                             *
  ******************************************************************************/
  

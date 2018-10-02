@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?import javafx.scene.*?><?import javafx.collections.*?><?import javafx.scene.layout.*?><?import javafx.scene.control.*?><?import javafx.scene.text.*?><?import javafx.scene.image.*?><?import javafx.scene.shape.*?><?import javafx.scene.paint.*?><?import javafx.scene.web.*?><?import javafx.geometry.*?><?import java.lang.*?><?import org.develnext.jphp.ext.javafx.classes.data.*?><?import org.develnext.jphp.ext.javafx.support.*?><?import org.develnext.jphp.ext.javafx.support.control.*?><?import org.develnext.jphp.ext.game.support.*?><AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" focusTraversable="false" id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360" prefWidth="432" styleClass="">
+<?import javafx.scene.*?><?import javafx.collections.*?><?import javafx.scene.layout.*?><?import javafx.scene.control.*?><?import javafx.scene.text.*?><?import javafx.scene.image.*?><?import javafx.scene.shape.*?><?import javafx.scene.paint.*?><?import javafx.scene.web.*?><?import javafx.geometry.*?><?import java.lang.*?><?import org.develnext.jphp.ext.javafx.classes.data.*?><?import org.develnext.jphp.ext.javafx.support.*?><?import org.develnext.jphp.ext.javafx.support.control.*?><?import org.develnext.jphp.ext.game.support.*?><AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" focusTraversable="false" id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360" prefWidth="432" styleClass="startForm ">
   <children>
     <Panel backgroundColor="#ffffff" borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelGlobal" layoutX="16" layoutY="16" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="328" prefWidth="400" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
       <children>
@@ -9,27 +9,27 @@
           </font>
         </ImageViewEx>
         <Data cursor="DEFAULT" enabled="1" id="data-imageGlobal" image=".data/img/background/StartForm.png" visible="1"/>
-        <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelLoad" layoutX="72" layoutY="266" prefHeight="26" prefWidth="248" style="-fx-font-family: &quot;Minecraft Title Cyrillic&quot;;-fx-font-size: 16px;" styleClass="label " text="Загрузка..." textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
+        <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelLoad" layoutX="72" layoutY="266" prefHeight="26" prefWidth="248" styleClass="label " text="Load..." textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
           <font>
             <Font name="Minecraft Title Cyrillic Regular" size="16"/>
           </font>
         </LabelEx>
         <Data cursor="DEFAULT" enabled="1" graphic="" id="data-labelLoad" visible="1"/>
-        <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelStatus" layoutX="72" layoutY="290" prefHeight="26" prefWidth="248" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" styleClass="label " text="" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
+        <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelStatus" layoutX="72" layoutY="290" prefHeight="26" prefWidth="248" styleClass="label " text="status" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
           <font>
             <Font name="Minecraft Rus Regular" size="16"/>
           </font>
         </LabelEx>
         <Data cursor="DEFAULT" enabled="1" graphic="" id="data-labelStatus" visible="1"/>
-        <ProgressIndicator focusTraversable="false" id="progressIndicator" layoutX="176" layoutY="228" prefHeight="32" prefWidth="40" progress="-1" style="&#10;-fx-progress-color: #ffffff;" styleClass="progress-indicator "/>
+        <ProgressIndicator focusTraversable="false" id="progressIndicator" layoutX="176" layoutY="228" prefHeight="32" prefWidth="40" progress="-1" styleClass="progress-indicator "/>
         <Data cursor="DEFAULT" enabled="1" id="data-progressIndicator" visible="1"/>
-        <LabelEx alignment="CENTER_RIGHT" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="label" layoutX="198" layoutY="8" prefHeight="26" prefWidth="192" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" styleClass="label " text="by TROFIM" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
+        <LabelEx alignment="CENTER_RIGHT" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="label" layoutX="198" layoutY="8" prefHeight="26" prefWidth="192" styleClass="label " text="by TROFIM" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
           <font>
             <Font name="Minecraft Rus Regular" size="16"/>
           </font>
         </LabelEx>
         <Data cursor="DEFAULT" enabled="1" graphic="" id="data-label" visible="1"/>
-        <LabelEx alignment="CENTER_LEFT" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelVersion" layoutX="8" layoutY="8" prefHeight="26" prefWidth="184" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" styleClass="label " text="" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+        <LabelEx alignment="CENTER_LEFT" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelVersion" layoutX="8" layoutY="8" prefHeight="26" prefWidth="184" styleClass="label " text=" version" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
           <font>
             <Font name="Minecraft Rus Regular" size="16"/>
           </font>
@@ -37,7 +37,7 @@
         <Data cursor="DEFAULT" enabled="1" graphic="" id="data-labelVersion" visible="1"/>
       </children>
       <titleFont>
-        <Font name="System Regular" size="12"/>
+        <Font name="Minecraft Rus Regular" size="16"/>
       </titleFont>
     </Panel>
     <Data cursor="DEFAULT" enabled="1" id="data-panelGlobal" visible="1"/>

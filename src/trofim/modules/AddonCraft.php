@@ -13,6 +13,19 @@ class AddonCraft extends AbstractModule
 {
     
     /**
+     * Главные константы.
+     */
+    private const APP_NAME           = 'AddonCraft',
+                  APP_GITHUB         = 'https://github.com/TROFIM-YT/AddonCraft/',
+                  APP_SERVER         = 'http://addoncraft.xyz/',
+                  APP_YOUTUBE        = 'http://bit.ly/TROFIM/',
+                  APP_VK_GROUP       = 'https://vk.com/addon.craft/',
+                  APP_VK_DEV         = 'https://vk.com/trofim_yt/',
+                  APP_KEY            = 'i6LDwKX3IgCXokL79D4CwfLd',
+                  APP_VERSION        = '0.1',
+                  APP_VERSION_PREFIX = 'beta';
+    
+    /**
      * Загрузка компонента.
      * 
      * @event construct 
@@ -38,16 +51,6 @@ class AddonCraft extends AbstractModule
     }
     
     /**
-     * Сайт программы.
-     * 
-     * @return string
-     */
-    static function getAppSite () : string
-    {
-        return self::APP_SITE;
-    }
-    
-    /**
      * Репозиторий программы на GitHub.
      * 
      * @return string
@@ -63,6 +66,36 @@ class AddonCraft extends AbstractModule
      * @return string
      */
     static function getAppServer () : string
+    {
+        return self::APP_SERVER;
+    }
+    
+    /**
+     * Канал YouTube.
+     * 
+     * @return string
+     */
+    static function getAppYouTube () : string
+    {
+        return self::APP_SERVER;
+    }
+    
+    /**
+     * Группа VK.
+     * 
+     * @return string
+     */
+    static function getAppGroup () : string
+    {
+        return self::APP_SERVER;
+    }
+    
+    /**
+     * Разработчик VK.
+     * 
+     * @return string
+     */
+    static function getAppDev () : string
     {
         return self::APP_SERVER;
     }
@@ -95,16 +128,6 @@ class AddonCraft extends AbstractModule
     static function getAppVersionPrefix () : string
     {
         return self::APP_VERSION_PREFIX;
-    }
-    
-    /**
-     * Очистить значения класса.
-     * 
-     * @param string $value.
-     */
-    static function clearValue (string $value)
-    {
-        self::{$value} = false;
     }
     
 }

@@ -4,19 +4,4 @@
     <behaviour animated="1" opacity="0.7" opacityEnabled="1" type="behaviour\custom\DraggingFormBehaviour"/>
     <behaviour color="#4d4d4d" offsetX="0" offsetY="3" radius="11" spread="0.05" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
   </target>
-  <target id="labelLoad">
-    <behaviour color="#000000" offsetX="0" offsetY="0" radius="6.0975609756098" spread="0.39024390243902" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
-  </target>
-  <target id="progressIndicator">
-    <behaviour color="#000000" offsetX="0" offsetY="0" radius="3.6585365853659" spread="0.60975609756098" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
-  </target>
-  <target id="labelStatus">
-    <behaviour color="#000000" offsetX="0" offsetY="0" radius="6.0975609756098" spread="0.39024390243902" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
-  </target>
-  <target id="label">
-    <behaviour color="#000000" offsetX="0" offsetY="0" radius="6.0975609756098" spread="0.39024390243902" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
-  </target>
-  <target id="labelVersion">
-    <behaviour color="#000000" offsetX="0" offsetY="0" radius="6.0975609756098" spread="0.39024390243902" type="behaviour\custom\DropShadowEffectBehaviour" when="ALWAYS"/>
-  </target>
 </behaviours>

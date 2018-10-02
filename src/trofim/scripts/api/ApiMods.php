@@ -68,7 +68,7 @@ class ApiMods
                         //$objectInfo = false;
                         
                         // Разархивирование mcmod.info
-                        $zipFile->read('mcmod.info', function ($entry, MiscStream $stream) use ($pathTemp) {
+                        $zipFile->read('mcmod.info', function (array $entry, MiscStream $stream) use ($pathTemp) {
                             fs::makeDir($pathTemp);
                             fs::copy($stream, $pathTemp . 'mcmod.info'); 
                         });
@@ -93,13 +93,13 @@ class ApiMods
                             if ($objectInfo['info']['logoFile'] && $zipFile->has($objectInfo['info']['logoFile'])) {
                                 
                                 // Разархивирование logo mod'a
-                                $zipFile->read($objectInfo['info']['logoFile'], function ($entry, MiscStream $stream) use (&$objectInfo) {
+                                $zipFile->read($objectInfo['info']['logoFile'], function (array $entry, MiscStream $stream) use (&$objectInfo) {
                                     $pathLogo = $objectInfo['path']['temp'] . 'logo.png';
                                     if (fs::copy($stream, $pathLogo))
                                         $objectInfo['path']['logo'] = $pathLogo;
                                 });
                             }
-
+                            
                             // Создание файла с hash-суммой
                             Stream::putContents($pathTemp . 'hash', sha1_file($object['path']));
                             
@@ -170,7 +170,7 @@ class ApiMods
                     $pathTemp = Path::getAppTemp() . '\\' . fs::nameNoExt($object->getName()) . '\\';
                     
                     // Разархивирование mcmod.info
-                    $zipFile->read('mcmod.info', function ($entry, MiscStream $stream) use ($pathTemp) {
+                    $zipFile->read('mcmod.info', function (array $entry, MiscStream $stream) use ($pathTemp) {
                         fs::makeDir($pathTemp);
                         fs::copy($stream, $pathTemp . 'mcmod.info'); 
                     });
@@ -211,7 +211,7 @@ class ApiMods
                         if ($objectInfo['info']['logoFile'] && $zipFile->has($objectInfo['info']['logoFile'])) {
                             
                             // Разархивирование logo mod'a
-                            $zipFile->read($objectInfo['info']['logoFile'], function ($entry, MiscStream $stream) use (&$objectInfo) {
+                            $zipFile->read($objectInfo['info']['logoFile'], function (array $entry, MiscStream $stream) use (&$objectInfo) {
                                 $pathLogo = $objectInfo['path']['temp'] . 'logo.png';
                                 if (fs::copy($stream, $pathLogo))
                                     $objectInfo['path']['logo'] = $pathLogo;

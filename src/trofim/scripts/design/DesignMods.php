@@ -46,7 +46,6 @@ class DesignMods
     static function showInfo (array $objectInfo)
     {
         (new Thread(function () use ($objectInfo) {
-            
             if ($objectInfo['info']['logoFile'] && $objectInfo['path']['logo']) {
                 $imageLogo = new UXImageArea(new UXImage($objectInfo['path']['logo']));
                 $imageLogo->size = [400, 140];

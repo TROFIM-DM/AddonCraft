@@ -27,7 +27,8 @@ class ApiShaders
      * 
      * @var array
      */
-    private static $LIST_SETTINGS   = ['shaderPack', 'antialiasingLevel', 'normalMapEnabled', 'specularMapEnabled', 'renderResMul', 'shadowResMul', 'handDepthMul', 'oldHandLight', 'oldLighting'];
+    private static $LIST_SETTINGS   = ['shaderPack', 'antialiasingLevel', 'normalMapEnabled', 'specularMapEnabled',
+                                       'renderResMul', 'shadowResMul', 'handDepthMul', 'oldHandLight', 'oldLighting'];
     
     /**
      * Значения настроек шейдеров.
@@ -63,7 +64,8 @@ class ApiShaders
                     self::$objectsInfo['list'][] = $objectInfo;
                     
                     // Создание item shaderpack
-                    app()->getForm(MainForm)->boxShaders->items->add(fs::nameNoExt($objectInfo['name']));
+                    $name = fs::nameNoExt($objectInfo['name']);
+                    app()->getForm(MainForm)->boxShaders->items->add((str::length($name) > 30) ? str::sub($name, 0, 30) . '...' : $name);
                 }
             }
         }
@@ -151,7 +153,8 @@ class ApiShaders
                 self::$objectsInfo['list'][] = $objectInfo;
                 
                 // Создание item shaderpack
-                app()->getForm(MainForm)->boxShaders->items->add(fs::nameNoExt($objectInfo['name']));
+                $name = fs::nameNoExt($objectInfo['name']);
+                app()->getForm(MainForm)->boxShaders->items->add((str::length($name) > 30) ? str::sub($name, 0, 30) . '...' : $name);
                 
                 // Сообщение о успешном добавлении текстур-пака
                 app()->getForm(MainForm)->toast(L::translate('mainform.toast.shaders.added'));

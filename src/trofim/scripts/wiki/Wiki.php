@@ -27,7 +27,7 @@ class Wiki
      */
     static function switch (int $index)
     {
-        app()->getForm(MainForm)->buttonWiki->tooltipText = L::translate('mainform.tooltip.wiki') . ' ' . self::$switchType[$index];
+        app()->getForm(MainForm)->buttonWiki->tooltipText = L::translate('mainform.tooltip.wiki') . ' ' . L::translate('word.' . str::lower(self::$switchType[$index]));
         self::$index = $index;
     }
     
@@ -36,8 +36,10 @@ class Wiki
      */
     static function open ()
     {
-        app()->getForm(MainForm)->toast(L::translate('mainform.toast.wiki'));
-        browse(AddonCraft::getAppGitHub() . 'blob/master/wiki/' . self::$switchType[self::$index] . '.md');
+        if (self::$index != 4) {
+            app()->getForm(MainForm)->toast(L::translate('mainform.toast.wiki'));
+            open(AddonCraft::getAppGitHub() . 'blob/master/wiki/' . self::$switchType[self::$index] . '.md');
+        } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.wiki.version'));
     }
     
 }

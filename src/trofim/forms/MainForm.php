@@ -36,15 +36,14 @@ class MainForm extends AbstractForm
         $this->on('dragDrop', function (UXDragEvent $drag) { 
             if (count($drag->dragboard->files)) {
                 foreach ($drag->dragboard->files as $file) {
-                    if ($this->tabPane->selectedIndex == 0 && fs::ext($file->getName()) == 'jar') {
+                    if ($this->tabPane->selectedIndex == 0 && fs::ext($file->getName()) == 'jar')
                         ApiMods::add($file);
-                    } else if ($this->tabPane->selectedIndex == 1 && fs::ext($file->getName()) == 'zip') {
+                    else if ($this->tabPane->selectedIndex == 1 && fs::ext($file->getName()) == 'zip')
                         ApiTextures::add($file);
-                    } else if ($this->tabPane->selectedIndex == 2 && fs::ext($file->getName()) == 'zip') {
+                    else if ($this->tabPane->selectedIndex == 2 && fs::ext($file->getName()) == 'zip')
                         ApiShaders::add($file);
-                    } else if ($this->tabPane->selectedIndex == 3 && fs::isDir($file->getPath())) {
+                    else if ($this->tabPane->selectedIndex == 3 && fs::isDir($file->getPath()))
                         ApiMaps::add($file);
-                    }
                 }
                 return;
             }
@@ -62,6 +61,7 @@ class MainForm extends AbstractForm
         // Плавное появление окна
         Animation::fadeOut($this, 1, function () {
             $this->panelInfoMod->visible = false;
+            $this->panelInfoVersion->visible = false;
             Animation::fadeIn($this, 350);
         });
     }
@@ -81,7 +81,6 @@ class MainForm extends AbstractForm
     {    
         Animation::fadeOut($this, 350, function () {
             app()->shutdown();
-            exit();
         });
     }
     
@@ -125,7 +124,7 @@ class MainForm extends AbstractForm
         $alert->setButtonTypes([L::translate('word.yes'), L::translate('word.no')]);
         $alert->graphic = new UXImageView(new UXImage('res://.data/img/icon/delete_alert-24.png'));
         
-        $textUrl = new UXLabelEx(ApiMods::getObjects()[$this->boxMods->selectedIndex]['name']);
+        $textUrl = new UXLabelEx(ApiMods::getObjects()[$this->boxMods->selectedIndex]['info']['name']);
         $textUrl->style = '-fx-font-family: "Impact"; -fx-font-size: 22px; -fx-text-alignment: CENTER; -fx-alignment: CENTER;';
         $box = new UXVBox([$textUrl]);
         $box->style = '-fx-alignment: CENTER;';
@@ -145,7 +144,7 @@ class MainForm extends AbstractForm
      */
     function doButtonOpenModAction (UXEvent $e = null)
     {    
-        execute('explorer.exe  /select, ' . ApiMods::getObjects()[$this->boxMods->selectedIndex]['path']['mod']);
+        execute('explorer.exe  /select, "' . ApiMods::getObjects()[$this->boxMods->selectedIndex]['path']['mod'] . '"');
     }
 
     /**
@@ -355,18 +354,19 @@ class MainForm extends AbstractForm
             $e->sender->enabled = true;
         });
     }
-    
+
     /**
-     * @event buttonAlt.action 
+     * @event boxVersions.action 
      */
-    function doButtonAltAction (UXEvent $e = null)
+    function doBoxVersionsAction (UXEvent $e = null)
     {    
-        $parse = new Parsedown();
-        $TEXT = $parse->text("# Как установить мод в AddonCraft?\n1. Нажать кнопку \"**Добавить мод...**\" или перенести мод в окно программы.\n2. Дождаться установки...\n3. PROFIT!");
-        pre($TEXT);
-        $progress = new Progress($this->boxMods, 'Всем привет, Дорогие друзья!' . "\n" . 'Выскажите свое слово!');
-        waitAsync(4000, function () use ($progress){$progress->free();});
+        $this->boxInfoVersion->items->clear();
+        if ($e->sender->items->count() > 0 && $e->sender->selectedIndex > -1)
+            ApiVersions::exists($e->sender->selectedIndex);
+            
     }
+
+
 
     function setModeMod ($mode)
     {

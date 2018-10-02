@@ -55,7 +55,7 @@ class DesignTextures
         $buttonMode->size = [39, 44];
         $buttonMode->tooltipText = L::translate('mainform.tooltip.textures.btn.mode');
         $buttonMode->cursor = 'HAND';
-        $buttonMode->classes->addAll(['itemTexture-mode', 'help-tooltip']);
+        $buttonMode->classes->addAll(['itemTexture-mode', 'tip']);
         $buttonMode->nameTexture = fs::name($objectInfo['path']['texture']);
         $buttonMode->on('action', function () use (UXMaterialButton $buttonMode) {
             if (ApiTextures::getObjects()[$buttonMode->nameTexture]['enabled']) 
@@ -75,7 +75,7 @@ class DesignTextures
         $buttonDelete->size = [39, 44];
         $buttonDelete->tooltipText = L::translate('mainform.tooltip.textures.btn.delete');
         $buttonDelete->cursor = 'HAND';
-        $buttonDelete->classes->addAll(['itemTexture-delete', 'help-tooltip']);
+        $buttonDelete->classes->addAll(['itemTexture-delete', 'tip']);
         $buttonDelete->nameTexture = fs::name($objectInfo['path']['texture']);
         $buttonDelete->on('action', function () use (UXMaterialButton $buttonDelete) {
             $alert = new UXAlert('INFORMATION');

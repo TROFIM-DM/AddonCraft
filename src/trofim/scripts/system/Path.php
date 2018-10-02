@@ -3,6 +3,12 @@ namespace trofim\scripts\system;
 
 use windows;
 
+/**
+ * Класс для работы с данными путями.
+ * 
+ * @author TROFIM
+ * @url https://github.com/TROFIM-YT/AddonCraft
+ */
 class Path 
 {
     
