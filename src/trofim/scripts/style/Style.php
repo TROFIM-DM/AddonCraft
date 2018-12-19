@@ -4,6 +4,12 @@ namespace trofim\scripts\style;
 use std, framework;
 use trofim\scripts\lang\Language as L;
 
+/**
+ * Класс для работы со стилем интерфейса.
+ * 
+ * @author TROFIM
+ * @url https://github.com/TROFIM-YT/AddonCraft
+ */
 class Style 
 {    
 

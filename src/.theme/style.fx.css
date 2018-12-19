@@ -212,7 +212,7 @@
 
 .list-mods .list-cell:filled:selected, .list-textures .list-cell:filled:selected,
     .list-shaders .list-cell:filled:selected, .list-maps .list-cell:filled:selected,
-        .list-versions .list-cell:filled:selected {
+        .list-versions .list-cell:filled:selected, .list-language .list-cell:filled:selected {
     -fx-background-image: url('/.data/img/transparent_selected.png');
     -fx-border-color: '#cccccc';
     -fx-border-width: 3;
@@ -220,21 +220,21 @@
 
 .list-mods .list-cell:filled:hover, .list-textures .list-cell:filled:hover,
     .list-shaders .list-cell:filled:hover, .list-maps .list-cell:filled:hover,
-        .list-versions .list-cell:filled:hover {
+        .list-versions .list-cell:filled:hover, .list-language .list-cell:filled:hover {
     -fx-cursor: hand;
 }
 
 .list-mods .list-cell, .info-mod .list-cell,
     .list-textures .list-cell, .list-shaders .list-cell,
         .list-maps .list-cell, .list-versions .list-cell,
-            .info-version .list-cell {
+            .info-version .list-cel {
     -fx-background-color: transparent;
     -fx-padding: 0 0 0 0;
 }
 
 .list-mods .list-cell:filled:selected:hover, .list-textures .list-cell:filled:selected:hover,
     .list-shaders .list-cell:filled:selected:hover, .list-maps .list-cell:filled:selected:hover,
-        .list-versions .list-cell:filled:selected:hover {
+        .list-versions .list-cell:filled:selected:hover, .list-language .list-cell:filled:selected:hover {
     -fx-cursor: default;
 }
 
@@ -401,7 +401,7 @@
 }
 
 // Версия мода && Minecraft Версия && ID мода && Авторы мода
-.infoMod-version, .infoMod-mcversion, .infoMod-modid, .infoMod-author {
+.infoMod-version, .infoMod-mcversion, .infoMod-modid, .infoMod-author, .infoMod-size {
     -fx-font-family: "Minecraft Rus";
     -fx-font-size: 22px;
     -fx-text-fill: white;
@@ -656,4 +656,17 @@
 #selectedValue .cell {
     -fx-font-size: 16px;
     -fx-padding: 4 0 4 5;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * SettingsForm (FORM)                                                         *
+ *                                                                             *
+ ******************************************************************************/
+ 
+.list-language .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 4 0 4 6;
 }

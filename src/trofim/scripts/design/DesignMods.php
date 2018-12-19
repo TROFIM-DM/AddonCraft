@@ -128,6 +128,11 @@ class DesignMods
                 $GUI[] = $boxURL;
             }
             
+            $labelSize = new UXLabel(L::translate('mainform.mods.info.size') . ' ' . round(fs::size($objectInfo['path']['mod']) / 1024 / 1024, 2) . L::translate('measurement.mb'));
+            $labelSize->wrapText = true;
+            $labelSize->classes->add('infoMod-size');
+            $GUI[] = $labelSize;
+            
             if ($objectInfo['info']['description']) {
                 $labelDescription = new UXLabelEx($objectInfo['info']['description']);
                 $labelDescription->wrapText = true;

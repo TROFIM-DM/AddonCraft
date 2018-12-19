@@ -4,7 +4,7 @@
     <Data cursor="DEFAULT" enabled="1" id="data-panelGlobal" visible="1"/>
     <Panel backgroundColor="#ffffff" borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelGlobal" layoutX="16" layoutY="16" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="632" prefWidth="944" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
       <children>
-        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="568" id="imageGlobal" layoutX="0" layoutY="64" mosaic="false" mosaicGap="0" proportional="false" stretch="false" styleClass=" " textFill="#000000" width="944">
+        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="566" id="imageGlobal" layoutX="0" layoutY="66" mosaic="false" mosaicGap="0" proportional="false" stretch="false" styleClass=" " textFill="#000000" width="944">
           <font>
             <Font name="System Regular" size="12"/>
           </font>
@@ -477,13 +477,13 @@
             </Tab>
           </tabs>
         </org.develnext.jphp.ext.javafx.jfoenix.support.JFXTabPaneFixed>
-        <Data cursor="DEFAULT" enabled="1" id="data-imageGlobal" image=".data/img/background/MainForm.png" visible="1"/>
+        <Data cursor="DEFAULT" enabled="1" id="data-imageGlobal" image=".data/img/background/mainForm/mainForm-0.png" visible="1"/>
         <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="0" id="buttonSettings" layoutX="840" layoutY="32" prefHeight="34" prefWidth="104" ripplerFill="#ffffff" styleClass="button jfx-button " text="Настройки" textAlignment="CENTER" textFill="#ffffff" underline="false" wrapText="false">
           <font>
             <Font name="Minecraft Rus Regular" size="14"/>
           </font>
         </com.jfoenix.controls.JFXButton>
-        <Data cursor="HAND" enabled="1" graphic="" id="data-buttonSettings" visible=""/>
+        <Data cursor="HAND" enabled="1" graphic="" id="data-buttonSettings" visible="1"/>
         <Panel backgroundColor="#999999" borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelBar" layoutX="0" layoutY="0" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="32" prefWidth="944" styleClass="" titleColor="#999999" titleOffset="15" titlePosition="TOP_LEFT">
           <children>
             <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="24" id="imageIco" layoutX="4" layoutY="4" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="24">

@@ -12,7 +12,7 @@ class EditMapForm extends AbstractForm
     /**
      * @event show 
      */
-    function doShow(UXWindowEvent $e = null)
+    function doShow (UXWindowEvent $e = null)
     {    
         Animation::fadeOut($this, 1, function () {
             Animation::fadeIn($this, 150);
@@ -22,7 +22,7 @@ class EditMapForm extends AbstractForm
     /**
      * @event imageExit.click-Left 
      */
-    function doImageExitClickLeft(UXMouseEvent $e = null)
+    function doImageExitClickLeft (UXMouseEvent $e = null)
     {
         $this->closeForm();
     }
@@ -30,7 +30,7 @@ class EditMapForm extends AbstractForm
     /**
      * @event buttonCancel.action 
      */
-    function doButtonCancelAction(UXEvent $e = null)
+    function doButtonCancelAction (UXEvent $e = null)
     {    
         $this->closeForm();
     }
@@ -38,7 +38,7 @@ class EditMapForm extends AbstractForm
     /**
      * @event listValue.action 
      */
-    function doListValueAction(UXEvent $e = null)
+    function doListValueAction (UXEvent $e = null)
     {    
         switch ($e->sender->selectedIndex) {
             case 0:
@@ -56,7 +56,7 @@ class EditMapForm extends AbstractForm
     /**
      * @event buttonDeleteIcon.action 
      */
-    function doButtonDeleteIconAction(UXEvent $e = null)
+    function doButtonDeleteIconAction (UXEvent $e = null)
     {    
         $alert = new UXAlert('INFORMATION');
         $alert->title = app()->getName();
@@ -76,7 +76,7 @@ class EditMapForm extends AbstractForm
     /**
      * @event selectedValue.action 
      */
-    function doSelectedValueAction(UXEvent $e = null)
+    function doSelectedValueAction (UXEvent $e = null)
     {    
         switch ($this->listValue->selectedIndex) {
             case 0:
@@ -94,7 +94,7 @@ class EditMapForm extends AbstractForm
     /**
      * @event buttonSave.action 
      */
-    function doButtonSaveAction(UXEvent $e = null)
+    function doButtonSaveAction (UXEvent $e = null)
     {    
         $this->mapInfo['info']['LevelName'] = $this->editNameMap->text;
         ApiMaps::saveMap($this->mapInfo);

@@ -148,5 +148,16 @@
   	  "text" : "editmapform.btn.cancel",
   	  "tooltip" : "editmapform.tooltip.btn.cancel"
   	}
+  },
+  "SettingsForm" : {
+  	"labelNameForm" : {
+  	  "text" : "settingsform.label.name.form"
+  	},
+  	"labelLanguage" : {
+  	  "text" : "settingsform.label.language"
+  	},
+  	"buttonSave" : {
+  	  "text" : "settingsform.btn.save"
+  	}
   }
 }

@@ -366,7 +366,13 @@ class MainForm extends AbstractForm
             
     }
 
-
+    /**
+     * @event buttonSettings.action 
+     */
+    function doButtonSettingsAction (UXEvent $e = null)
+    {    
+        app()->form(SettingsForm)->showAndWait();
+    }
 
     function setModeMod ($mode)
     {

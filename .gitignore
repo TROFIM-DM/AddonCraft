@@ -15,6 +15,7 @@
 /build.gradle
 /settings.gradle
 /.gitattributes
+/info versions.txt
 
 *.log
 *.pid

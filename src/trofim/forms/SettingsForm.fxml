@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?import javafx.scene.*?><?import javafx.collections.*?><?import javafx.scene.layout.*?><?import javafx.scene.control.*?><?import javafx.scene.text.*?><?import javafx.scene.image.*?><?import javafx.scene.shape.*?><?import javafx.scene.paint.*?><?import javafx.scene.web.*?><?import javafx.geometry.*?><?import java.lang.*?><?import org.develnext.jphp.ext.javafx.classes.data.*?><?import org.develnext.jphp.ext.javafx.support.*?><?import org.develnext.jphp.ext.javafx.support.control.*?><?import org.develnext.jphp.ext.game.support.*?><AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" focusTraversable="false" id="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220" prefWidth="232" styleClass="settingsForm ">
+  <children>
+    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelGlobal" layoutX="16" layoutY="16" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="188" prefWidth="200" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
+      <children>
+        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="156" id="imageGlobal" layoutX="0" layoutY="32" mosaic="false" mosaicGap="0" opacity="0.85" proportional="false" stretch="true" styleClass=" " textFill="#000000" width="200">
+          <font>
+            <Font name="System Regular" size="12"/>
+          </font>
+        </ImageViewEx>
+        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="100" id="transparentSettings" layoutX="0" layoutY="32" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="200">
+          <font>
+            <Font name="System Regular" size="12"/>
+          </font>
+        </ImageViewEx>
+        <Data cursor="DEFAULT" enabled="1" id="data-panelBar" visible="1"/>
+        <Data cursor="DEFAULT" enabled="1" id="data-imageGlobal" image=".data/img/background/EditMapForm.png" visible="1"/>
+        <Data cursor="HAND" enabled="1" id="data-buttonSave" visible="1"/>
+        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-transparentButton" image=".data/img/transparent.png" visible="1"/>
+        <Panel backgroundColor="#999999" borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelBar" layoutX="0" layoutY="0" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="32" prefWidth="200" styleClass="" titleColor="#999999" titleOffset="15" titlePosition="TOP_LEFT">
+          <children>
+            <LabelEx alignment="CENTER_LEFT" autoSize="true" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelNameForm" layoutX="8" layoutY="7" prefHeight="16" prefWidth="108" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" styleClass="label " text="Настройки" textAlignment="LEFT" textFill="#f2f2f2" underline="false" wrapText="false">
+              <font>
+                <Font name="Minecraft Rus Regular" size="16"/>
+              </font>
+            </LabelEx>
+            <Data cursor="DEFAULT" enabled="1" id="data-labelNameForm" visible="1"/>
+          </children>
+          <titleFont>
+            <Font name="System Regular" size="12"/>
+          </titleFont>
+        </Panel>
+        <LabelEx alignment="CENTER_LEFT" autoSize="true" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelLanguage" layoutX="8" layoutY="40" prefHeight="16" prefWidth="54" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" styleClass="label " text="Язык:" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+          <font>
+            <Font name="Minecraft Rus Regular" size="16"/>
+          </font>
+        </LabelEx>
+        <Data cursor="DEFAULT" enabled="1" id="data-labelLanguage" visible="1"/>
+        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-transparentSettings" image=".data/img/transparent.png" visible="1"/>
+        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="48" id="transparentButton" layoutX="0" layoutY="140" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="200">
+          <font>
+            <Font name="System Regular" size="12"/>
+          </font>
+        </ImageViewEx>
+        <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonSave" layoutX="8" layoutY="148" prefHeight="32" prefWidth="184" ripplerFill="#333333" style="-fx-background-color: #999999;&#10;-fx-background-radius: 0;&#10;-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 16px;" styleClass="button jfx-button " text="Сохранить" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
+          <font>
+            <Font name="Minecraft Rus Regular" size="16"/>
+          </font>
+        </com.jfoenix.controls.JFXButton>
+        <Data cursor="DEFAULT" enabled="1" id="data-listLanguage" visible="1"/>
+        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="60" id="transparentList" layoutX="8" layoutY="64" mosaic="false" mosaicGap="0" opacity="0.35365853658537" proportional="false" stretch="true" styleClass="" textFill="#000000" width="184">
+          <font>
+            <Font name="System Regular" size="12"/>
+          </font>
+        </ImageViewEx>
+        <Data cursor="DEFAULT" enabled="1" id="data-transparentList" image=".data/img/transparent_selected.png" visible="1"/>
+        <ListViewEx editable="false" fixedCellSize="-1" focusTraversable="false" id="listLanguage" layoutX="8" layoutY="64" prefHeight="72" prefWidth="184" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-background-color: transparent;" styleClass="list-view list-language ">
+          <items xmlns:fx="http://javafx.com/fxml">
+            <FXCollections fx:factory="observableArrayList"/>
+          </items>
+        </ListViewEx>
+      </children>
+      <titleFont>
+        <Font name="System Regular" size="12"/>
+      </titleFont>
+    </Panel>
+    <Data cursor="DEFAULT" enabled="1" id="data-panelGlobal" visible="1"/>
+    <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="16" id="imageExit" layoutX="194" layoutY="24" mosaic="false" mosaicGap="0" proportional="false" stretch="false" styleClass="" textFill="#000000" width="16">
+      <font>
+        <Font name="System Regular" size="12"/>
+      </font>
+    </ImageViewEx>
+    <Data clickImage="" cursor="DEFAULT" enabled="1" hoverImage=".data/img/icon/close_hover-16.png" id="data-imageExit" image=".data/img/icon/close-16.png" visible="1"/>
+  </children>
+</AnchorPane>
