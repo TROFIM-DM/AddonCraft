@@ -20,9 +20,9 @@ class AddonCraft extends AbstractModule
                   APP_SERVER         = 'http://addoncraft.xyz/',
                   APP_YOUTUBE        = 'http://bit.ly/TROFIM/',
                   APP_VK_GROUP       = 'https://vk.com/addon.craft/',
-                  APP_VK_DEV         = 'https://vk.com/trofim_yt/',
+                  APP_VK_DEV         = 'https://vk.com/trofim_dm/',
                   APP_KEY            = 'i6LDwKX3IgCXokL79D4CwfLd',
-                  APP_VERSION        = '0.1.1',
+                  APP_VERSION        = '0.2',
                   APP_VERSION_PREFIX = 'beta';
     
     /**

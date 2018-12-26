@@ -1,8 +1,8 @@
 <?php
 namespace trofim\scripts\design;
 
-use std, gui, trofim;
 use php\gui\UXRichTextArea;
+use std, gui, trofim;
 use trofim\scripts\lang\Language as L;
 
 /**
@@ -20,7 +20,7 @@ class DesignMaps
      * @param array $objectInfo
      */
     static function addItem (array $objectInfo)
-    {
+    {    
         $pathIcon = (fs::exists($objectInfo['path']['icon'])) ? $objectInfo['path']['icon'] : 'res://.data/img/map_icon.png';
         $imageIcon = new UXImageArea(new UXImage($pathIcon));
         $imageIcon->stretch = true;
@@ -52,11 +52,11 @@ class DesignMaps
             
         $versionText = ($objectInfo['info']['Name']) ? $objectInfo['info']['Name'] : L::translate('word.unknown');
         $labelLine2->appendText(', ' . L::translate('word.version') . ': ' . $versionText, '-fx-fill: "#cccccc";');
-        
+
         $labelBox = new UXVBox([$labelName, $labelLine1, $labelLine2]);
-        
+
         $GUI = new UXHBox([$boxIcon, $labelBox]);
-        
+
         app()->getForm(MainForm)->boxMaps->items->add($GUI);
     }
     

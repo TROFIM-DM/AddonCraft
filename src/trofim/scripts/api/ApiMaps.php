@@ -62,6 +62,7 @@ class ApiMaps
                         // Получение данных NBT
                         $NBT = new NBT($object['path'] . '\\level.dat');
                         $listInfo = $NBT->getList();
+                        
                         foreach (self::$mapValue as $value)
                             if ($listInfo[$value]) $objectInfo['info'][$value] = $listInfo[$value];
                         

@@ -301,7 +301,7 @@
             </Tab>
             <Tab text="Карты">
               <content>
-                <AnchorPane focusTraversable="false" id="" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="568" prefWidth="944" styleClass="">
+                <AnchorPane focusTraversable="false" id="" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="566" prefWidth="944" styleClass="">
                   <children>
                     <LabelEx alignment="CENTER_LEFT" autoSize="true" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelMaps" layoutX="426" layoutY="8" prefHeight="24" prefWidth="93" style="-fx-font-family: &quot;Minecraft Rus&quot;;&#10;-fx-font-size: 24px;&#10;-fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.6), 10, 0.0, 0, 0);" styleClass="label " text="Карты" textAlignment="LEFT" textFill="#f2f2f2" underline="false" wrapText="false">
                       <font>
@@ -328,19 +328,19 @@
                         <Font name="System Regular" size="12"/>
                       </titleFont>
                     </Panel>
-                    <Data cursor="DEFAULT" enabled="1" id="data-panelMaps" visible=""/>
+                    <Data cursor="DEFAULT" enabled="1" id="data-panelMaps" visible="1"/>
                     <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonUpdateMap" layoutX="476" layoutY="527" prefHeight="32" prefWidth="184" ripplerFill="#333333" styleClass="button jfx-button " text="Обновить" textAlignment="LEFT" textFill="#ffffff" underline="false" wrapText="false">
                       <font>
                         <Font name="Minecraft Rus Regular" size="14"/>
                       </font>
                     </com.jfoenix.controls.JFXButton>
-                    <Data cursor="HAND" enabled="1" id="data-buttonUpdateMap" visible=""/>
+                    <Data cursor="HAND" enabled="1" id="data-buttonUpdateMap" visible="1"/>
                     <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonDeleteMap" layoutX="284" layoutY="488" prefHeight="32" prefWidth="184" ripplerFill="#333333" styleClass="button jfx-button " text="Удалить" textAlignment="LEFT" textFill="#990000" underline="false" wrapText="false">
                       <font>
                         <Font name="Minecraft Rus Regular" size="14"/>
                       </font>
                     </com.jfoenix.controls.JFXButton>
-                    <Data cursor="HAND" enabled="" id="data-buttonDeleteMap" visible=""/>
+                    <Data cursor="HAND" enabled="" id="data-buttonDeleteMap" visible="1"/>
                     <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonEditMap" layoutX="8" layoutY="488" prefHeight="32" prefWidth="184" ripplerFill="#333333" styleClass="button jfx-button " text="Редактировать" textAlignment="LEFT" textFill="#993300" underline="false" wrapText="false">
                       <font>
                         <Font name="Minecraft Rus Regular" size="14"/>
@@ -352,33 +352,13 @@
                         <Font name="Minecraft Rus Regular" size="14"/>
                       </font>
                     </com.jfoenix.controls.JFXButton>
-                    <Data cursor="HAND" enabled="" id="data-buttonFolderMap" visible=""/>
+                    <Data cursor="HAND" enabled="" id="data-buttonFolderMap" visible="1"/>
                     <com.jfoenix.controls.JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TEXT_ONLY" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="buttonAddMap" layoutX="284" layoutY="527" prefHeight="32" prefWidth="184" ripplerFill="#333333" styleClass="button jfx-button " text="Добавить карту..." textAlignment="LEFT" textFill="#1a4d1a" underline="false" wrapText="false">
                       <font>
                         <Font name="Minecraft Rus Regular" size="14"/>
                       </font>
                     </com.jfoenix.controls.JFXButton>
-                    <Data cursor="HAND" enabled="1" id="data-buttonAddMap" visible=""/>
-                    <Panel borderColor="#c0c0c0" borderRadius="0" borderStyle="NONE" borderWidth="0" focusTraversable="false" id="panelMapsUn" layoutX="0" layoutY="0" maxHeight="-1" maxWidth="-1" minHeight="-1" minWidth="-1" prefHeight="568" prefWidth="944" styleClass="" titleColor="#333333" titleOffset="15" titlePosition="TOP_LEFT">
-                      <children>
-                        <ImageViewEx autoSize="false" centered="false" focusTraversable="false" height="568" id="imageMapsUn" layoutX="0" layoutY="0" mosaic="false" mosaicGap="0" proportional="false" stretch="true" styleClass="" textFill="#000000" width="944">
-                          <font>
-                            <Font name="System Regular" size="12"/>
-                          </font>
-                        </ImageViewEx>
-                        <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelMapsUn" layoutX="0" layoutY="0" prefHeight="568" prefWidth="944" styleClass="label placeholder-list " text="" textAlignment="CENTER" underline="false" wrapText="false">
-                          <font>
-                            <Font name="Minecraft Title Cyrillic Regular" size="36"/>
-                          </font>
-                        </LabelEx>
-                        <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-imageMapsUn" image=".data/img/transparent.png" visible="1"/>
-                        <Data cursor="DEFAULT" enabled="1" id="data-labelMapsUn" visible="1"/>
-                      </children>
-                      <titleFont>
-                        <Font name="System Regular" size="12"/>
-                      </titleFont>
-                    </Panel>
-                    <Data cursor="DEFAULT" enabled="1" id="data-panelMapsUn" visible="1"/>
+                    <Data cursor="HAND" enabled="1" id="data-buttonAddMap" visible="1"/>
                   </children>
                 </AnchorPane>
               </content>
@@ -459,7 +439,7 @@
                           </font>
                         </ImageViewEx>
                         <Data cursor="DEFAULT" enabled="1" hoverImage="" id="data-imageVersionUn" image=".data/img/transparent.png" visible="1"/>
-                        <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelVersionUn" layoutX="0" layoutY="0" prefHeight="568" prefWidth="944" styleClass="label placeholder-list " text="" textAlignment="CENTER" underline="false" wrapText="false">
+                        <LabelEx alignment="CENTER" autoSize="false" contentDisplay="LEFT" ellipsisString="..." focusTraversable="false" graphicTextGap="4" id="labelVersionUn" layoutX="0" layoutY="0" prefHeight="568" prefWidth="944" styleClass="label placeholder-list " text="" textAlignment="CENTER" textFill="#000000" underline="false" wrapText="false">
                           <font>
                             <Font name="Minecraft Title Cyrillic Regular" size="36"/>
                           </font>

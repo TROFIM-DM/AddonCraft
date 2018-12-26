@@ -112,9 +112,6 @@
 	},
 	"labelVersionUn" : {
 	  "text" : "mainform.versions.label.un"
-	},
-	"labelMapsUn" : {
-	  "text" : "mainform.maps.label.un"
 	}
   },
   "EditMapForm" : {

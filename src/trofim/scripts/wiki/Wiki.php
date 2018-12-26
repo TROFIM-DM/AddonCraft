@@ -36,7 +36,7 @@ class Wiki
      */
     static function open ()
     {
-        if (self::$index != 4 && self::$index != 3) {
+        if (self::$index != 4) {
             app()->getForm(MainForm)->toast(L::translate('mainform.toast.wiki'));
             open(AddonCraft::getAppGitHub() . 'blob/master/wiki/' . self::$switchType[self::$index] . '.md');
         } else app()->getForm(MainForm)->toast(L::translate('mainform.toast.wiki.' . str::lower(self::$switchType[self::$index])));
