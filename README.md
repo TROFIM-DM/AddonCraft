@@ -1,7 +1,8 @@
 # AddonCraft
 ### Программа, позволяющая с комфортом и удобством, работать со всеми возможными дополнениями, которые поддерживаются **Minecraft**!
-![Screenshot](docs/0.1/screen_1.png)
-![Screenshot](docs/0.1/screen_2.png)
+![Screenshot](docs/0.1.1/screen_1.png)
+![Screenshot](docs/0.1.1/screen_2.png)
+![Screenshot](docs/0.1.1/screen_3.png)
 
 # Актуальная версия программы - 0.1.1 beta (19.12.2018)
 
